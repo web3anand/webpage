@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us - AV Interior</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="container nav-container">
+    <h1 class="logo">AV INTERIOR DECORATION</h1>
+    <nav class="nav-links desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  </div>
+
+  <!-- Mobile Floating Menu -->
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <div class="mobile-nav-card">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <nav class="mobile-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+
+
+  <section class="contact-page">
+    <div class="container">
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="contact-grid">
+        <form class="contact-form" onsubmit="return false">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea rows="5" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+        <div class="contact-info">
+          <h3>Our Office</h3>
+          <p>Annai Theresa Nagar , Thoothukudi </p>
+          <p><strong>Phone:</strong> <a href="tel:+919715032513">+91 97150 32513</a></p>
+          <p><strong>WhatsApp:</strong> <a href="https://wa.me/919715032513" target="_blank">Chat with us</a></p>
+         <div class="map">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15771.289271885958!2d78.1174878!3d8.8027577!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b03efb2fd3c3353%3A0x4e6da1e40f53b69d!2sAV%20INTERIOR%20DECORATION!5e0!3m2!1sen!2sin!4v1748697393710!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 AV Interior Decoration. All rights reserved.</p>
+    </div>
+  </footer>
+
+ <script>
+  function toggleMenu() {
+    document.getElementById("mobileNav").classList.toggle("active");
+  }
+</script>
+</body>
+</html>

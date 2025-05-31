@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - AV Interior</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<!-- Navbar -->
+<header class="navbar">
+  <div class="container nav-container">
+    <h1 class="logo">AV INTERIOR DECORATION</h1>
+    <nav class="nav-links desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  </div>
+
+  <!-- Mobile Floating Menu -->
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <div class="mobile-nav-card">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <nav class="mobile-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+
+
+  <section class="projects-page">
+    <div class="container">
+      <h2 class="section-title">Completed Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <img src="assets/a1.jpg" alt="Project 1" />
+          <p>Luxury Living Room Interior</p>
+        </div>
+        <div class="project-card">
+          <img src="assets/a2.jpg" alt="Project 2" />
+          <p>Modern Office Partition Work</p>
+        </div>
+        <div class="project-card">
+          <img src="assets/a3.jpg" alt="Project 3" />
+          <p>Stylish Roller Screen Installation</p>
+        </div>
+        <div class="project-card">
+          <img src="assets/a4.jpg" alt="Project 4" />
+          <p>Elegant False Ceiling Finish</p>
+        </div>
+        <div class="project-card">
+          <img src="assets/a5.jpg" alt="Project 5" />
+          <p>Aluminium Window Replacement</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 AV Interior Decoration. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+  function toggleMenu() {
+    document.getElementById("mobileNav").classList.toggle("active");
+  }
+</script>
+</body>
+</html>

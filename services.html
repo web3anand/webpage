@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Services - AV Interior</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+ <!-- Navbar -->
+<header class="navbar">
+  <div class="container nav-container">
+    <h1 class="logo">AV INTERIOR DECORATION</h1>
+    <nav class="nav-links desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  </div>
+
+  <!-- Mobile Floating Menu -->
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <div class="mobile-nav-card">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <nav class="mobile-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+
+
+  <section class="services-page">
+    <div class="container">
+      <h2 class="section-title">Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <img src="assets/a1.jpg" alt="False Ceiling" />
+          <h3>False Ceiling</h3>
+          <p>Elegant false ceiling installations tailored to your space.</p>
+        </div>
+        <div class="service-card">
+          <img src="assets/a2.jpg" alt="Flooring" />
+          <h3>Flooring</h3>
+          <p>Premium flooring solutions for homes and offices.</p>
+        </div>
+        <div class="service-card">
+          <img src="assets/a3.jpg" alt="Roller Screens" />
+          <h3>Roller Screens</h3>
+          <p>Sleek roller screens for privacy and aesthetics.</p>
+        </div>
+        <div class="service-card">
+          <img src="assets/a4.jpg" alt="Partitions" />
+          <h3>Aluminium Partitions</h3>
+          <p>Modular partitions for smart office space design.</p>
+        </div>
+        <div class="service-card">
+          <img src="assets/a5.jpg" alt="Windows" />
+          <h3>Aluminium Windows</h3>
+          <p>Durable and modern aluminium window fittings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 AV Interior Decoration. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+  function toggleMenu() {
+    document.getElementById("mobileNav").classList.toggle("active");
+  }
+</script>
+</body>
+</html>

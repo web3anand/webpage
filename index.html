@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AV Interior Decoration</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="container nav-container">
+    <h1 class="logo">AV INTERIOR DECORATION</h1>
+
+    <!-- Desktop Nav -->
+    <nav class="nav-links desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Hamburger icon -->
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+    <!-- Mobile Floating Dropdown -->
+    <div class="mobile-nav-card" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</header>
+
+
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h2>Bring Your Dream Space to Life</h2>
+      <p>Premium interior decoration for homes and offices. Expertly done. Perfectly delivered.</p>
+      <a href="services.html" class="btn">Explore Our Services</a>
+    </div>
+  </section>
+
+  <!-- Carousel Section -->
+  <section class="carousel-section">
+    <div class="container">
+      <h2 class="section-title">Our Project Highlights</h2>
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="carousel-wrapper">
+          <!-- Slides will be injected dynamically -->
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="carousel-section">
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper" id="carousel-wrapper">
+      <!-- Slides injected here -->
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 AV Interior Decoration. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+  function toggleMenu() {
+    document.getElementById("mobileNav").classList.toggle("active");
+  }
+</script>
+
+</body>
+</html>
