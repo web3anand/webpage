@@ -132,12 +132,12 @@ a {
 
 /* HERO */
 .hero {
-  background: url('../assets/hero.jpg') center/cover no-repeat;
   background-color: #ffffff;
   color: rgb(82, 50, 50);
   padding: 100px 0;
   text-align: center;
 }
+
 .hero h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -278,6 +278,9 @@ a {
 }
 
 /* CONTACT */
+
+
+
 .contact-page {
   padding: 3rem 0;
 }
@@ -286,18 +289,48 @@ a {
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   align-items: start;
+   background-color: #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  border:none;
 }
 .contact-form input,
 .contact-form textarea {
   width: 100%;
   padding: 0.75rem;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 5px;
   font-size: 1rem;
 }
+
+.clr{
+  background-color: #ffffff;
+  padding: 7px;
+  border: none;
+  border-radius: 8px;
+}
+
+.wbt{
+  text-decoration: none;
+  background: #e5e9eb;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s;
+  display: inline-block;
+}
+
+.wbt:hover {
+  text-decoration: none;
+  background-color: #1ebd5a;     /* optional: slightly darker on hover */
+  color: white;
+}
+
 .contact-form button {
-  background: #ffb700;
+  background: #d3b76f;
   border: none;
   padding: 0.75rem 1.5rem;
   cursor: pointer;
