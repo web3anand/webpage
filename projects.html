@@ -11,25 +11,24 @@
 <header class="navbar">
   <div class="container nav-container">
     <h1 class="logo">AV INTERIOR DECORATION</h1>
+
+    <!-- Desktop Nav -->
     <nav class="nav-links desktop-nav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
       <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-  </div>
 
-  <!-- Mobile Floating Menu -->
-  <div class="mobile-nav-overlay" id="mobileNav">
-    <div class="mobile-nav-card">
-      <button class="close-btn" onclick="toggleMenu()">×</button>
-      <nav class="mobile-links">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+    <!-- Hamburger icon -->
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+    <!-- Mobile Floating Dropdown -->
+    <div class="mobile-nav-card" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
     </div>
   </div>
 </header>
