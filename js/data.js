@@ -6,10 +6,42 @@ const projectImages = [
   { src: "assets/a5.jpg", alt: "Aluminium window fitting" }
 ];
 
-const serviceCategories = [
-  { name: "False Ceiling", link: "services.html#false-ceiling" },
-  { name: "Aluminum Partition", link: "services.html#flooring" },
-  { name: "Roller Screens", link: "services.html#roller-screens" },
-  { name: "Aluminium Partitions", link: "services.html#partitions" },
-  { name: "Aluminium Windows", link: "services.html#windows" }
+const serviceList = [
+  {
+    name: "False Ceiling",
+    services: [
+      { name: "POP Design", id: "pop" },
+      { name: "Gypsum Board", id: "gypsum" },
+      { name: "Grid Ceiling", id: "grid" }
+    ]
+  },
+  {
+    name: "Flooring",
+    services: [
+      { name: "Vinyl Flooring", id: "vinyl" },
+      { name: "Wooden Flooring", id: "wooden" },
+      { name: "Carpet Tiles", id: "carpet" }
+    ]
+  },
+  {
+    name: "Roller Screens",
+    services: [
+      { name: "Blackout Roller", id: "blackout" },
+      { name: "Sunscreen Roller", id: "sunscreen" }
+    ]
+  },
+  {
+    name: "Aluminium Partitions",
+    services: [
+      { name: "Office Partition", id: "officepart" },
+      { name: "Glass Partition", id: "glasspart" }
+    ]
+  },
+  {
+    name: "Aluminium Windows",
+    services: [
+      { name: "Sliding Windows", id: "sliding" },
+      { name: "Casement Windows", id: "casement" }
+    ]
+  }
 ];

@@ -429,6 +429,62 @@ a {
   margin-top: 1rem;
 }
 
+/* EXPERIENCE BANNER */
+.experience-banner {
+  background: #f2f2f2;
+  padding: var(--spacing-lg) 0;
+  text-align: center;
+}
+.experience-banner h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* SERVICE LIST */
+.service-list {
+  max-width: 600px;
+  margin: auto;
+  text-align: left;
+}
+.service-category {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.category-title {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  position: relative;
+}
+.category-title::after {
+  content: '+';
+  position: absolute;
+  right: 1rem;
+  transition: transform 0.2s;
+}
+.category-title.open::after {
+  content: '-';
+}
+.sub-services {
+  list-style: none;
+  padding: 0 1rem 1rem 1.5rem;
+  display: none;
+}
+.sub-services.open {
+  display: block;
+}
+.sub-services li {
+  margin: 0.4rem 0;
+}
+.sub-services a {
+  display: block;
+  padding: 0.25rem 0;
+  color: var(--primary-color);
+}
+
 /* FOOTER */
 .footer {
   background: var(--dark-color);
@@ -454,5 +510,8 @@ a {
   }
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+  .experience-banner h3 {
+    font-size: 1.4rem;
   }
 }
