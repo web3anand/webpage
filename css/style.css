@@ -157,15 +157,20 @@ a {
   overflow: hidden;
 }
 
-.hero-wave {
-  display: block;
+.wave-divider {
+  line-height: 0;
   position: relative;
+  overflow: hidden;
+}
+
+.wave-divider svg {
+  display: block;
   width: 100%;
   height: 80px;
   margin-top: -1px;
 }
 
-.hero-wave path {
+.wave-divider svg path {
   fill: var(--bg-light);
   animation: waveFloat 8s ease-in-out infinite;
 }
