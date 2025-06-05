@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const carouselWrapper = document.getElementById("carousel-wrapper");
-  const serviceListEl = document.getElementById("service-list");
+  const categoryGrid = document.getElementById("category-grid");
 
   if (carouselWrapper) {
     projectImages.forEach(project => {
@@ -31,32 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  if (serviceListEl) {
-    serviceList.forEach(cat => {
-      const wrapper = document.createElement("div");
-      wrapper.className = "service-category";
-
-      const title = document.createElement("div");
-      title.className = "category-title";
-      title.textContent = cat.name;
-
-      const list = document.createElement("ul");
-      list.className = "sub-services";
-
-      cat.services.forEach(item => {
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="products.html#${item.id}">${item.name}</a>`;
-        list.appendChild(li);
-      });
-
-      title.addEventListener("click", () => {
-        list.classList.toggle("open");
-        title.classList.toggle("open");
-      });
-
-      wrapper.appendChild(title);
-      wrapper.appendChild(list);
-      serviceListEl.appendChild(wrapper);
+  if (categoryGrid) {
+    serviceCategories.forEach(category => {
+      const card = document.createElement("a");
+      card.href = category.link;
+      card.className = "category-card";
+      card.textContent = category.name;
+      categoryGrid.appendChild(card);
     });
   }
 });
