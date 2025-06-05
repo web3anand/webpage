@@ -7,19 +7,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 <header class="navbar">
   <div class="container nav-container">
-    <h1 class="logo">AV INTERIOR DECORATION</h1>
+    <a href="index.html" class="logo">AV INTERIOR DECORATION</a>
     <nav class="nav-links desktop-nav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
       <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <button class="menu-icon" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
     <div class="mobile-nav-card" id="mobileNav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
@@ -44,6 +45,11 @@
 <script>
 function toggleMenu() {
   document.getElementById('mobileNav').classList.toggle('active');
+  const btn = document.querySelector('.menu-icon');
+  if (btn) {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+  }
 }
 </script>
 </body>
