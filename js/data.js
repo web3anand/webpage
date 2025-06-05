@@ -10,9 +10,11 @@ const serviceList = [
   {
     name: "False Ceiling",
     services: [
-      { name: "POP Design", id: "pop" },
-      { name: "Gypsum Board", id: "gypsum" },
-      { name: "Grid Ceiling", id: "grid" }
+      { name: "Gypsum Ceiling", id: "gypsum" },
+      { name: "Grid Ceiling", id: "grid" },
+      { name: "PVC ceiling", id: "pvcc" },
+      { name: "Wooden Ceiling", id: "woodc" }
+
     ]
   },
   {
@@ -24,10 +26,14 @@ const serviceList = [
     ]
   },
   {
-    name: "Roller Screens",
+    name: "Blinds",
     services: [
-      { name: "Blackout Roller", id: "blackout" },
-      { name: "Sunscreen Roller", id: "sunscreen" }
+      { name: "Roller Blinds", id: "roller" },
+      { name: "Zebra Blinds", id: "zebra" },
+      { name: "Roman Blinds", id: "roman" },
+      { name: "PVC Blinds", id: "pvcb" },
+      { name: "Wooden Blinds", id: "woodb" },
+      { name: "Bambo Blinds", id: "bambo" }
     ]
   },
   {
@@ -40,8 +46,8 @@ const serviceList = [
   {
     name: "Aluminium Windows",
     services: [
-      { name: "Sliding Windows", id: "sliding" },
-      { name: "Casement Windows", id: "casement" }
+      { name: "Sliding Windows", id: "sliding1" },
+      { name: "Sliding windows", id: "sliding2" }
     ]
   }
 ];
