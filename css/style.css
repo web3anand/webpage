@@ -182,8 +182,34 @@ a {
   transition: background 0.3s, transform 0.3s;
 }
 
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
 .hero .btn {
   margin: 0 var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(180deg, var(--accent-color), #e6f780);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+  animation: fadeInUp 0.6s ease both;
+  animation-delay: 0.2s;
+}
+
+.hero .btn:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.hero .btn:hover {
+  background: var(--primary-color);
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 .btn:hover {
@@ -414,6 +440,10 @@ a {
   }
   .hero {
     padding: var(--spacing-md) 0;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
   }
   .contact-grid {
     grid-template-columns: 1fr;
