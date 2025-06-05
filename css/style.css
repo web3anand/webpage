@@ -480,6 +480,8 @@ a {
   margin: 0.4rem 0;
 }
 .sub-services a {
+  display: block;
+  padding: 0.25rem 0;
   color: var(--primary-color);
 }
 
