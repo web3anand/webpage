@@ -20,6 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     delay: 3000,
     disableOnInteraction: false,
   },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
   coverflowEffect: {
     rotate: 0,
     stretch: 0,
