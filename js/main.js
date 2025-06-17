@@ -1,34 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const carouselWrapper = document.getElementById("carousel-wrapper");
+  const carouselTrack = document.getElementById("carousel-track");
+  const carouselContainer = document.getElementById("carousel-container");
   const serviceListEl = document.getElementById("service-list");
 
-  if (carouselWrapper) {
+  if (carouselTrack && carouselContainer) {
     projectImages.forEach(project => {
       const slide = document.createElement("div");
-      slide.className = "swiper-slide";
+      slide.className = "carousel-item";
       slide.innerHTML = `<img src="${project.src}" alt="${project.alt}">`;
-      carouselWrapper.appendChild(slide);
+      carouselTrack.appendChild(slide);
     });
 
-    new Swiper(".mySwiper", {
-  effect: "coverflow",
-  grabCursor: true,
-  centeredSlides: true,
-  loop: true,
-  slidesPerView: "auto",
-  coverflowEffect: {
-    rotate: 0,
-    stretch: 0,
-    depth: 200,
-    modifier: 2,
-    slideShadows: false,
-  },
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  }
-});
+    // Duplicate items for seamless looping
+    const initialCount = carouselTrack.children.length;
+    for (let i = 0; i < initialCount; i++) {
+      const clone = carouselTrack.children[i].cloneNode(true);
+      carouselTrack.appendChild(clone);
+    }
 
+    let animationId;
+    const speed = 0.5; // pixels per frame
+
+    const step = () => {
+      carouselContainer.scrollLeft += speed;
+      if (carouselContainer.scrollLeft >= carouselTrack.scrollWidth / 2) {
+        carouselContainer.scrollLeft -= carouselTrack.scrollWidth / 2;
+      }
+      animationId = requestAnimationFrame(step);
+    };
+
+    const start = () => {
+      if (!animationId) animationId = requestAnimationFrame(step);
+    };
+
+    const stop = () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    };
+
+    carouselContainer.addEventListener("mouseenter", stop);
+    carouselContainer.addEventListener("touchstart", stop);
+    carouselContainer.addEventListener("mouseleave", start);
+    carouselContainer.addEventListener("touchend", start);
+    start();
   }
 
   if (serviceListEl) {
