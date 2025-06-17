@@ -1,42 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const carouselWrapper = document.getElementById("carousel-wrapper");
+  const carouselTrack = document.getElementById("carousel-track");
   const serviceListEl = document.getElementById("service-list");
 
-  if (carouselWrapper) {
+  if (carouselTrack) {
     projectImages.forEach(project => {
       const slide = document.createElement("div");
-      slide.className = "swiper-slide";
+      slide.className = "carousel-item";
       slide.innerHTML = `<img src="${project.src}" alt="${project.alt}">`;
-      carouselWrapper.appendChild(slide);
+      carouselTrack.appendChild(slide);
     });
 
-    new Swiper(".mySwiper", {
-  effect: "coverflow",
-  grabCursor: true,
-  centeredSlides: true,
-  loop: true,
-  slidesPerView: "auto",
-  autoplay: {
-    delay: 3000,
-    disableOnInteraction: false,
-  },
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  coverflowEffect: {
-    rotate: 0,
-    stretch: 0,
-    depth: 200,
-    modifier: 2,
-    slideShadows: false,
-  },
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  }
-});
-
+    const autoScroll = () => {
+      const card = carouselTrack.querySelector(".carousel-item");
+      if (!card) return;
+      const scrollAmount = card.offsetWidth + 24; // card width + gap
+      if (Math.ceil(carouselTrack.scrollLeft + scrollAmount) >= carouselTrack.scrollWidth - carouselTrack.clientWidth) {
+        carouselTrack.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        carouselTrack.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      }
+    };
+    setInterval(autoScroll, 3000);
   }
 
   if (serviceListEl) {
