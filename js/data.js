@@ -3,7 +3,15 @@ const projectImages = [
   { src: "assets/a2.jpg", alt: "Modern flooring work" },
   { src: "assets/a3.jpg", alt: "Roller screen fitting" },
   { src: "assets/a4.jpg", alt: "Aluminium partition office" },
-  { src: "assets/a5.jpg", alt: "Aluminium window fitting" }
+  { src: "assets/a5.jpg", alt: "Aluminium window fitting" },
+  { src: "assets/a6.jpg", alt: "False ceiling design" },
+  { src: "assets/a7.jpg", alt: "Modern flooring work" },
+  { src: "assets/a8.jpg", alt: "Roller screen fitting" },
+  { src: "assets/a9.jpg", alt: "Aluminium partition office" },
+  { src: "assets/a10.jpg", alt: "Aluminium window fitting" },
+  { src: "assets/a11.jpg", alt: "Roller screen fitting" },
+  { src: "assets/a12.jpg", alt: "Aluminium partition office" },
+  { src: "assets/a13.jpg", alt: "Aluminium window fitting" }
 ];
 
 const serviceList = [
