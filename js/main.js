@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     let frameId;
-    const speed = 4; // pixels per frame
+    const speed = 20; // pixels per frame
     const maxScroll = carouselTrack.scrollWidth / 2;
     const startContinuousScroll = () => {
       const step = () => {
