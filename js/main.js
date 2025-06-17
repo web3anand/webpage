@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
   centeredSlides: true,
   loop: true,
   slidesPerView: "auto",
+  autoplay: {
+    delay: 3000,
+    disableOnInteraction: false,
+  },
   coverflowEffect: {
     rotate: 0,
     stretch: 0,
