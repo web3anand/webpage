@@ -178,28 +178,6 @@ a {
   overflow: hidden;
 }
 
-.wave-divider {
-  line-height: 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.wave-divider svg {
-  display: block;
-  width: 100%;
-  height: 80px;
-  margin-top: -1px;
-}
-
-.wave-divider svg path {
-  fill: var(--bg-light);
-  animation: waveFloat 8s ease-in-out infinite;
-}
-
-@keyframes waveFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
 
 .hero::before {
   content: '';
