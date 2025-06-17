@@ -17,19 +17,29 @@ document.addEventListener("DOMContentLoaded", () => {
       const gap = parseFloat(style.columnGap || style.gap);
       return isNaN(gap) ? 24 : gap;
     };
+    const smoothScrollBy = (distance, duration = 600) => {
+      const start = carouselContainer.scrollLeft;
+      const startTime = performance.now();
+      const step = time => {
+        const progress = Math.min((time - startTime) / duration, 1);
+        carouselContainer.scrollLeft = start + distance * progress;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
     const scrollStep = () => {
       const card = carouselTrack.querySelector(".carousel-item");
       if (!card) return;
       const scrollAmount = card.offsetWidth + getGap();
       if (Math.ceil(carouselContainer.scrollLeft + scrollAmount) >=
           carouselTrack.scrollWidth - carouselContainer.clientWidth) {
-        carouselContainer.scrollTo({ left: 0, behavior: "smooth" });
+        smoothScrollBy(-carouselContainer.scrollLeft);
       } else {
-        carouselContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        smoothScrollBy(scrollAmount);
       }
     };
     const startAutoScroll = () => {
-      autoScrollInterval = setInterval(scrollStep, 3000);
+      autoScrollInterval = setInterval(scrollStep, 2000);
     };
     carouselContainer.addEventListener("mouseenter", () => clearInterval(autoScrollInterval));
     carouselContainer.addEventListener("touchstart", () => clearInterval(autoScrollInterval));
