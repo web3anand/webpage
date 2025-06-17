@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const carouselTrack = document.getElementById("carousel-track");
   const carouselContainer = document.getElementById("carousel-container");
+  const carouselSpinner = document.getElementById("carousel-spinner");
+  const carousel3d = document.getElementById("carousel-3d");
   const serviceListEl = document.getElementById("service-list");
 
   if (carouselTrack && carouselContainer) {
@@ -46,6 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
     carouselContainer.addEventListener("mouseleave", startAutoScroll);
     carouselContainer.addEventListener("touchend", startAutoScroll);
     startAutoScroll();
+  }
+
+  if (carouselSpinner && carousel3d) {
+    const radius = 350;
+    const step = 360 / projectImages.length;
+    projectImages.forEach((project, idx) => {
+      const img = document.createElement("img");
+      img.src = project.src;
+      img.alt = project.alt;
+      img.style.transform = `rotateY(${idx * step}deg) translateZ(${radius}px)`;
+      carouselSpinner.appendChild(img);
+    });
   }
 
   if (serviceListEl) {
