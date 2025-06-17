@@ -11,40 +11,33 @@ document.addEventListener("DOMContentLoaded", () => {
       carouselTrack.appendChild(slide);
     });
 
-    let autoScrollInterval;
-    const getGap = () => {
-      const style = getComputedStyle(carouselTrack);
-      const gap = parseFloat(style.columnGap || style.gap);
-      return isNaN(gap) ? 24 : gap;
-    };
-    const smoothScrollBy = (distance, duration = 500) => {
-      const start = carouselContainer.scrollLeft;
-      const startTime = performance.now();
-      const step = time => {
-        const progress = Math.min((time - startTime) / duration, 1);
-        carouselContainer.scrollLeft = start + distance * progress;
-        if (progress < 1) requestAnimationFrame(step);
+    // Duplicate slides for seamless looping
+    const slides = Array.from(carouselTrack.children);
+    slides.forEach(slide => {
+      const clone = slide.cloneNode(true);
+      clone.classList.add("clone");
+      carouselTrack.appendChild(clone);
+    });
+
+    let frameId;
+    const speed = 0.5; // pixels per frame
+    const maxScroll = carouselTrack.scrollWidth / 2;
+    const startContinuousScroll = () => {
+      const step = () => {
+        carouselContainer.scrollLeft += speed;
+        if (carouselContainer.scrollLeft >= maxScroll) {
+          carouselContainer.scrollLeft = 0;
+        }
+        frameId = requestAnimationFrame(step);
       };
-      requestAnimationFrame(step);
+      frameId = requestAnimationFrame(step);
     };
-    const scrollStep = () => {
-      const card = carouselTrack.querySelector(".carousel-item");
-      if (!card) return;
-      const scrollAmount = card.offsetWidth + getGap();
-      if (Math.ceil(carouselContainer.scrollLeft + scrollAmount) >=
-          carouselTrack.scrollWidth - carouselContainer.clientWidth) {
-        smoothScrollBy(-carouselContainer.scrollLeft);
-      } else {
-        smoothScrollBy(scrollAmount);
-      }
-    };
-    const startAutoScroll = () => {
-      autoScrollInterval = setInterval(scrollStep, 1500);
-    };
-    carouselContainer.addEventListener("mouseenter", () => clearInterval(autoScrollInterval));
-    carouselContainer.addEventListener("touchstart", () => clearInterval(autoScrollInterval));
-    carouselContainer.addEventListener("mouseleave", startAutoScroll);
-    carouselContainer.addEventListener("touchend", startAutoScroll);
+    const stopContinuousScroll = () => cancelAnimationFrame(frameId);
+
+    carouselContainer.addEventListener("mouseenter", stopContinuousScroll);
+    carouselContainer.addEventListener("touchstart", stopContinuousScroll);
+    carouselContainer.addEventListener("mouseleave", startContinuousScroll);
+    carouselContainer.addEventListener("touchend", startContinuousScroll);
 
     const enlargeImage = img => {
       document.querySelectorAll(".carousel-item img").forEach(el => el.classList.remove("enlarged"));
@@ -62,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const img = e.target.closest("img");
       if (img) enlargeImage(img);
     });
-    startAutoScroll();
+    startContinuousScroll();
   }
 
   if (serviceListEl) {

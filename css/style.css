@@ -302,11 +302,11 @@ a {
   gap: 1.5rem;
   padding: var(--spacing-lg) var(--spacing-md);
   width: max-content;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: none;
 }
 .carousel-item {
   flex: 0 0 auto;
-  scroll-snap-align: center;
+  scroll-snap-align: none;
 }
 .carousel-item img {
   width: 280px;
