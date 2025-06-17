@@ -11,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
 
@@ -66,15 +65,23 @@
 
   <!-- Carousel Section -->
   <section class="carousel-section">
-    <div class="container">
+      <svg class="wave wave-top" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,60 C150,30 300,0 450,30 C600,60 750,60 900,30 C1050,0 1200,30 1440,60 V0 H0 V60 Z" />
+      </svg>
       <h2 class="section-title">Our Project Highlights</h2>
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper" id="carousel-wrapper">
+      <p class="carousel-subtext">A glimpse of our recent work</p>
+      <div class="carousel-container" id="carousel-container">
+        <div class="carousel-track" id="carousel-track">
           <!-- Slides will be injected dynamically -->
         </div>
-        <div class="swiper-pagination"></div>
       </div>
-    </div>
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll to view gallery</span>
+        <span class="down-arrow">&#8595;</span>
+      </div>
+      <svg class="wave wave-bottom" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,0 C150,30 300,60 450,30 C600,0 750,0 900,30 C1050,60 1200,30 1440,0 V60 H0 V0 Z" />
+      </svg>
   </section>
 
   <!-- Categories Section -->
@@ -117,7 +124,6 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
   <script>

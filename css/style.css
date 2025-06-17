@@ -251,34 +251,86 @@ a {
 
 /* CAROUSEL */
 .carousel-section {
+  position: relative;
   padding: var(--spacing-lg) 0;
-  background: var(--bg-light);
-}
-.swiper {
+  background: #fff;
+  overflow: hidden;
   width: 100%;
-  max-width: 1000px;
-  margin: auto;
-  padding: var(--spacing-lg) 0;
-  perspective: 1200px;
 }
-.swiper-wrapper {
-  transform-style: preserve-3d;
+.wave {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  fill: #fff;
+  z-index: 1;
 }
-.swiper-slide {
-  width: 280px;
-  transition: transform 0.5s ease;
-  transform-origin: center;
-  transform-style: preserve-3d;
+.wave-top {
+  top: -1px;
+  transform: rotate(180deg);
+}
+.wave-bottom {
+  bottom: -1px;
+}
+.carousel-section .section-title,
+.carousel-section .carousel-subtext {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.carousel-subtext {
+  margin-top: -1rem;
+  margin-bottom: var(--spacing-md);
+  color: #555;
+}
+.carousel-container {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  position: relative;
+  padding-bottom: 2rem;
+  z-index: 2;
+}
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+.carousel-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.carousel-track {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 1.5rem;
+  padding: var(--spacing-lg) var(--spacing-md);
+  width: max-content;
+  scroll-snap-type: x mandatory;
 }
-.swiper-slide img {
-  width: 100%;
+.carousel-item {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+}
+.carousel-item img {
+  width: 280px;
   aspect-ratio: 4/3;
   object-fit: cover;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.scroll-hint {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 0.5rem;
+  position: relative;
+  z-index: 2;
+}
+.down-arrow {
+  display: block;
+  font-size: 1.5rem;
+  animation: bounce 1s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
 
 /* CATEGORIES */

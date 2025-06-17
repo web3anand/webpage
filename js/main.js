@@ -1,34 +1,51 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const carouselWrapper = document.getElementById("carousel-wrapper");
+  const carouselTrack = document.getElementById("carousel-track");
+  const carouselContainer = document.getElementById("carousel-container");
   const serviceListEl = document.getElementById("service-list");
 
-  if (carouselWrapper) {
+  if (carouselTrack && carouselContainer) {
     projectImages.forEach(project => {
       const slide = document.createElement("div");
-      slide.className = "swiper-slide";
+      slide.className = "carousel-item";
       slide.innerHTML = `<img src="${project.src}" alt="${project.alt}">`;
-      carouselWrapper.appendChild(slide);
+      carouselTrack.appendChild(slide);
     });
 
-    new Swiper(".mySwiper", {
-  effect: "coverflow",
-  grabCursor: true,
-  centeredSlides: true,
-  loop: true,
-  slidesPerView: "auto",
-  coverflowEffect: {
-    rotate: 0,
-    stretch: 0,
-    depth: 200,
-    modifier: 2,
-    slideShadows: false,
-  },
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  }
-});
-
+    let autoScrollInterval;
+    const getGap = () => {
+      const style = getComputedStyle(carouselTrack);
+      const gap = parseFloat(style.columnGap || style.gap);
+      return isNaN(gap) ? 24 : gap;
+    };
+    const smoothScrollBy = (distance, duration = 600) => {
+      const start = carouselContainer.scrollLeft;
+      const startTime = performance.now();
+      const step = time => {
+        const progress = Math.min((time - startTime) / duration, 1);
+        carouselContainer.scrollLeft = start + distance * progress;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const scrollStep = () => {
+      const card = carouselTrack.querySelector(".carousel-item");
+      if (!card) return;
+      const scrollAmount = card.offsetWidth + getGap();
+      if (Math.ceil(carouselContainer.scrollLeft + scrollAmount) >=
+          carouselTrack.scrollWidth - carouselContainer.clientWidth) {
+        smoothScrollBy(-carouselContainer.scrollLeft);
+      } else {
+        smoothScrollBy(scrollAmount);
+      }
+    };
+    const startAutoScroll = () => {
+      autoScrollInterval = setInterval(scrollStep, 2000);
+    };
+    carouselContainer.addEventListener("mouseenter", () => clearInterval(autoScrollInterval));
+    carouselContainer.addEventListener("touchstart", () => clearInterval(autoScrollInterval));
+    carouselContainer.addEventListener("mouseleave", startAutoScroll);
+    carouselContainer.addEventListener("touchend", startAutoScroll);
+    startAutoScroll();
   }
 
   if (serviceListEl) {
