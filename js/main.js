@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const gap = parseFloat(style.columnGap || style.gap);
       return isNaN(gap) ? 24 : gap;
     };
-    const smoothScrollBy = (distance, duration = 600) => {
+    const smoothScrollBy = (distance, duration = 500) => {
       const start = carouselContainer.scrollLeft;
       const startTime = performance.now();
       const step = time => {
@@ -39,12 +39,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
     const startAutoScroll = () => {
-      autoScrollInterval = setInterval(scrollStep, 2000);
+      autoScrollInterval = setInterval(scrollStep, 1500);
     };
     carouselContainer.addEventListener("mouseenter", () => clearInterval(autoScrollInterval));
     carouselContainer.addEventListener("touchstart", () => clearInterval(autoScrollInterval));
     carouselContainer.addEventListener("mouseleave", startAutoScroll);
     carouselContainer.addEventListener("touchend", startAutoScroll);
+
+    const enlargeImage = img => {
+      document.querySelectorAll(".carousel-item img").forEach(el => el.classList.remove("enlarged"));
+      img.classList.add("enlarged");
+      setTimeout(() => {
+        img.classList.remove("enlarged");
+      }, 3000);
+    };
+
+    carouselTrack.addEventListener("click", e => {
+      const img = e.target.closest("img");
+      if (img) enlargeImage(img);
+    });
+    carouselTrack.addEventListener("touchstart", e => {
+      const img = e.target.closest("img");
+      if (img) enlargeImage(img);
+    });
     startAutoScroll();
   }
 
