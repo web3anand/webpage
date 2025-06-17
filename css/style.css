@@ -289,6 +289,9 @@ a {
   position: relative;
   padding-bottom: 2rem;
   z-index: 2;
+  border-radius: 60px;
+  mask-image: linear-gradient(to right, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
 }
 .carousel-container::-webkit-scrollbar {
   display: none;
