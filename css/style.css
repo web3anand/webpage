@@ -506,10 +506,12 @@ a {
 
 /* EXPERIENCE BANNER */
 .experience-banner {
-  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+  background: linear-gradient(90deg, #ffffff, var(--primary-color));
   padding: var(--spacing-lg) 0;
   text-align: center;
   color: var(--dark-color);
+}
+
 }
 .experience-banner h3 {
   font-size: 1.8rem;
