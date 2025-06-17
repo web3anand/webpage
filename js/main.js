@@ -10,29 +10,33 @@ document.addEventListener("DOMContentLoaded", () => {
       carouselWrapper.appendChild(slide);
     });
 
-    new Swiper("#carousel-container", {
-      loop: true,
-      centeredSlides: true,
-      slidesPerView: "auto",
-      spaceBetween: 30,
-      grabCursor: true,
-      effect: "coverflow",
-      coverflowEffect: {
-        rotate: 0,
-        stretch: 0,
-        depth: 150,
-        modifier: 1.5,
-        slideShadows: false
-      },
-      autoplay: {
-        delay: 2500,
-        disableOnInteraction: false
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      }
-    });
+    new Swiper(".mySwiper", {
+  effect: "coverflow",
+  grabCursor: true,
+  centeredSlides: true,
+  loop: true,
+  slidesPerView: "auto",
+  autoplay: {
+    delay: 3000,
+    disableOnInteraction: false,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  coverflowEffect: {
+    rotate: 0,
+    stretch: 0,
+    depth: 200,
+    modifier: 2,
+    slideShadows: false,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  }
+});
+
   }
 
   if (serviceListEl) {
