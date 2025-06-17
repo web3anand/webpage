@@ -1,0 +1,8 @@
+{
+  "name": "webpage",
+  "version": "1.0.0",
+  "description": "AV Interior Decoration website",
+  "scripts": {
+    "test": "echo \"No tests specified\""
+  }
+}
