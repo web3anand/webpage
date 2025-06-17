@@ -72,19 +72,35 @@ a {
 
 /* Desktop styles */
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   font-size: 1.5rem;
   font-weight: bold;
   font-family: 'DM Serif Text', serif;
   letter-spacing: 1px;
   color: var(--primary-color);
+  text-decoration: none;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+  border-radius: 6px; /* Optional */
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
   .logo {
-    font-size: 1rem; /* 👈 smaller font on mobile */
+    font-size: 1rem;
+    gap: 0.4rem;
+  }
+
+  .logo img {
+    height: 28px;
   }
 }
+
 
 .menu-icon {
   display: none;
