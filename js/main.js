@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const carouselTrack = document.getElementById("carousel-track");
+  const carouselContainer = document.getElementById("carousel-container");
   const serviceListEl = document.getElementById("service-list");
 
-  if (carouselTrack) {
+  if (carouselTrack && carouselContainer) {
     projectImages.forEach(project => {
       const slide = document.createElement("div");
       slide.className = "carousel-item";
@@ -10,17 +11,31 @@ document.addEventListener("DOMContentLoaded", () => {
       carouselTrack.appendChild(slide);
     });
 
-    const autoScroll = () => {
+    let autoScrollInterval;
+    const getGap = () => {
+      const style = getComputedStyle(carouselTrack);
+      const gap = parseFloat(style.columnGap || style.gap);
+      return isNaN(gap) ? 24 : gap;
+    };
+    const scrollStep = () => {
       const card = carouselTrack.querySelector(".carousel-item");
       if (!card) return;
-      const scrollAmount = card.offsetWidth + 24; // card width + gap
-      if (Math.ceil(carouselTrack.scrollLeft + scrollAmount) >= carouselTrack.scrollWidth - carouselTrack.clientWidth) {
-        carouselTrack.scrollTo({ left: 0, behavior: "smooth" });
+      const scrollAmount = card.offsetWidth + getGap();
+      if (Math.ceil(carouselContainer.scrollLeft + scrollAmount) >=
+          carouselTrack.scrollWidth - carouselContainer.clientWidth) {
+        carouselContainer.scrollTo({ left: 0, behavior: "smooth" });
       } else {
-        carouselTrack.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        carouselContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
       }
     };
-    setInterval(autoScroll, 3000);
+    const startAutoScroll = () => {
+      autoScrollInterval = setInterval(scrollStep, 3000);
+    };
+    carouselContainer.addEventListener("mouseenter", () => clearInterval(autoScrollInterval));
+    carouselContainer.addEventListener("touchstart", () => clearInterval(autoScrollInterval));
+    carouselContainer.addEventListener("mouseleave", startAutoScroll);
+    carouselContainer.addEventListener("touchend", startAutoScroll);
+    startAutoScroll();
   }
 
   if (serviceListEl) {
