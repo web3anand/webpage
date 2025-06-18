@@ -182,7 +182,7 @@ a {
   position: relative;
   background: url('../assets/hero.jpg') center/cover no-repeat;
   color: #fff;
-  padding: var(--spacing-lg) 0;
+  padding: 0 0 var(--spacing-lg);
   text-align: center;
   overflow: hidden;
 }
@@ -677,7 +677,7 @@ a {
   }
   .hero {
     background: none;
-    padding: var(--spacing-md) 0;
+    padding: 0 0 var(--spacing-md);
   }
   .hero-carousel {
     display: block;
