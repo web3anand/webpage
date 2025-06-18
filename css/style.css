@@ -182,6 +182,7 @@ a {
   position: relative;
   background: url('../assets/hero.jpg') center/cover no-repeat;
   color: #fff;
+  min-height: 65vh;
   padding: 0 0 var(--spacing-lg);
   text-align: center;
   overflow: hidden;
