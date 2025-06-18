@@ -579,7 +579,6 @@ a {
   color: var(--dark-color);
 }
 
-}
 .experience-banner h3 {
   font-size: 1.8rem;
   font-weight: 600;
@@ -660,7 +659,7 @@ a {
 /* FOOTER */
 .footer {
   background: var(--dark-color);
-  color: #ccc;
+  color: #272525;
   text-align: center;
   padding: var(--spacing-sm) 0;
 }
