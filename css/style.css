@@ -180,15 +180,15 @@ a {
 /* HERO */
 .hero {
   position: relative;
-  background: url('../assets/hero.jpg') center/cover no-repeat;
   color: #fff;
   padding: 0 0 var(--spacing-lg);
+  background: #000;
   text-align: center;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 55px);
+  min-height: 100vh;
   margin-top: 0;
 }
 
@@ -213,30 +213,39 @@ a {
   padding: calc(var(--spacing-lg) * 1.2) var(--spacing-lg);
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
   border-radius: 20px;
   max-width: 600px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
 .hero h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  max-width: 18ch;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.2;
   animation: fadeInUp 0.6s ease both;
 }
 .hero p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
+  max-width: 32ch;
+  margin-left: auto;
+  margin-right: auto;
   animation: fadeInUp 0.6s ease both;
   animation-delay: 0.1s;
 }
 .btn {
   background: var(--accent-color);
   color: var(--dark-color);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: 5px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   font-weight: bold;
   display: inline-block;
+  min-height: 44px;
   transition: background 0.3s, transform 0.3s;
 }
 
@@ -248,9 +257,13 @@ a {
 }
 
 .hero-carousel {
-  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   width: 100%;
+  height: 100%;
   overflow: hidden;
+  display: block;
 }
 .hero-blob {
   display: none;
@@ -277,19 +290,18 @@ a {
 }
 .hero-carousel .slides {
   display: flex;
+  height: 100%;
   transition: transform 0.5s ease-in-out;
 }
 .hero-carousel img {
   flex: 0 0 100%;
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
 }
 
 .hero .btn {
   margin: 0 var(--spacing-sm);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(221, 235, 28, 0.651);
   background:  #f3f3f3;
   transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
@@ -673,7 +685,7 @@ a {
 /* RESPONSIVE CONTENT */
 @media (max-width: 768px) {
   .hero h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin-bottom: 0.5rem;
   }
   .hero p {
@@ -689,7 +701,7 @@ a {
   }
   .hero-content {
     margin: var(--spacing-md) auto;
-    padding: var(--spacing-md);
+    padding: 1rem;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 16px;
@@ -704,6 +716,9 @@ a {
   .hero-actions {
     flex-direction: column;
     align-items: center;
+  }
+  .hero-actions .btn + .btn {
+    margin-top: 1rem;
   }
   .contact-grid {
     grid-template-columns: 1fr;
