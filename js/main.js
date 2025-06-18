@@ -5,36 +5,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const heroCarousel = document.getElementById("hero-carousel");
 
   if (heroCarousel) {
-    const slidesContainer = heroCarousel.querySelector(".slides");
     const slides = heroCarousel.querySelectorAll("img");
     let heroIndex = 0;
     const heroInterval = 4000;
 
-    const updateHeroSlide = () => {
-      slidesContainer.style.transform = `translateX(-${heroIndex * 100}%)`;
-    };
+    slides[heroIndex].classList.add("active");
 
     const nextHeroSlide = () => {
+      slides[heroIndex].classList.remove("active");
       heroIndex = (heroIndex + 1) % slides.length;
-      updateHeroSlide();
+      slides[heroIndex].classList.add("active");
     };
 
-    let heroTimer = setInterval(nextHeroSlide, heroInterval);
-    let startX = 0;
-    heroCarousel.addEventListener("touchstart", e => {
-      startX = e.touches[0].clientX;
-      clearInterval(heroTimer);
-    });
-    heroCarousel.addEventListener("touchend", e => {
-      const diff = e.changedTouches[0].clientX - startX;
-      if (diff > 50) {
-        heroIndex = (heroIndex - 1 + slides.length) % slides.length;
-      } else if (diff < -50) {
-        heroIndex = (heroIndex + 1) % slides.length;
-      }
-      updateHeroSlide();
-      heroTimer = setInterval(nextHeroSlide, heroInterval);
-    });
+    setInterval(nextHeroSlide, heroInterval);
   }
 
   if (carouselTrack && carouselContainer) {

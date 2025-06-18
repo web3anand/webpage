@@ -180,11 +180,12 @@ a {
 /* HERO */
 .hero {
   position: relative;
-  background: url('../assets/hero.jpg') center/cover no-repeat;
+  background: #000;
   color: #fff;
   padding: 0 0 var(--spacing-lg);
   text-align: center;
   overflow: hidden;
+  min-height: 60vh;
 }
 
 
@@ -192,8 +193,8 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(3px);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
   z-index: 0;
 }
 
@@ -231,10 +232,24 @@ a {
   gap: var(--spacing-sm);
 }
 
+.hero-content {
+  margin: var(--spacing-lg) auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  max-width: 80%;
+  position: relative;
+  z-index: 1;
+}
+
 .hero-carousel {
-  display: none;
-  width: 100%;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  display: block;
+  z-index: -1;
+  pointer-events: none;
 }
 .hero-blob {
   display: none;
@@ -260,16 +275,21 @@ a {
   z-index: 1;
 }
 .hero-carousel .slides {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 .hero-carousel img {
-  flex: 0 0 100%;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
-  /* Apply a subtle blue tint over each slide image */
-  filter: brightness(0.7) sepia(1) hue-rotate(190deg) saturate(1.5);
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.hero-carousel img.active {
+  opacity: 1;
 }
 
 .hero .btn {
@@ -667,19 +687,7 @@ a {
     margin-bottom: 1.2rem;
   }
   .hero {
-    background: none;
     padding: 0 0 var(--spacing-md);
-  }
-  .hero-carousel {
-    display: block;
-  }
-  .hero-content {
-    margin: var(--spacing-md) auto;
-    padding: var(--spacing-md);
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    max-width: 90%;
   }
   .hero-blob {
     display: block;
