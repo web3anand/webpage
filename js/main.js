@@ -2,6 +2,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const carouselTrack = document.getElementById("carousel-track");
   const carouselContainer = document.getElementById("carousel-container");
   const serviceListEl = document.getElementById("service-list");
+  const heroCarousel = document.getElementById("hero-carousel");
+
+  if (heroCarousel) {
+    const slidesContainer = heroCarousel.querySelector(".slides");
+    const slides = heroCarousel.querySelectorAll("img");
+    let heroIndex = 0;
+    const heroInterval = 4000;
+
+    const updateHeroSlide = () => {
+      slidesContainer.style.transform = `translateX(-${heroIndex * 100}%)`;
+    };
+
+    const nextHeroSlide = () => {
+      heroIndex = (heroIndex + 1) % slides.length;
+      updateHeroSlide();
+    };
+
+    let heroTimer = setInterval(nextHeroSlide, heroInterval);
+    let startX = 0;
+    heroCarousel.addEventListener("touchstart", e => {
+      startX = e.touches[0].clientX;
+      clearInterval(heroTimer);
+    });
+    heroCarousel.addEventListener("touchend", e => {
+      const diff = e.changedTouches[0].clientX - startX;
+      if (diff > 50) {
+        heroIndex = (heroIndex - 1 + slides.length) % slides.length;
+      } else if (diff < -50) {
+        heroIndex = (heroIndex + 1) % slides.length;
+      }
+      updateHeroSlide();
+      heroTimer = setInterval(nextHeroSlide, heroInterval);
+    });
+  }
 
   if (carouselTrack && carouselContainer) {
     projectImages.forEach(project => {
