@@ -270,6 +270,7 @@ a {
   z-index: 1;
 }
 .hero-carousel .slides {
+  filter: blur(6px);
   display: flex;
   transition: transform 0.5s ease-in-out;
 }
