@@ -433,12 +433,6 @@ a {
 .services-page {
   padding: var(--spacing-lg) 0;
 }
-.service-groups {
-  background: #fff;
-  padding: var(--spacing-md);
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-}
 .service-group {
   background: #fff;
   padding: var(--spacing-md);
