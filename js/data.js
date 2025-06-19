@@ -18,44 +18,48 @@ const serviceList = [
   {
     name: "False Ceiling",
     services: [
-      { name: "Gypsum Ceiling", id: "gypsum" },
-      { name: "Grid Ceiling", id: "grid" },
-      { name: "PVC ceiling", id: "pvcc" },
-      { name: "Wooden Ceiling", id: "woodc" }
+      { name: "Gypsum Ceiling", id: "gypsum", img: "assets/a6.jpg" },
+      { name: "Grid Ceiling", id: "grid", img: "assets/a3.jpg" },
+      { name: "PVC Ceiling", id: "pvc", img: "assets/a2.jpg" },
+      { name: "Wooden Ceiling", id: "woodc", img: "assets/a1.jpg" },
+      { name: "POP Ceiling", id: "pop", img: "assets/a4.jpg" }
 
     ]
   },
   {
     name: "Flooring",
     services: [
-      { name: "Vinyl Flooring", id: "vinyl" },
-      { name: "Wooden Flooring", id: "wooden" },
-      { name: "Carpet Tiles", id: "carpet" }
+      { name: "Vinyl Flooring", id: "vinyl", img: "assets/a7.jpg" },
+      { name: "Wooden Flooring", id: "wooden", img: "assets/a8.jpg" },
+      { name: "Tile Flooring", id: "tile", img: "assets/a9.jpg" },
+      { name: "Carpet Tiles", id: "carpet", img: "assets/a10.jpg" }
     ]
   },
   {
     name: "Blinds",
     services: [
-      { name: "Roller Blinds", id: "roller" },
-      { name: "Zebra Blinds", id: "zebra" },
-      { name: "Roman Blinds", id: "roman" },
-      { name: "PVC Blinds", id: "pvcb" },
-      { name: "Wooden Blinds", id: "woodb" },
-      { name: "Bambo Blinds", id: "bambo" }
+      { name: "Roller Blinds", id: "roller", img: "assets/a8.jpg" },
+      { name: "Zebra Blinds", id: "zebra", img: "assets/a11.jpg" },
+      { name: "Roman Blinds", id: "roman", img: "assets/a12.jpg" },
+      { name: "PVC Blinds", id: "pvcb", img: "assets/a13.jpg" },
+      { name: "Wooden Blinds", id: "woodb", img: "assets/a5.jpg" },
+      { name: "Bamboo Blinds", id: "bambo", img: "assets/a7.jpg" }
     ]
   },
   {
     name: "Aluminium Partitions",
     services: [
-      { name: "Office Partition", id: "officepart" },
-      { name: "Glass Partition", id: "glasspart" }
+      { name: "Office Partition", id: "officepart", img: "assets/a9.jpg" },
+      { name: "Glass Partition", id: "glasspart", img: "assets/a10.jpg" },
+      { name: "Cubicle Partition", id: "cubicle", img: "assets/a11.jpg" }
     ]
   },
   {
     name: "Aluminium Windows",
     services: [
-      { name: "Sliding Windows", id: "sliding1" },
-      { name: "Sliding windows", id: "sliding2" }
+      { name: "Sliding Windows", id: "sliding1", img: "assets/a5.jpg" },
+      { name: "Casement Windows", id: "casement", img: "assets/a4.jpg" },
+      { name: "Fixed Windows", id: "fixed", img: "assets/a6.jpg" }
     ]
   }
 ];
