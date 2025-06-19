@@ -106,11 +106,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cat.services.forEach(item => {
         const li = document.createElement("li");
+        li.className = "sub-card";
         li.innerHTML = `<a href="products.html#${item.id}">${item.name}</a>`;
         list.appendChild(li);
       });
 
       title.addEventListener("click", () => {
+        document.querySelectorAll(".service-category .sub-services").forEach(el => {
+          if (el !== list) el.classList.remove("open");
+        });
+        document.querySelectorAll(".service-category .category-title").forEach(el => {
+          if (el !== title) el.classList.remove("open");
+        });
         list.classList.toggle("open");
         title.classList.toggle("open");
       });
