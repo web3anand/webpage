@@ -1,10 +1,10 @@
 /* RESET & BASE */
 :root {
-  --primary-color: #91ff00da;
-  --accent-color: #c7f548c4;
-  --dark-color: #111;
-  --text-color: #222;
-  --bg-light: #f8f8f8;
+  --primary-color: #a67c52;
+  --accent-color: #dbc8a0;
+  --dark-color: #2e2b29;
+  --text-color: #2b2a28;
+  --bg-light: #f8f6f1;
   --spacing-sm: 0.75rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 3rem;
@@ -80,7 +80,7 @@ a {
   font-weight: bold;
   font-family: 'DM Serif Text', serif;
   letter-spacing: 1px;
-  color: #dad0b9;
+  color: var(--accent-color);
   text-decoration: none;
 }
 
@@ -182,7 +182,7 @@ a {
 .hero {
   position: relative;
   background: url('../assets/hero.jpg') center/cover no-repeat;
-  color: #1b0f0f;
+  color: var(--dark-color);
   min-height: 65vh;
   display: flex;
   flex-direction: column;
@@ -418,14 +418,14 @@ a {
 }
 .category-card {
   background: #fff;
-  border: 2px solid #ffb700;
+  border: 2px solid var(--primary-color);
   padding: 1rem;
   border-radius: 8px;
   font-weight: 600;
   transition: 0.3s;
 }
 .category-card:hover {
-  background: #ffb700;
+  background: var(--primary-color);
   color: #fff;
 }
 
@@ -648,7 +648,11 @@ a {
 }
 .sub-services li {
   background: #fff;
+
+  border: 1px solid var(--accent-color);
+=======
   border: 1px solid #e0e0e0;
+
   border-radius: 6px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   padding: 0.5rem;
@@ -703,7 +707,7 @@ a {
 /* FOOTER */
 .footer {
   background: var(--dark-color);
-  color: #272525;
+  color: var(--accent-color);
   text-align: center;
   padding: var(--spacing-sm) 0;
 }
@@ -734,8 +738,8 @@ a {
   backdrop-filter: blur(16px);
   border-radius: 16px;
   max-width: 90%;
-  box-shadow: 0 6px 30px rgba(255, 174, 0, 0.15); /* warm glow */
-  color: #131212;
+  box-shadow: 0 6px 30px rgba(219, 200, 160, 0.2); /* warm glow */
+  color: var(--dark-color);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
   .hero-blob {
