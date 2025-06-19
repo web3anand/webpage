@@ -647,6 +647,17 @@ a {
   font-weight: 500;
   text-decoration: none;
 }
+.sub-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+}
+.sub-card span {
+  display: block;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
 
 
 /* MILESTONES */
