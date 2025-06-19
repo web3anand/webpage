@@ -183,6 +183,9 @@ a {
   background: url('../assets/hero.jpg') center/cover no-repeat;
   color: #fff;
   min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   padding: 0 0 var(--spacing-lg);
   text-align: center;
   overflow: hidden;
