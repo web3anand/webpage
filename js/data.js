@@ -27,6 +27,17 @@ const serviceList = [
     ]
   },
   {
+    name: "MosquitoNet Windows",
+    services:[
+      { name: "0.75 inch Section window ", id: "gypsum", img: "assets/a6.jpg" },
+      { name: "1 inch Section", id: "grid", img: "assets/a3.jpg" },
+      { name: "Sliding window", id: "pvc", img: "assets/a2.jpg" },
+      { name: "Wooden Ceiling", id: "woodc", img: "assets/a1.jpg" },
+      { name: "POP Ceiling", id: "pop", img: "assets/a4.jpg" }
+
+    ]
+  },
+  {
     name: "Flooring",
     services: [
       { name: "Vinyl Flooring", id: "vinyl", img: "assets/a7.jpg" },
