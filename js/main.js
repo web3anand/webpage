@@ -106,11 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cat.services.forEach(item => {
         const li = document.createElement("li");
-        li.className = "sub-card";
+        li.className = "service-item";
         li.innerHTML = `
           <a href="products.html#${item.id}">
+            <span class="service-title">${item.name}</span>
             <img src="${item.img}" alt="${item.name}" />
-            <span>${item.name}</span>
           </a>`;
         list.appendChild(li);
       });
