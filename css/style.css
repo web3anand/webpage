@@ -802,11 +802,13 @@ a {
     text-align: center;
     transition: transform 0.2s, color 0.3s;
   }
-  .bottom-nav a:hover {
-    transform: translateY(-4px) scale(1.1);
+  @media (hover: hover) {
+    .bottom-nav a:hover {
+      transform: translateY(-4px) scale(1.1);
+    }
   }
   .bottom-nav a:active {
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   .bottom-nav a.active {
     color: var(--primary-color);
@@ -820,9 +822,11 @@ a {
     justify-content: center;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.35);
+    transition: transform 0.2s;
   }
   .bottom-nav a.active i {
     background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
   }
   .bottom-nav .nav-label {
     font-size: 0.65rem;
