@@ -18,23 +18,23 @@ const serviceList = [
     {
     name: "Cupboards",
     services: [
-      { name: "Modular Kitchen", id: "modular", img: "assets/gypsum.jpg" },
-      { name: "TV Showcase", id: "TV", img: "assets/grid.jpg" },
-      { name: "UPVC Cupboard", id: "UPVC", img: "assets/pvcceiling.jpg" },
-      { name: "Aluminium Cupboard", id: "aluCup", img: "assets/thermocol.jpg" },
-      { name: "PVC Cupboard", id: "PVC", img: "assets/thermocol.jpg" },
-      { name: "plywood Cupboard", id: "PlyCup", img: "assets/thermocol.jpg" },
-      { name: "MDF Cupboard", id: "MDF", img: "assets/thermocol.jpg" },
+      { name: "Modular Kitchen", id: "modular", img: "assets/modular.jpg" },
+      { name: "TV Showcase", id: "TV", img: "assets/tv.jpg" },
+      { name: "UPVC Cupboard", id: "UPVC", img: "assets/upvccupboard.jpg" },
+      { name: "Aluminium Cupboard", id: "aluCup", img: "assets/aluminiumcupboard.jpg" },
+      { name: "PVC Cupboard", id: "PVC", img: "assets/pvccupboard.jpg" },
+      { name: "plywood Cupboard", id: "PlyCup", img: "assets/plywood.jpg" },
+      { name: "MDF Cupboard", id: "MDF", img: "assets/mdf.jpg" },
     ]
   },
     {
     name: "Glass Works",
     services: [
-      { name: "Aluminium Balcony railing", id: "abr", img: "assets/a8.jpg" },
-      { name: "12MM Partitions", id: "12mm", img: "assets/a11.jpg" },
-      { name: "Toughen Glass Partitions", id: "toughen", img: "assets/a12.jpg" },
-      { name: "Stainless Steel Balcony railing", id: "ssbr", img: "assets/a13.jpg" },
-      { name: "Stairs Glass railing", id: "ssr", img: "assets/a5.jpg" }
+      { name: "Aluminium Balcony railing", id: "abr", img: "assets/a6.jpg" },
+      { name: "12MM Partitions", id: "12mm", img: "assets/12mm.jpg" },
+      { name: "Toughen Glass Partitions", id: "toughen", img: "assets/toughen.jpg" },
+      { name: "Stainless Steel Balcony railing", id: "ssbr", img: "assets/ss.jpg" },
+      { name: "Stairs Glass railing", id: "ssr", img: "assets/ssg.jpg" }
     ]
   },
     {
@@ -81,20 +81,20 @@ const serviceList = [
   {
     name: "Aluminium works",
     services: [
-      { name: "Aluminium Partition", id: "alupart", img: "assets/a9.jpg" },
-      { name: "Glass Partition", id: "glasspart", img: "assets/a10.jpg" },
-      { name: "Powder Coated Aluminium Partition", id: "powder", img: "assets/a11.jpg" },
-      { name: "Sliding Windows", id: "SW", img: "assets/a9.jpg" },
-      { name: "Open Windows", id: "OW", img: "assets/a9.jpg" }  
+      { name: "Aluminium Partition", id: "alupart", img: "assets/a2.jpg" },
+      { name: "Glass Partition", id: "glasspart", img: "assets/glassp.jpg" },
+      { name: "Powder Coated Aluminium Partition", id: "powder", img: "assets/a1.jpg" },
+      { name: "Sliding Windows", id: "SW", img: "assets/windows.jpg" },
+      { name: "Open Windows", id: "OW", img: "assets/aopen.jpg" }  
     ]
   },
   {
     name: "UPVC Work",
     services: [
-      { name: "UPVC Open window", id: "UPVCopen", img: "assets/a5.jpg" },
-      { name: "UPVC sliding window", id: "UPVCS", img: "assets/a4.jpg" },
-      { name: "Fixed", id: "fixed", img: "assets/a6.jpg" },
-      { name: "UPVC Partition", id: "UPVCpart", img: "assets/a9.jpg" }
+      { name: "UPVC Open window", id: "UPVCopen", img: "assets/upvcopen.jpg" },
+      { name: "UPVC sliding window", id: "UPVCS", img: "assets/upvcsliding.jpg" },
+      { name: "Fixed", id: "fixed", img: "assets/upvcfixed.jpg" },
+      { name: "UPVC Partition", id: "UPVCpart", img: "assets/upvcp.jpg" }
     ]
   }
 ];
