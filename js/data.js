@@ -18,7 +18,7 @@ const serviceList = [
   {
     name: "False Ceiling",
     services: [
-      { name: "Gypsum Ceiling", id: "gypsum", img: "assets/gpysum.jpg" },
+      { name: "Gypsum Ceiling", id: "gypsum", img: "assets/gypsum.jpg" },
       { name: "Grid Ceiling", id: "grid", img: "assets/grid.jpg" },
       { name: "PVC Ceiling", id: "pvc", img: "assets/pvcceiling.jpg" },
       { name: "Thermocol Ceiling", id: "Thermo", img: "assets/thermocol.jpg" },
