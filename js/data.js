@@ -29,9 +29,9 @@ const serviceList = [
   {
     name: "MosquitoNet Windows",
     services:[
-      { name: "0.75 inch Section window ", id: "gypsum", img: "assets/a6.jpg" },
-      { name: "1 inch Section", id: "grid", img: "assets/a3.jpg" },
-      { name: "Sliding window", id: "pvc", img: "assets/a2.jpg" },
+      { name: "0.75 inch Section window ", id: "0.75", img: "assets/a6.jpg" },
+      { name: "1 inch Section", id: "1", img: "assets/a3.jpg" },
+      { name: "Sliding window", id: "sliding", img: "assets/a2.jpg" },
       { name: "Wooden Ceiling", id: "woodc", img: "assets/a1.jpg" },
       { name: "POP Ceiling", id: "pop", img: "assets/a4.jpg" }
 
@@ -40,10 +40,9 @@ const serviceList = [
   {
     name: "Flooring",
     services: [
-      { name: "Vinyl Flooring", id: "vinyl", img: "assets/a7.jpg" },
-      { name: "Wooden Flooring", id: "wooden", img: "assets/a8.jpg" },
-      { name: "Tile Flooring", id: "tile", img: "assets/a9.jpg" },
-      { name: "Carpet Tiles", id: "carpet", img: "assets/a10.jpg" }
+      { name: "Vinyl Flooring", id: "vinyl", img: "assets/vinyl flooring.jpg" },
+      { name: "Wooden Flooring", id: "wooden", img: "assets/woodenflooring.jpg" },
+      { name: "Carpet ", id: "carpet", img: "assests/carpet.jpg" }
     ]
   },
   {
