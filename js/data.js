@@ -42,7 +42,7 @@ const serviceList = [
     services: [
       { name: "Vinyl Flooring", id: "vinyl", img: "assets/vinyl flooring.jpg" },
       { name: "Wooden Flooring", id: "wooden", img: "assets/woodenflooring.jpg" },
-      { name: "Carpet ", id: "carpet", img: "assests/carpet.jpg" }
+      { name: "Carpet ", id: "carpet", img: "assets/carpet.jpg" }
     ]
   },
   {
