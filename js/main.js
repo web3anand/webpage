@@ -117,13 +117,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       title.addEventListener("click", () => {
         document.querySelectorAll(".service-category .sub-services").forEach(el => {
-          if (el !== list) el.classList.remove("open");
+          if (el !== list) {
+            el.classList.remove("open");
+            el.style.maxHeight = null;
+          }
         });
         document.querySelectorAll(".service-category .category-title").forEach(el => {
           if (el !== title) el.classList.remove("open");
         });
-        list.classList.toggle("open");
+        const isOpen = list.classList.toggle("open");
         title.classList.toggle("open");
+        if (isOpen) {
+          list.style.maxHeight = list.scrollHeight + "px";
+        } else {
+          list.style.maxHeight = null;
+        }
       });
 
       wrapper.appendChild(title);
