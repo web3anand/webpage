@@ -59,6 +59,10 @@ a {
 }
 
 .nav-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 var(--spacing-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
