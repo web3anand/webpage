@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p+1rB7jGaxfjBrC1K2TNEB5vW7HQwZ0pniS3pSDOMkMt2rt7NmBGG99nmCaTKty+O3O5RAwOBLRp5MNJi9d1wA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -26,16 +27,6 @@
       <a href="services.html">Services</a>
       <a href="contact.html">Contact</a>
     </nav>
-
-    <!-- Hamburger icon -->
-    <button class="menu-icon" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
-
-    <!-- Mobile Floating Dropdown -->
-    <div class="mobile-nav-card" id="mobileNav">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
-    </div>
   </div>
 </header>
 
@@ -126,17 +117,14 @@
       <p>&copy; 2025 AV Interior Decoration. All rights reserved.</p>
     </div>
   </footer>
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="index.html"><i class="fa-solid fa-house"></i><span>Home</span></a>
+    <a href="services.html"><i class="fa-solid fa-layer-group"></i><span>Services</span></a>
+    <a href="contact.html"><i class="fa-solid fa-envelope"></i><span>Contact</span></a>
+  </nav>
+
 
   <!-- Scripts -->
-  <script>
-  function toggleMenu() {
-    document.getElementById("mobileNav").classList.toggle("active");
-    const btn = document.querySelector('.menu-icon');
-    if (btn) {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !expanded);
-    }
-  }
-</script>
 </body>
 </html>
