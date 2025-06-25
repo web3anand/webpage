@@ -15,6 +15,41 @@ const projectImages = [
 ];
 
 const serviceList = [
+    {
+    name: "Cupboards",
+    services: [
+      { name: "Modular Kitchen", id: "modular", img: "assets/gypsum.jpg" },
+      { name: "TV Showcase", id: "TV", img: "assets/grid.jpg" },
+      { name: "UPVC Cupboard", id: "UPVC", img: "assets/pvcceiling.jpg" },
+      { name: "Aluminium Cupboard", id: "aluCup", img: "assets/thermocol.jpg" },
+      { name: "PVC Cupboard", id: "PVC", img: "assets/thermocol.jpg" },
+      { name: "plywood Cupboard", id: "PlyCup", img: "assets/thermocol.jpg" },
+      { name: "MDF Cupboard", id: "MDF", img: "assets/thermocol.jpg" },
+    ]
+  },
+    {
+    name: "Glass Works",
+    services: [
+      { name: "Aluminium Balcony railing", id: "abr", img: "assets/a8.jpg" },
+      { name: "12MM Partitions", id: "12mm", img: "assets/a11.jpg" },
+      { name: "Toughen Glass Partitions", id: "toughen", img: "assets/a12.jpg" },
+      { name: "Stainless Steel Balcony railing", id: "ssbr", img: "assets/a13.jpg" },
+      { name: "Stairs Glass railing", id: "ssr", img: "assets/a5.jpg" }
+    ]
+  },
+    {
+    name: "Blinds",
+    services: [
+      { name: "Roller Blinds", id: "roller", img: "assets/roller.jpg" },
+      { name: "Zebra Blinds", id: "zebra", img: "assets/zebra.jpg" },
+      { name: "Roman Blinds", id: "roman", img: "assets/roman.jpg" },
+      { name: "PVC Blinds", id: "pvcb", img: "assets/pvcblinds.jpg" },
+      { name: "Wooden Blinds", id: "woodb", img: "assets/wooden.jpg" },
+      { name: "Curtains", id: "curtain", img: "assets/curtains.jpg" },
+      { name: "Venetian Blinds", id: "vb", img: "assets/venetian.jpg" },
+      { name: "Bamboo Blinds", id: "bambo", img: "assets/bamboo.jpg" }
+    ]
+  },
   {
     name: "False Ceiling",
     services: [
@@ -27,11 +62,11 @@ const serviceList = [
   {
     name: "MosquitoNet",
     services:[
-      { name: "0.75 inch Section window ", id: "0.75", img: "assets/a6.jpg" },
-      { name: "1 inch Section Window", id: "1", img: "assets/a3.jpg" },
+      { name: "Open window ", id: "open", img: "assets/a6.jpg" },
+      { name: "Aluminium Sliding PLeated", id: "aluminium", img: "assets/a3.jpg" },
       { name: "Sliding window", id: "sliding", img: "assets/a2.jpg" },
-      { name: "Magnetic Door", id: "woodc", img: "assets/a1.jpg" },
-      { name: "Sliding Fiber Pleated", id: "pop", img: "assets/a4.jpg" }
+      { name: "Magnetic Door", id: "magnet", img: "assets/a1.jpg" },
+      { name: "Fiber sliding Pleated", id: "fiber", img: "assets/a4.jpg" }
 
     ]
   },
@@ -44,30 +79,22 @@ const serviceList = [
     ]
   },
   {
-    name: "Blinds",
+    name: "Aluminium works",
     services: [
-      { name: "Roller Blinds", id: "roller", img: "assets/a8.jpg" },
-      { name: "Zebra Blinds", id: "zebra", img: "assets/a11.jpg" },
-      { name: "Roman Blinds", id: "roman", img: "assets/a12.jpg" },
-      { name: "PVC Blinds", id: "pvcb", img: "assets/a13.jpg" },
-      { name: "Wooden Blinds", id: "woodb", img: "assets/a5.jpg" },
-      { name: "Bamboo Blinds", id: "bambo", img: "assets/a7.jpg" }
-    ]
-  },
-  {
-    name: "Aluminium Partitions",
-    services: [
-      { name: "Office Partition", id: "officepart", img: "assets/a9.jpg" },
+      { name: "Aluminium Partition", id: "alupart", img: "assets/a9.jpg" },
       { name: "Glass Partition", id: "glasspart", img: "assets/a10.jpg" },
-      { name: "Cubicle Partition", id: "cubicle", img: "assets/a11.jpg" }
+      { name: "Powder Coated Aluminium Partition", id: "powder", img: "assets/a11.jpg" },
+      { name: "Sliding Windows", id: "SW", img: "assets/a9.jpg" },
+      { name: "Open Windows", id: "OW", img: "assets/a9.jpg" }  
     ]
   },
   {
-    name: "Aluminium Windows",
+    name: "UPVC Work",
     services: [
-      { name: "Sliding Windows", id: "sliding1", img: "assets/a5.jpg" },
-      { name: "Casement Windows", id: "casement", img: "assets/a4.jpg" },
-      { name: "Fixed Windows", id: "fixed", img: "assets/a6.jpg" }
+      { name: "UPVC Open window", id: "UPVCopen", img: "assets/a5.jpg" },
+      { name: "UPVC sliding window", id: "UPVCS", img: "assets/a4.jpg" },
+      { name: "Fixed", id: "fixed", img: "assets/a6.jpg" },
+      { name: "UPVC Partition", id: "UPVCpart", img: "assets/a9.jpg" }
     ]
   }
 ];
