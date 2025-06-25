@@ -18,22 +18,20 @@ const serviceList = [
   {
     name: "False Ceiling",
     services: [
-      { name: "Gypsum Ceiling", id: "gypsum", img: "assets/a6.jpg" },
-      { name: "Grid Ceiling", id: "grid", img: "assets/a3.jpg" },
-      { name: "PVC Ceiling", id: "pvc", img: "assets/a2.jpg" },
-      { name: "Wooden Ceiling", id: "woodc", img: "assets/a1.jpg" },
-      { name: "POP Ceiling", id: "pop", img: "assets/a4.jpg" }
-
+      { name: "Gypsum Ceiling", id: "gypsum", img: "assets/gpysum.jpg" },
+      { name: "Grid Ceiling", id: "grid", img: "assets/grid.jpg" },
+      { name: "PVC Ceiling", id: "pvc", img: "assets/pvcceiling.jpg" },
+      { name: "Thermocol Ceiling", id: "Thermo", img: "assets/thermocol.jpg" },
     ]
   },
   {
-    name: "MosquitoNet Windows",
+    name: "MosquitoNet",
     services:[
       { name: "0.75 inch Section window ", id: "0.75", img: "assets/a6.jpg" },
-      { name: "1 inch Section", id: "1", img: "assets/a3.jpg" },
+      { name: "1 inch Section Window", id: "1", img: "assets/a3.jpg" },
       { name: "Sliding window", id: "sliding", img: "assets/a2.jpg" },
-      { name: "Wooden Ceiling", id: "woodc", img: "assets/a1.jpg" },
-      { name: "POP Ceiling", id: "pop", img: "assets/a4.jpg" }
+      { name: "Magnetic Door", id: "woodc", img: "assets/a1.jpg" },
+      { name: "Sliding Fiber Pleated", id: "pop", img: "assets/a4.jpg" }
 
     ]
   },
