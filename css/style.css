@@ -774,19 +774,50 @@ a {
 }
 @media (max-width: 768px) {
   .bottom-nav {
+    --active-index: 0;
     display: flex;
+    align-items: flex-start;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(17, 17, 17, 0.95);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    height: 80px;
+    background: transparent;
     z-index: 1000;
+  }
+  .bottom-nav-curve {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    fill: rgba(17, 17, 17, 0.95);
+    filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.4));
+    pointer-events: none;
+  }
+  .bottom-nav .active-indicator {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 33.333%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(calc(var(--active-index) * 100%));
+    transition: transform 0.4s;
+    pointer-events: none;
+  }
+  .bottom-nav .active-indicator::before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
   }
   .bottom-nav a {
     flex: 1;
-    padding: 0.5rem 0;
     text-align: center;
     color: var(--accent-color);
     font-size: 0.75rem;
@@ -794,12 +825,30 @@ a {
     flex-direction: column;
     align-items: center;
     gap: 0.2rem;
-    transition: color 0.3s, transform 0.2s;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .bottom-nav a .nav-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    transition: background 0.3s, transform 0.2s;
   }
   .bottom-nav a i {
     font-size: 1.2rem;
   }
-  .bottom-nav a:active {
+  .bottom-nav a:active .nav-icon {
     transform: scale(0.9);
+  }
+  .bottom-nav a.active {
+    color: #fff;
+  }
+  .bottom-nav a.active .nav-icon {
+    background: rgba(255, 255, 255, 0.2);
   }
 }

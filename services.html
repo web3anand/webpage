@@ -118,10 +118,20 @@
     </div>
   </footer>
   <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <a href="index.html"><i class="fa-solid fa-house"></i><span>Home</span></a>
-    <a href="services.html"><i class="fa-solid fa-layer-group"></i><span>Services</span></a>
-    <a href="contact.html"><i class="fa-solid fa-envelope"></i><span>Contact</span></a>
+  <nav class="bottom-nav" style="--active-index:1;">
+    <svg class="bottom-nav-curve" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,20 Q50,0 100,20 Z" />
+    </svg>
+    <span class="active-indicator"></span>
+    <a href="index.html">
+      <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+      <span>Home</span></a>
+    <a href="services.html" class="active">
+      <span class="nav-icon"><i class="fa-solid fa-layer-group"></i></span>
+      <span>Services</span></a>
+    <a href="contact.html">
+      <span class="nav-icon"><i class="fa-solid fa-envelope"></i></span>
+      <span>Contact</span></a>
   </nav>
 
 
