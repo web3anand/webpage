@@ -62,11 +62,11 @@ const serviceList = [
   {
     name: "MosquitoNet",
     services:[
-      { name: "Open window ", id: "open", img: "assets/a6.jpg" },
-      { name: "Aluminium Sliding PLeated", id: "aluminium", img: "assets/a3.jpg" },
-      { name: "Sliding window", id: "sliding", img: "assets/a2.jpg" },
-      { name: "Magnetic Door", id: "magnet", img: "assets/a1.jpg" },
-      { name: "Fiber sliding Pleated", id: "fiber", img: "assets/a4.jpg" }
+      { name: "Open window ", id: "open", img: "assets/mosopen.jpg" },
+      { name: "Aluminium Sliding PLeated", id: "aluminium", img: "assets/apleated.jpg" },
+      { name: "Honey Comb", id: "sliding", img: "assets/honey.jpg" },
+      { name: "Magnetic Door", id: "magnet", img: "assets/magnet.jpg" },
+      { name: "Fiber sliding Pleated", id: "fiber", img: "assets/fiber.jpg" }
 
     ]
   },
@@ -81,7 +81,7 @@ const serviceList = [
   {
     name: "Aluminium works",
     services: [
-      { name: "Aluminium Partition", id: "alupart", img: "assets/a2.jpg" },
+      { name: "Aluminium Partition", id: "alupart", img: "assets/normalp.jpg" },
       { name: "Glass Partition", id: "glasspart", img: "assets/glassp.jpg" },
       { name: "Powder Coated Aluminium Partition", id: "powder", img: "assets/a1.jpg" },
       { name: "Sliding Windows", id: "SW", img: "assets/windows.jpg" },
