@@ -140,9 +140,11 @@
   <script src="js/main.js"></script>
   <script>
   function toggleMenu() {
-    document.getElementById("mobileNav").classList.toggle("active");
+    const menu = document.getElementById("mobileNav");
     const btn = document.querySelector('.menu-icon');
+    menu.classList.toggle("active");
     if (btn) {
+      btn.classList.toggle("active");
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', !expanded);
     }

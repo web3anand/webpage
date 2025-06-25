@@ -50,7 +50,7 @@ a {
 .navbar {
   background: rgba(17, 17, 17, 0.9);
   color: #fff;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 0;
   position: sticky;
   top: 0;
   z-index: 999;
@@ -59,17 +59,45 @@ a {
 }
 
 .nav-container {
+  padding: var(--spacing-sm) var(--spacing-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .nav-links a {
+  position: relative;
   text-decoration: none;
   color: #fff;
   margin: 0 var(--spacing-sm);
   font-weight: 500;
-  }
+  padding: var(--spacing-sm) 0;
+  transition: color 0.3s;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  color: var(--accent-color);
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
 
 /* Desktop styles */
 .logo {
@@ -112,6 +140,11 @@ a {
   color: #fff;
   cursor: pointer;
   z-index: 1002;
+  transition: transform 0.3s ease;
+}
+
+.menu-icon.active {
+  transform: rotate(90deg);
 }
 
 /* MOBILE FLOATING DROPDOWN MENU */
@@ -135,10 +168,11 @@ a {
   font-weight: 500;
   font-size: 1rem;
   border-radius: 8px;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.3s;
 }
 .mobile-nav-card a:hover {
   background: #f3f3f3;
+  color: var(--primary-color);
 }
 .mobile-nav-card.active {
   display: flex;
