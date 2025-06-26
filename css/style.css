@@ -640,7 +640,7 @@ a {
 /* DESKTOP EXPERIENCE TAG */
 .experience-tag-section {
   position: relative;
-  height: 160px;
+  height: 180px;
   margin: var(--spacing-lg) 0;
   display: none;
 }
@@ -661,12 +661,12 @@ a {
 
 .experience-tag-section .shape-divider.top {
   top: 0;
-  transform: translateY(-20px);
+  transform: translateY(-40px);
 }
 
 .experience-tag-section .shape-divider.bottom {
   bottom: 0;
-  transform: rotate(180deg) translateY(-20px);
+  transform: rotate(180deg) translateY(-40px);
 }
 
 .experience-tag {
