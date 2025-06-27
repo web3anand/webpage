@@ -1,11 +1,12 @@
 /* RESET & BASE */
 :root {
-  --primary-color: #a67c52;
-  --accent-color: #dbc8a0;
-  --cta-color: #b4845d;
-  --dark-color: #2e2b29;
-  --text-color: #2b2a28;
-  --bg-light: #f8f6f1;
+  /* Premium cream palette */
+  --primary-color: #967859;
+  --accent-color: #e6d9c7;
+  --cta-color: #b48a64;
+  --dark-color: #2f2b28;
+  --text-color: #3b3328;
+  --bg-light: #f7f3ef;
   --spacing-sm: 0.75rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 3rem;
