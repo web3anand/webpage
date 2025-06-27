@@ -642,7 +642,7 @@ a {
 /* DESKTOP EXPERIENCE DIVIDER */
 
 .experience-divider {
-  display: none;
+  display: block;
   position: absolute;
   left: 0;
   bottom: -1px;
@@ -672,7 +672,7 @@ a {
 
 @media (min-width: 768px) {
   .experience-divider {
-    display: block;
+    display: none;
   }
 }
 
