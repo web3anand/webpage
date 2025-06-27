@@ -2,6 +2,7 @@
 :root {
   --primary-color: #a67c52;
   --accent-color: #dbc8a0;
+  --cta-color: #b4845d;
   --dark-color: #2e2b29;
   --text-color: #2b2a28;
   --bg-light: #f8f6f1;
@@ -21,6 +22,13 @@ body {
   font-size: 16px;
   letter-spacing: 0.2px;
 }
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.logo,
+.service-group-title {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.5px;
+}
 a {
   text-decoration: none;
   color: inherit;
@@ -31,16 +39,11 @@ a {
   margin: auto;
 }
 
-.container h2{
-  font-family: "DM Serif Text", serif;
-  font-weight: 400;
-  font-style: normal;
-}
+
 
 .section-title {
-  font-family:  "DM Serif Text", serif;
   font-size: 2.25rem;
-  font-weight: 400;
+  font-weight: 600;
   text-align: center;
   margin-bottom: var(--spacing-lg);
   color: var(--text-color);
@@ -48,14 +51,14 @@ a {
 
 /* NAVBAR */
 .navbar {
-  background: rgba(17, 17, 17, 0.9);
+  background: rgba(17, 17, 17, 0.6);
   color: #fff;
   padding: 0;
   position: sticky;
   top: 0;
   z-index: 999;
   height: 55px;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(10px);
 }
 
 .nav-container {
@@ -106,7 +109,6 @@ a {
   gap: 0.6rem;
   font-size: 1.5rem;
   font-weight: bold;
-  font-family: 'DM Serif Text', serif;
   letter-spacing: 1px;
   color: var(--accent-color);
   text-decoration: none;
@@ -190,6 +192,11 @@ a {
   }
 }
 
+.fade-up {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
 @keyframes blobMove {
   from {
     transform: translate(0, 0) scale(1);
@@ -215,7 +222,7 @@ a {
 /* HERO */
 .hero {
   position: relative;
-  background: url('../assets/hero.jpg') center/cover no-repeat;
+  background: url('../assets/a1.jpg') center/cover no-repeat;
   color: var(--dark-color);
   min-height: 65vh;
   display: flex;
@@ -231,8 +238,7 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(81, 184, 77, 0.432);
-  backdrop-filter: blur(20px);
+  background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.2));
   z-index: 0;
 }
 
@@ -295,7 +301,7 @@ a {
   left: 0;
   width: 100%;
   height: 60px;
-  fill: #fff;
+  fill: var(--primary-color);
   z-index: 1;
 }
 .hero-top-wave {
@@ -323,9 +329,10 @@ a {
 .hero .btn {
   margin: 0 var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(221, 235, 28, 0.651);
-  background:  #f3f3f3;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  background: var(--cta-color);
+  color: #fff;
   transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
   animation: fadeInUp 0.6s ease both;
   animation-delay: 0.2s;
@@ -337,9 +344,8 @@ a {
 }
 
 .hero .btn:hover {
-  background: var(--primary-color);
-  color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #a0734f;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
 }
 
@@ -416,6 +422,11 @@ a {
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.carousel-item:hover img {
+  transform: scale(1.05);
 }
 
 .carousel-item img.enlarged {
@@ -475,7 +486,6 @@ a {
   margin-bottom: var(--spacing-lg);
 }
 .service-group-title {
-  font-family: "DM Serif Text", serif;
   font-size: 1.75rem;
   margin-bottom: var(--spacing-md);
   color: var(--text-color);
@@ -629,20 +639,21 @@ a {
   position: relative;
   overflow: hidden;
   background: linear-gradient(90deg, #ffffff, var(--primary-color));
-  padding: var(--spacing-lg) 0;
+  padding: calc(var(--spacing-lg) * 1.2) 0;
   text-align: center;
   color: var(--dark-color);
 }
 
 .experience-banner h3 {
   font-size: 1.8rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 /* DESKTOP EXPERIENCE DIVIDER */
 
 .experience-divider {
-  display: block;
+  display: none;
   position: absolute;
   left: 0;
   bottom: -1px;
@@ -670,9 +681,9 @@ a {
   white-space: nowrap;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .experience-divider {
-    display: none;
+    display: block;
   }
 }
 
@@ -813,12 +824,6 @@ a {
   .hero-blob {
     display: block;
   }
-  .hero-wave {
-    display: block;
-  }
-  .hero-top-wave {
-    display: block;
-  }
   .hero-actions {
     flex-direction: column;
     align-items: center;
@@ -835,4 +840,25 @@ a {
     align-items: center;
   }
 
+}
+
+@media (min-width: 1024px) {
+  .hero-wave {
+    display: block;
+  }
+  .hero {
+    min-height: 80vh;
+    padding: 0 0 calc(var(--spacing-lg) * 1.5);
+  }
+  .hero h2 {
+    font-size: 3rem;
+  }
+  .section-title {
+    font-size: 2.5rem;
+  }
+  .carousel-section,
+  .categories,
+  .milestones {
+    padding: calc(var(--spacing-lg) * 1.5) 0;
+  }
 }

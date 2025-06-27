@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (carouselTrack && carouselContainer) {
     projectImages.forEach(project => {
       const slide = document.createElement("div");
-      slide.className = "carousel-item";
+      slide.className = "carousel-item fade-up";
       slide.innerHTML = `<img src="${project.src}" alt="${project.alt}">`;
       carouselTrack.appendChild(slide);
     });
