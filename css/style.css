@@ -797,3 +797,11 @@ a {
   }
 
 }
+
+/* Desktop view: remove green overlay from hero */
+@media (min-width: 769px) {
+  .hero::before {
+    display: none;
+  }
+}
+
