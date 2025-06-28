@@ -831,7 +831,8 @@ a {
   }
 
   .custom-shape-divider-bottom-1751090085 .shape-fill {
-    fill: var(--accent-color);
+    /* Match the service categories section background */
+    fill: var(--bg-light);
   }
 }
 
