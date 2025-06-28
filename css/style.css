@@ -217,7 +217,7 @@ a {
   position: relative;
   background: url('../assets/hero.jpg') center/cover no-repeat;
   color: var(--dark-color);
-  min-height: 65vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
