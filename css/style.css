@@ -367,21 +367,6 @@ a {
   overflow: hidden;
   width: 100%;
 }
-.wave {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  fill: #fff;
-  z-index: 1;
-}
-.wave-top {
-  top: -1px;
-  transform: rotate(180deg);
-}
-.wave-bottom {
-  bottom: -1px;
-}
 .carousel-section .section-title,
 .carousel-section .carousel-subtext {
   text-align: center;
@@ -653,51 +638,6 @@ a {
   letter-spacing: -0.5px;
 }
 
-/* DESKTOP EXPERIENCE TAG SECTION */
-
-.experience-gap {
-  display: none;
-  position: relative;
-  height: 150px;
-  text-align: center;
-}
-
-.exp-shape {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 150px;
-  fill: var(--cta-color);
-}
-
-.exp-top {
-  top: 0;
-}
-
-.exp-bottom {
-  bottom: 0;
-  transform: scaleY(-1);
-}
-
-.exp-tag {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--cta-color);
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: 999px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-@media (min-width: 768px) {
-  .experience-gap {
-    display: block;
-  }
-}
 
 /* SERVICE LIST */
 .service-list {
