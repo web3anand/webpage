@@ -217,7 +217,7 @@ a {
   position: relative;
   background: url('../assets/hero.jpg') center/cover no-repeat;
   color: var(--dark-color);
-  min-height: 90vh;
+  min-height: 65vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -311,23 +311,7 @@ a {
 
 /* Divider between hero and experience sections */
 .custom-shape-divider-bottom-1751090085 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-}
-
-.custom-shape-divider-bottom-1751090085 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 343px;
-}
-
-.custom-shape-divider-bottom-1751090085 .shape-fill {
-  fill: #000000BF;
+  display: none;
 }
 .hero-carousel .slides {
   filter: blur(3px);
@@ -819,10 +803,35 @@ a {
 
 }
 
-/* Desktop view: remove green overlay from hero */
+/* Desktop view adjustments */
 @media (min-width: 769px) {
+  .hero {
+    min-height: 90vh;
+  }
+
   .hero::before {
     display: none;
+  }
+
+  .custom-shape-divider-bottom-1751090085 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    display: block;
+  }
+
+  .custom-shape-divider-bottom-1751090085 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 343px;
+  }
+
+  .custom-shape-divider-bottom-1751090085 .shape-fill {
+    fill: #000000BF;
   }
 }
 
