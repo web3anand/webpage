@@ -778,7 +778,7 @@ a {
   z-index: 1;
   margin: var(--spacing-md) auto;
   padding: var(--spacing-md);
-  background: none;
+  background: rgba(252, 246, 246, 0); /* light frosted glass */
   backdrop-filter: blur(16px);
   border-radius: 16px;
   max-width: 90%;
