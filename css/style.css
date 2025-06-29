@@ -778,7 +778,6 @@ a {
   }
   .hero-carousel {
     display: block;
-    height: 100%;
   }
  .hero-content {
   position: relative;
@@ -829,10 +828,11 @@ a {
 
   .hero-carousel {
     display: block;
+    height: 70vh;
   }
 
   .hero-carousel img {
-    height: 100%;
+    height: 70vh;
   }
 
 
