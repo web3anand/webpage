@@ -806,7 +806,7 @@ a {
 /* Desktop view adjustments */
 @media (min-width: 769px) {
   .hero {
-    min-height: 90vh;
+    min-height: 70vh;
   }
 
   .hero::before {
