@@ -215,7 +215,7 @@ a {
 /* HERO */
 .hero {
   position: relative;
-  background: var(--bg-light);
+  background: url('../assets/hero.jpg') center/cover no-repeat;
   color: var(--dark-color);
   min-height: 65vh;
   display: flex;
@@ -228,7 +228,12 @@ a {
 
 
 .hero::before {
-  display: none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(81, 184, 77, 0.432);
+  backdrop-filter: blur(20px);
+  z-index: 0;
 }
 
 
@@ -272,7 +277,7 @@ a {
 }
 
 .hero-carousel {
-  display: block;
+  display: none;
   width: 100%;
   overflow: hidden;
 }
@@ -768,7 +773,7 @@ a {
     margin-bottom: 1.2rem;
   }
   .hero {
-    background: var(--bg-light);
+    background: none;
     padding: 0 0 var(--spacing-md);
   }
   .hero-carousel {
@@ -819,6 +824,10 @@ a {
   .hero {
     min-height: 70vh;
     background: var(--bg-light);
+  }
+
+  .hero::before {
+    display: none;
   }
 
   .hero-carousel {
