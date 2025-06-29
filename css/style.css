@@ -231,7 +231,7 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(81, 184, 77, 0.432);
+  background:none;
   backdrop-filter: blur(20px);
   z-index: 0;
 }
