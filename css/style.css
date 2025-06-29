@@ -817,6 +817,16 @@ a {
 @media (min-width: 769px) {
   .hero {
     min-height: 70vh;
+    background: none;
+  }
+
+  .hero-carousel {
+    display: block;
+    height: 70vh;
+  }
+
+  .hero-carousel img {
+    height: 70vh;
   }
 
   .hero::before {
