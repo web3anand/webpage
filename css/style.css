@@ -828,7 +828,9 @@ a {
   .hero-carousel img {
     height: 70vh;
   }
-
+  .container hero-content{
+    background: none;
+  }
 
 
   .custom-shape-divider-bottom-1751090085 {
