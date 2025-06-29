@@ -231,7 +231,7 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background:none;
+  background:transparent;
   backdrop-filter: blur(20px);
   z-index: 0;
 }
