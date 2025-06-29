@@ -773,12 +773,12 @@ a {
   .hero-carousel {
     display: block;
   }
- .hero-content {
+.hero-content {
   position: relative;
   z-index: 1;
   margin: var(--spacing-md) auto;
   padding: var(--spacing-md);
-  background: rgba(252, 246, 246, 0.603); /* light frosted glass */
+  background: transparent;
   backdrop-filter: blur(16px);
   border-radius: 16px;
   max-width: 90%;
