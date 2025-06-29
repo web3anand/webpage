@@ -220,8 +220,8 @@ a {
   min-height: 65vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 0 var(--spacing-lg);
+  justify-content: center;
+  padding: var(--spacing-lg) 0;
   text-align: center;
   overflow: hidden;
 }
@@ -783,7 +783,7 @@ a {
   }
   .hero {
     background: none;
-    padding: 0 0 var(--spacing-md);
+    padding: var(--spacing-md) 0;
   }
   .hero-carousel {
     display: block;
