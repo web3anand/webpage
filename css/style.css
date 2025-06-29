@@ -641,7 +641,6 @@ a {
 
 /* EXPERIENCE BANNER */
 .experience-banner {
-  background: var(--accent-color);
   padding: var(--spacing-lg) 0;
   text-align: center;
   color: var(--dark-color);
@@ -778,6 +777,7 @@ a {
   z-index: 1;
   margin: var(--spacing-md) auto;
   padding: var(--spacing-md);
+  background: rgba(252, 246, 246, 0); /* light frosted glass */
   backdrop-filter: blur(16px);
   border-radius: 16px;
   max-width: 90%;
