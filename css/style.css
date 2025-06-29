@@ -829,9 +829,7 @@ a {
     height: 70vh;
   }
 
-  .hero::before {
-    display: none;
-  }
+
 
   .custom-shape-divider-bottom-1751090085 {
     position: absolute;
