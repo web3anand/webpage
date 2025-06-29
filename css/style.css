@@ -641,6 +641,7 @@ a {
 
 /* EXPERIENCE BANNER */
 .experience-banner {
+  background: var(--accent-color);
   padding: var(--spacing-lg) 0;
   text-align: center;
   color: var(--dark-color);
