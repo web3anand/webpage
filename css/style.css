@@ -236,6 +236,14 @@ a {
   z-index: 0;
 }
 
+@media (min-width: 769px) {
+  .hero::before {
+    content: none;
+    background: none;
+    backdrop-filter: none;
+  }
+}
+
 
 .hero .container {
   position: relative;
