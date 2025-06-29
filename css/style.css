@@ -775,6 +775,7 @@ a {
   .hero {
     background: none;
     padding: 0 0 var(--spacing-md);
+    justify-content: flex-end;
   }
   .hero-carousel {
     display: block;
@@ -782,7 +783,7 @@ a {
  .hero-content {
   position: relative;
   z-index: 1;
-  margin: var(--spacing-md) auto;
+  margin: var(--spacing-md) auto var(--spacing-lg);
   padding: var(--spacing-md);
   background: rgba(252, 246, 246, 0.603); /* light frosted glass */
   backdrop-filter: blur(16px);
