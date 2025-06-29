@@ -138,6 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
       wrapper.appendChild(title);
       wrapper.appendChild(list);
       serviceListEl.appendChild(wrapper);
+      // open each category by default
+      list.classList.add("open");
+      title.classList.add("open");
+      list.style.maxHeight = list.scrollHeight + "px";
     });
   }
 });
