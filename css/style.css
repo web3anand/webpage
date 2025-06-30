@@ -494,20 +494,24 @@ a {
 }
 
 .filter-btn {
-  background: #fff;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
-  padding: 0.4rem 0.75rem;
+  background: var(--accent-color);
+  border: none;
+  color: var(--dark-color);
+  padding: 0.5rem 1rem;
   margin: 0 0.25rem 0.5rem;
-  border-radius: 8px;
+  border-radius: 20px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 
 .filter-btn.active,
 .filter-btn:hover {
   background: var(--primary-color);
   color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 .service-group {
   background: #fff;
@@ -577,6 +581,23 @@ a {
 
 .service-card .details-toggle {
   margin-top: 0.75rem;
+  background: var(--accent-color);
+  color: var(--dark-color);
+  border: none;
+  border-radius: 20px;
+  padding: 0.45rem 1rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
+  display: inline-block;
+}
+
+.service-card .details-toggle:hover {
+  background: var(--primary-color);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .service-card.expanded {
