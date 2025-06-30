@@ -1008,3 +1008,16 @@ a {
   text-align: center;
 }
 
+@media (max-width: 600px) {
+  .quote-btn {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    padding: 1rem 0;
+    z-index: 10;
+  }
+}
+
