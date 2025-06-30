@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Our Services - AV Interior</title>
+  <title>Interior Design Services in Tuticorin | AV Interior Decoration</title>
+  <meta name="description" content="Explore our range of false ceilings, flooring, roller screens and aluminium works available across Tuticorin and Thoothukudi." />
+  <meta property="og:title" content="Interior Design Services in Tuticorin" />
+  <meta property="og:description" content="Professional interior decoration services throughout Pearl City and beyond." />
+  <meta property="og:image" content="assets/hero1.jpg" />
+  <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.min.css" />
+  <style>body{color:var(--text-color);}</style>
 </head>
 <body>
 
@@ -16,7 +22,7 @@
 <header class="navbar">
   <div class="container nav-container">
     <a href="index.html" class="logo">
-      <img src="assets/logo.jpg" alt="AV Logo" class="logo-img" />
+      <img src="assets/logo.jpg" width="40" height="40" alt="AV Interior Decoration logo" class="logo-img" />
       <span>AV INTERIOR DECORATION</span>
     </a>
 
@@ -24,6 +30,7 @@
     <nav class="nav-links desktop-nav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </nav>
 
@@ -34,6 +41,7 @@
     <div class="mobile-nav-card" id="mobileNav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </div>
   </div>
@@ -43,6 +51,8 @@
 
   <section class="services-page">
     <div class="container">
+      <h1>Interior Decoration Services in Tuticorin</h1>
+      <p>From elegant false ceilings to functional aluminium windows, we deliver comprehensive interior works across Thoothukudi. Browse our categories below to see how we can transform your space.</p>
       <h2 class="section-title">Our Services</h2>
       <div id="filterControls" class="filter-controls"></div>
       <div class="services-grid" id="servicesGrid"></div>
@@ -66,8 +76,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
+  <script defer src="js/data.js"></script>
+  <script defer src="js/script.min.js"></script>
   <script>
   function toggleMenu() {
     document.getElementById("mobileNav").classList.toggle("active");
