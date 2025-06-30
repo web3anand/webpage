@@ -1002,3 +1002,9 @@ a {
   outline: 2px solid var(--primary-color);
 }
 
+.quote-btn {
+  display: none;
+  margin-top: 1rem;
+  text-align: center;
+}
+

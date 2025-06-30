@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("subItemsModal");
   const modalItems = modal ? modal.querySelector(".modal-items") : null;
   const modalClose = modal ? modal.querySelector(".modal-close") : null;
+  const quoteBtn = modal ? modal.querySelector("#quoteBtn") : null;
 
   const openModal = (items, highlightId = null) => {
     if (!modal || !modalItems) return;
@@ -15,21 +16,38 @@ document.addEventListener("DOMContentLoaded", () => {
     items.forEach(item => {
       const div = document.createElement("div");
       div.className = "sub-item-card";
+      div.dataset.serviceId = item.id;
       if (highlightId && item.id === highlightId) div.classList.add("highlight");
       div.innerHTML = `
         <img src="${item.img}" alt="${item.name}">
         <h4>${item.name}</h4>`;
+      div.addEventListener("click", () => {
+        modalItems.querySelectorAll(".sub-item-card").forEach(el => el.classList.remove("highlight"));
+        div.classList.add("highlight");
+        if (quoteBtn) {
+          quoteBtn.href = `contact.html?service=${item.id}`;
+          quoteBtn.style.display = "block";
+        }
+      });
       modalItems.appendChild(div);
     });
     modal.classList.add("open");
+    if (quoteBtn) quoteBtn.style.display = "none";
     if (highlightId) {
-      const el = modalItems.querySelector(".highlight");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      const el = modalItems.querySelector(`.sub-item-card[data-service-id="${highlightId}"]`);
+      if (el) {
+        if (quoteBtn) {
+          quoteBtn.href = `contact.html?service=${highlightId}`;
+          quoteBtn.style.display = "block";
+        }
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }
   };
 
   const closeModal = () => {
     if (modal) modal.classList.remove("open");
+    if (quoteBtn) quoteBtn.style.display = "none";
   };
 
   if (modalClose) modalClose.addEventListener("click", closeModal);
