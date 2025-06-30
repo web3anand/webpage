@@ -9,18 +9,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalItems = modal ? modal.querySelector(".modal-items") : null;
   const modalClose = modal ? modal.querySelector(".modal-close") : null;
 
-  const openModal = items => {
+  const openModal = (items, highlightId = null) => {
     if (!modal || !modalItems) return;
     modalItems.innerHTML = "";
     items.forEach(item => {
       const div = document.createElement("div");
       div.className = "sub-item-card";
+      if (highlightId && item.id === highlightId) div.classList.add("highlight");
       div.innerHTML = `
         <img src="${item.img}" alt="${item.name}">
         <h4>${item.name}</h4>`;
       modalItems.appendChild(div);
     });
     modal.classList.add("open");
+    if (highlightId) {
+      const el = modalItems.querySelector(".highlight");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   };
 
   const closeModal = () => {
@@ -138,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const li = document.createElement("li");
         li.className = "sub-card";
         li.innerHTML = `
-          <a href="products.html#${item.id}">
+          <a href="services.html?item=${item.id}">
             <img src="${item.img}" alt="${item.name}" />
             <span>${item.name}</span>
           </a>`;
@@ -232,6 +237,26 @@ document.addEventListener("DOMContentLoaded", () => {
           card.style.display = show ? "" : "none";
         });
       });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get("item");
+    if (itemId) {
+      const cat = serviceList.find(c => c.services.some(s => s.id === itemId));
+      if (cat) {
+        if (filterControls) {
+          const targetBtn = filterControls.querySelector(`[data-filter="${cat.name}"]`);
+          if (targetBtn) {
+            filterControls.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            targetBtn.classList.add("active");
+          }
+        }
+        servicesGrid.querySelectorAll(".service-card").forEach(card => {
+          const show = card.dataset.category === cat.name;
+          card.style.display = show ? "" : "none";
+        });
+        openModal(cat.services, itemId);
+      }
     }
   }
 });

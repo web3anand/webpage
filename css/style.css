@@ -998,3 +998,7 @@ a {
   margin-top: 0.25rem;
 }
 
+.sub-item-card.highlight {
+  outline: 2px solid var(--primary-color);
+}
+
