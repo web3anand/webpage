@@ -219,7 +219,16 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.classList.add("active");
         const filter = btn.dataset.filter;
         servicesGrid.querySelectorAll(".service-card").forEach(card => {
-          card.style.display = filter === "all" || card.dataset.category === filter ? "" : "none";
+          const show = filter === "all" || card.dataset.category === filter;
+          card.style.display = show ? "" : "none";
+          if (!show) {
+            const list = card.querySelector(".sub-services");
+            card.classList.remove("expanded");
+            if (list) {
+              list.classList.remove("open");
+              list.style.maxHeight = null;
+            }
+          }
         });
       });
     }
