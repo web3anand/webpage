@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us - AV Interior</title>
+  <title>Contact AV Interior Decoration in Tuticorin</title>
+  <meta name="description" content="Get in touch with AV Interior Decoration for interior services across Tuticorin and Thoothukudi." />
+  <meta property="og:title" content="Contact AV Interior Decoration" />
+  <meta property="og:description" content="Reach our team in Pearl City for quotations and consultations." />
+  <meta property="og:image" content="assets/hero2.jpg" />
+  <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.min.css" />
+  <style>body{color:var(--text-color);}</style>
 </head>
 <body>
 
@@ -16,7 +22,7 @@
 <header class="navbar">
   <div class="container nav-container">
     <a href="index.html" class="logo">
-      <img src="assets/logo.jpg" alt="AV Logo" class="logo-img" />
+      <img src="assets/logo.jpg" width="40" height="40" alt="AV Interior Decoration logo" class="logo-img" />
       <span>AV INTERIOR DECORATION</span>
     </a>
 
@@ -24,6 +30,7 @@
     <nav class="nav-links desktop-nav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </nav>
 
@@ -34,6 +41,7 @@
     <div class="mobile-nav-card" id="mobileNav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </div>
   </div>
@@ -44,6 +52,8 @@
 
   <section class="contact-page">
     <div class="container">
+      <h1>Contact Interior Decorators in Tuticorin</h1>
+      <p>We are ready to answer your questions about false ceilings, flooring and all our interior services throughout Thoothukudi.</p>
       <h2 class="section-title">Get in Touch</h2>
       <div class="contact-grid">
         <form class="contact-form" id="quoteForm">
@@ -75,8 +85,26 @@
     </div>
   </footer>
 
-  <script src="js/data.js"></script>
-  <script src="js/contact.js"></script>
+  <script defer src="js/data.js"></script>
+  <script defer src="js/script.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "AV Interior Decoration",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Tuticorin",
+      "addressRegion": "Tamil Nadu",
+      "addressCountry": "IN"
+    },
+    "url": "https://www.avinteriordecoration.com/",
+    "sameAs": [
+      "https://www.facebook.com/avinteriordecoration",
+      "https://www.instagram.com/avinteriordecoration"
+    ]
+  }
+  </script>
   <script>
  function toggleMenu() {
     const menu = document.getElementById("mobileNav");

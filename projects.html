@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Gallery | AV Interior Decoration Tuticorin</title>
+  <meta name="description" content="View recent AV Interior Decoration projects completed around Tuticorin and Pearl City." />
+  <meta property="og:title" content="Project Gallery in Thoothukudi" />
+  <meta property="og:description" content="Examples of our false ceilings, flooring and partitions across Tuticorin." />
+  <meta property="og:image" content="assets/hero1.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.min.css" />
+  <style>body{color:var(--text-color);}</style>
+</head>
+<body>
+<header class="navbar">
+  <div class="container nav-container">
+    <a href="index.html" class="logo">
+      <img src="assets/logo.jpg" width="40" height="40" alt="AV Interior Decoration logo" class="logo-img" />
+      <span>AV INTERIOR DECORATION</span>
+    </a>
+    <nav class="nav-links desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="menu-icon" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <div class="mobile-nav-card" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</header>
+<section class="projects-page">
+  <div class="container">
+    <h1>Recent Interior Projects in Tuticorin</h1>
+    <p>Our gallery highlights a few of the many homes and offices we have transformed across Thoothukudi. We will be updating this section soon with detailed case studies from Pearl City.</p>
+  </div>
+</section>
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 AV Interior Decoration. All rights reserved.</p>
+  </div>
+</footer>
+<script defer src="js/data.js"></script>
+<script defer src="js/script.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "AV Interior Decoration",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tuticorin",
+    "addressRegion": "Tamil Nadu",
+    "addressCountry": "IN"
+  },
+  "url": "https://www.avinteriordecoration.com/",
+  "sameAs": [
+    "https://www.facebook.com/avinteriordecoration",
+    "https://www.instagram.com/avinteriordecoration"
+  ]
+}
+</script>
+<script>
+function toggleMenu(){
+  const menu=document.getElementById("mobileNav");
+  const btn=document.querySelector('.menu-icon');
+  menu.classList.toggle("active");
+  if(btn){
+    btn.classList.toggle("active");
+    const expanded=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',!expanded);
+  }
+}
+</script>
+</body>
+</html>
