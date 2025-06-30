@@ -5,6 +5,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const servicesGrid = document.getElementById("servicesGrid");
   const filterControls = document.getElementById("filterControls");
   const heroCarousel = document.getElementById("hero-carousel");
+  const modal = document.getElementById("subItemsModal");
+  const modalItems = modal ? modal.querySelector(".modal-items") : null;
+  const modalClose = modal ? modal.querySelector(".modal-close") : null;
+
+  const openModal = items => {
+    if (!modal || !modalItems) return;
+    modalItems.innerHTML = "";
+    items.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "sub-item-card";
+      div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <h4>${item.name}</h4>`;
+      modalItems.appendChild(div);
+    });
+    modal.classList.add("open");
+  };
+
+  const closeModal = () => {
+    if (modal) modal.classList.remove("open");
+  };
+
+  if (modalClose) modalClose.addEventListener("click", closeModal);
+  if (modal) {
+    modal.addEventListener("click", e => {
+      if (e.target === modal) closeModal();
+    });
+  }
 
   if (heroCarousel) {
     const slidesContainer = heroCarousel.querySelector(".slides");
@@ -181,31 +209,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3>${cat.name}</h3>
         <p>${descriptions[cat.name] || `Explore our ${cat.name.toLowerCase()} solutions.`}</p>
         <button class="details-toggle btn">View Details</button>
-        <ul class="sub-services"></ul>
       `;
-
-      const list = card.querySelector(".sub-services");
-      cat.services.forEach(item => {
-        const li = document.createElement("li");
-        li.className = "sub-card";
-        li.innerHTML = `
-          <a href="products.html#${item.id}">
-            <img src="${item.img}" alt="${item.name}">
-            <span>${item.name}</span>
-          </a>`;
-        list.appendChild(li);
-      });
 
       const toggleBtn = card.querySelector(".details-toggle");
       toggleBtn.addEventListener("click", e => {
         e.preventDefault();
-        const isOpen = list.classList.toggle("open");
-        card.classList.toggle("expanded");
-        if (isOpen) {
-          list.style.maxHeight = list.scrollHeight + "px";
-        } else {
-          list.style.maxHeight = null;
-        }
+        openModal(cat.services);
       });
 
       servicesGrid.appendChild(card);
@@ -221,14 +230,6 @@ document.addEventListener("DOMContentLoaded", () => {
         servicesGrid.querySelectorAll(".service-card").forEach(card => {
           const show = filter === "all" || card.dataset.category === filter;
           card.style.display = show ? "" : "none";
-          if (!show) {
-            const list = card.querySelector(".sub-services");
-            card.classList.remove("expanded");
-            if (list) {
-              list.classList.remove("open");
-              list.style.maxHeight = null;
-            }
-          }
         });
       });
     }
