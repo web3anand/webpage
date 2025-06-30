@@ -8,23 +8,55 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("subItemsModal");
   const modalItems = modal ? modal.querySelector(".modal-items") : null;
   const modalClose = modal ? modal.querySelector(".modal-close") : null;
+  const quoteBtn = modal ? modal.querySelector("#quoteBtn") : null;
 
-  const openModal = items => {
+  const showQuoteButton = id => {
+    if (!quoteBtn) return;
+    quoteBtn.href = `contact.html?service=${id}`;
+    quoteBtn.style.display = "block";
+    quoteBtn.classList.remove("animate");
+    void quoteBtn.offsetWidth;
+    quoteBtn.classList.add("animate");
+  };
+
+  const openModal = (items, highlightId = null) => {
     if (!modal || !modalItems) return;
     modalItems.innerHTML = "";
     items.forEach(item => {
       const div = document.createElement("div");
       div.className = "sub-item-card";
+      div.dataset.serviceId = item.id;
+      if (highlightId && item.id === highlightId) div.classList.add("highlight");
       div.innerHTML = `
         <img src="${item.img}" alt="${item.name}">
         <h4>${item.name}</h4>`;
+      div.addEventListener("click", () => {
+        modalItems.querySelectorAll(".sub-item-card").forEach(el => el.classList.remove("highlight"));
+        div.classList.add("highlight");
+        showQuoteButton(item.id);
+      });
       modalItems.appendChild(div);
     });
     modal.classList.add("open");
+    if (quoteBtn) {
+      quoteBtn.style.display = "none";
+      quoteBtn.classList.remove("animate");
+    }
+    if (highlightId) {
+      const el = modalItems.querySelector(`.sub-item-card[data-service-id="${highlightId}"]`);
+      if (el) {
+        showQuoteButton(highlightId);
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
   };
 
   const closeModal = () => {
     if (modal) modal.classList.remove("open");
+    if (quoteBtn) {
+      quoteBtn.style.display = "none";
+      quoteBtn.classList.remove("animate");
+    }
   };
 
   if (modalClose) modalClose.addEventListener("click", closeModal);
@@ -138,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const li = document.createElement("li");
         li.className = "sub-card";
         li.innerHTML = `
-          <a href="products.html#${item.id}">
+          <a href="services.html?item=${item.id}">
             <img src="${item.img}" alt="${item.name}" />
             <span>${item.name}</span>
           </a>`;
@@ -232,6 +264,26 @@ document.addEventListener("DOMContentLoaded", () => {
           card.style.display = show ? "" : "none";
         });
       });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get("item");
+    if (itemId) {
+      const cat = serviceList.find(c => c.services.some(s => s.id === itemId));
+      if (cat) {
+        if (filterControls) {
+          const targetBtn = filterControls.querySelector(`[data-filter="${cat.name}"]`);
+          if (targetBtn) {
+            filterControls.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            targetBtn.classList.add("active");
+          }
+        }
+        servicesGrid.querySelectorAll(".service-card").forEach(card => {
+          const show = card.dataset.category === cat.name;
+          card.style.display = show ? "" : "none";
+        });
+        openModal(cat.services, itemId);
+      }
     }
   }
 });
