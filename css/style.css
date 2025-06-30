@@ -550,6 +550,31 @@ a {
   }
 }
 
+
+
+
+\
+=======
+}
+
+@media (min-width: 600px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .service-card {
   background: #fff;
   border-radius: 12px;
@@ -603,6 +628,7 @@ a {
 .service-card.expanded {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
+
 
 /* SERVICE MODAL */
 .modal {
@@ -667,6 +693,7 @@ a {
   font-size: 1rem;
   color: #333;
 }
+
 
 /* PROJECTS */
 .projects-page {

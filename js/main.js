@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalGrid = document.getElementById("modalGrid");
   const modalTitle = document.getElementById("modalTitle");
   const modalClose = document.querySelector(".modal-close");
+
   const heroCarousel = document.getElementById("hero-carousel");
 
   if (heroCarousel) {
@@ -185,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3>${cat.name}</h3>
         <p>${descriptions[cat.name] || `Explore our ${cat.name.toLowerCase()} solutions.`}</p>
         <button class="details-toggle btn">View Details</button>
-      `;
+        `;
 
       const toggleBtn = card.querySelector(".details-toggle");
       toggleBtn.addEventListener("click", e => {
@@ -204,6 +205,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         servicesModal.classList.add("open");
         document.body.style.overflow = "hidden";
+        <ul class="sub-services"></ul>
+      `;
+
+      const list = card.querySelector(".sub-services");
+      cat.services.forEach(item => {
+        const li = document.createElement("li");
+        li.className = "sub-card";
+        li.innerHTML = `
+          <a href="products.html#${item.id}">
+            <img src="${item.img}" alt="${item.name}">
+            <span>${item.name}</span>
+          </a>`;
+        list.appendChild(li);
+      });
+
+      const toggleBtn = card.querySelector(".details-toggle");
+      toggleBtn.addEventListener("click", e => {
+        e.preventDefault();
+        const isOpen = list.classList.toggle("open");
+        card.classList.toggle("expanded");
+        if (isOpen) {
+          list.style.maxHeight = list.scrollHeight + "px";
+        } else {
+          list.style.maxHeight = null;
+        }
+
       });
 
       servicesGrid.appendChild(card);
@@ -234,5 +261,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === servicesModal) closeModal();
       });
     }
+
+          if (!show) {
+            const list = card.querySelector(".sub-services");
+            card.classList.remove("expanded");
+            if (list) {
+              list.classList.remove("open");
+              list.style.maxHeight = null;
+            }
+          }
+        });
+      });
+    }
+
   }
 });
