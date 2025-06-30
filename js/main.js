@@ -10,6 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalClose = modal ? modal.querySelector(".modal-close") : null;
   const quoteBtn = modal ? modal.querySelector("#quoteBtn") : null;
 
+  const showQuoteButton = id => {
+    if (!quoteBtn) return;
+    quoteBtn.href = `contact.html?service=${id}`;
+    quoteBtn.style.display = "block";
+    quoteBtn.classList.remove("animate");
+    void quoteBtn.offsetWidth;
+    quoteBtn.classList.add("animate");
+  };
+
   const openModal = (items, highlightId = null) => {
     if (!modal || !modalItems) return;
     modalItems.innerHTML = "";
@@ -24,22 +33,19 @@ document.addEventListener("DOMContentLoaded", () => {
       div.addEventListener("click", () => {
         modalItems.querySelectorAll(".sub-item-card").forEach(el => el.classList.remove("highlight"));
         div.classList.add("highlight");
-        if (quoteBtn) {
-          quoteBtn.href = `contact.html?service=${item.id}`;
-          quoteBtn.style.display = "block";
-        }
+        showQuoteButton(item.id);
       });
       modalItems.appendChild(div);
     });
     modal.classList.add("open");
-    if (quoteBtn) quoteBtn.style.display = "none";
+    if (quoteBtn) {
+      quoteBtn.style.display = "none";
+      quoteBtn.classList.remove("animate");
+    }
     if (highlightId) {
       const el = modalItems.querySelector(`.sub-item-card[data-service-id="${highlightId}"]`);
       if (el) {
-        if (quoteBtn) {
-          quoteBtn.href = `contact.html?service=${highlightId}`;
-          quoteBtn.style.display = "block";
-        }
+        showQuoteButton(highlightId);
         el.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
@@ -47,7 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const closeModal = () => {
     if (modal) modal.classList.remove("open");
-    if (quoteBtn) quoteBtn.style.display = "none";
+    if (quoteBtn) {
+      quoteBtn.style.display = "none";
+      quoteBtn.classList.remove("animate");
+    }
   };
 
   if (modalClose) modalClose.addEventListener("click", closeModal);
