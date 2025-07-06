@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us - AV Interior</title>
+  <title>About Us - AV Interior Decoration</title>
+  <meta name="description" content="Learn about AV Interior Decoration in Tuticorin and Thoothukudi. Since 2010 we have provided premium false ceilings, flooring, roller screens, aluminium partitions and decorative solutions." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,7 +13,7 @@
 </head>
 <body>
 
-<!-- Navbar -->
+ <!-- Navbar -->
 <header class="navbar">
   <div class="container nav-container">
     <a href="index.html" class="logo">
@@ -41,33 +42,29 @@
 
 
 
-
-  <section class="contact-page">
+  <section class="about-page">
     <div class="container">
-      <h2 class="section-title">Get in Touch</h2>
-      <div class="contact-grid">
-        <form class="contact-form" id="quoteForm">
-          <input type="text" id="name" placeholder="Your Name" required />
-          <input type="text" id="address" placeholder="Your Address" required />
-          <select id="serviceSelect" required></select>
-          <button type="submit">Submit</button>
-        </form>
-        <div class="contact-info">
-          <div class="clr">
-           <h3>Our Office</h3>
-           <p>Annai Theresa Nagar , Thoothukudi </p>
-           <p><strong>Phone:</strong> <a href="tel:+919715032513">+91 97150 32513</a></p>
+      <div class="about-wrapper">
+        <div class="about-text">
+          <h2 class="section-title">About Us</h2>
+          <p>AV Interior Decoration has over a decade of experience serving Tuticorin and Thoothukudi with trusted interior design solutions. We offer false ceilings, stylish flooring, roller screens, aluminium windows &amp; partitions, and unique wall &amp; ceiling designs. Our friendly team manages each project with care, ensuring quality results you’ll love.</p>
+          <div class="about-actions">
+            <a href="services.html" class="btn primary-btn">View Our Projects</a>
+            <a href="contact.html" class="btn secondary-btn">Contact Us</a>
           </div>
-          <br>
-          <p><strong>WhatsApp:</strong> <a  href="https://wa.me/919715032513" class="wbt btn" target="_blank">Chat with us</a></p>
-           <div class="map">
-           <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15771.289271885958!2d78.1174878!3d8.8027577!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b03efb2fd3c3353%3A0x4e6da1e40f53b69d!2sAV%20INTERIOR%20DECORATION!5e0!3m2!1sen!2sin!4v1748697393710!5m2!1sen!2sin" loading="lazy" title="AV Interior Decoration location Tuticorin Thoothukudi Pearl City" aria-label="Google Maps location of AV Interior Decoration" style="border:0;" allowfullscreen></iframe>
-          </div>
-
         </div>
+        <div class="about-image">
+          <img src="assets/about-team.svg" alt="AV Interior Decoration team working in Tuticorin and Thoothukudi" loading="lazy" />
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item"><h3>500+</h3><p>Projects Completed</p></div>
+        <div class="stat-item"><h3>10+</h3><p>Years Experience</p></div>
+        <div class="stat-item"><h3>100%</h3><p>Client Satisfaction</p></div>
       </div>
     </div>
   </section>
+
 
   <footer class="footer">
     <div class="container footer-columns">
@@ -147,15 +144,15 @@
     </script>
   </footer>
 
+
+  <!-- Scripts -->
   <script src="js/data.js"></script>
-  <script src="js/contact.js"></script>
+  <script src="js/main.js"></script>
   <script>
- function toggleMenu() {
-    const menu = document.getElementById("mobileNav");
+  function toggleMenu() {
+    document.getElementById("mobileNav").classList.toggle("active");
     const btn = document.querySelector('.menu-icon');
-    menu.classList.toggle("active");
     if (btn) {
-      btn.classList.toggle("active");
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', !expanded);
     }
