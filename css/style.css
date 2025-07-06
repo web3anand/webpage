@@ -240,6 +240,14 @@ a {
   z-index: 1;
 }
 
+@media (min-width: 769px) {
+  .hero::before {
+    content: none;
+    background: none;
+    backdrop-filter: none;
+  }
+}
+
 
 .hero .container {
   position: relative;
@@ -872,14 +880,14 @@ a {
   z-index: 1;
   margin: var(--spacing-md) auto var(--spacing-lg);
   padding: var(--spacing-md);
-  background: rgba(252, 246, 246, 0.603); /* light frosted glass */
-  backdrop-filter: blur(16px);
+  background: transparent;
+  backdrop-filter: none;
   border-radius: 16px;
   max-width: 90%;
-  box-shadow: 0 6px 30px rgba(219, 200, 160, 0.2); /* warm glow */
+  box-shadow: none;
   color: var(--dark-color);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
+  border: none;
+ }
   .hero-blob {
     display: block;
   }
