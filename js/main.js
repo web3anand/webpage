@@ -286,4 +286,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-question');
+    q.addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+  });
+
+  // Smooth scroll to FAQ section
+  const exploreBtn = document.getElementById('exploreBtn');
+  const faqSection = document.getElementById('faq');
+  if (exploreBtn && faqSection) {
+    exploreBtn.addEventListener('click', e => {
+      e.preventDefault();
+      faqSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 });
