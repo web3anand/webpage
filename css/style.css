@@ -744,6 +744,20 @@ a {
   font-weight: 600;
 }
 
+/* ABOUT */
+.about-section,
+.about-page {
+  background: #fff;
+  padding: var(--spacing-lg) 0;
+}
+.about-section p,
+.about-page p {
+  max-width: 800px;
+  margin: auto;
+  line-height: 1.6;
+  text-align: center;
+}
+
 /* SERVICE LIST */
 .service-list {
   max-width: 600px;
