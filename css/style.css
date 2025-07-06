@@ -297,14 +297,14 @@ a {
   z-index: 0;
 }
 .hero-wave {
-  display: none;
   position: absolute;
-  bottom: -1px;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 60px;
-  fill: #fff;
+  height: 120px;
+  fill: var(--bg-light);
   z-index: 1;
+  pointer-events: none;
 }
 .hero-top-wave {
   display: none;
@@ -317,10 +317,6 @@ a {
   z-index: 1;
 }
 
-/* Divider between hero and experience sections */
-.custom-shape-divider-bottom-1751090085 {
-  display: none;
-}
 .hero-carousel .slides {
   filter: blur(3px);
   display: flex;
@@ -839,6 +835,51 @@ a {
   font-size: 1rem;
 }
 
+/* FRONT GALLERY */
+.front-gallery {
+  position: relative;
+  background: var(--bg-light);
+  margin-top: -60px;
+  padding: 60px 0 var(--spacing-lg);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+  width: 90%;
+  max-width: 1200px;
+  margin: -60px auto 0;
+  padding-top: 60px;
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: 0 0 12px 12px;
+  min-height: 220px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  clip-path: url(#gallery-wave);
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  .front-gallery {
+    margin-top: -40px;
+    padding: 40px 0 var(--spacing-md);
+  }
+}
+
 
 /* FOOTER */
 .footer {
@@ -924,28 +965,6 @@ a {
   }
 
 
-  .custom-shape-divider-bottom-1751090085 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-    display: block;
-  }
-
-  .custom-shape-divider-bottom-1751090085 svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 343px;
-    z-index: 2;
-  }
-
-  .custom-shape-divider-bottom-1751090085 .shape-fill {
-    /* Match the service categories section background */
-    fill: var(--bg-light);
-  }
 }
 
 /* Modal Styles */
