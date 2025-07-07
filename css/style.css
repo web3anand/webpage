@@ -5,6 +5,7 @@
   --dark-color: #2e2b29;
   --text-color: #2b2a28;
   --bg-light: #f8f6f1;
+  --categories-bg: #fff;
   --spacing-sm: 0.75rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 3rem;
@@ -477,6 +478,7 @@ a {
 
 /* CATEGORIES */
 .categories {
+  background: var(--categories-bg);
   padding: var(--spacing-lg) 0;
   text-align: center;
 }
@@ -944,7 +946,7 @@ a {
 
   .custom-shape-divider-bottom-1751090085 .shape-fill {
     /* Match the service categories section background */
-    fill: var(--bg-light);
+    fill: var(--categories-bg);
   }
 }
 
