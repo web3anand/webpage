@@ -928,7 +928,7 @@ a {
 
   .custom-shape-divider-bottom-1751090085 {
     position: absolute;
-    bottom: 0;
+    bottom: 2rem;
     left: 0;
     width: 100%;
     overflow: hidden;
@@ -940,7 +940,7 @@ a {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
-    height: 200px;
+    height: 350px;
     z-index: 2;
   }
 
