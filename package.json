@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "AV Interior Decoration website",
   "scripts": {
-    "test": "echo \"No tests specified\""
+    "test": "echo \"No tests specified\"",
+    "build:css": "npx cleancss -o css/style.min.css css/style.css",
+    "build:js": "npx terser js/contact.js js/data.js js/main.js -o js/bundle.min.js -c -m",
+    "build": "npm run build:css && npm run build:js"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "terser": "^5.43.1"
   }
 }
