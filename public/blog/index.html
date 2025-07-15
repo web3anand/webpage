@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Interior Decoration Thoothukudi Services</title>
-  <meta name="description" content="Explore AV Interior Decoration services including false ceiling, flooring and office décor in Thoothukudi. Get a free quotation today.">
+  <title>Interior Decoration Thoothukudi Blog</title>
+  <meta name="description" content="Insights and tips from AV Interior Decoration in Thoothukudi. Read our latest posts about false ceilings, office décor and more.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="css/style.min.css" as="style">
-  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="preload" href="../css/style.min.css" as="style">
+  <link rel="stylesheet" href="../css/style.min.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -32,32 +32,33 @@
 <body>
 <nav class="navbar">
   <div class="container nav-container">
-    <a href="index.html" class="logo">
+    <a href="../index.html" class="logo">
       <picture>
-        <source srcset="assets/logo.webp" type="image/webp">
-        <img src="assets/logo.jpg" alt="AV Interior Decoration logo" loading="lazy" class="logo-img">
+        <source srcset="../assets/logo.webp" type="image/webp">
+        <img src="../assets/logo.jpg" alt="AV Interior Decoration logo" loading="lazy" class="logo-img">
       </picture>
       <span>AV INTERIOR DECORATION</span>
     </a>
     <div class="nav-links desktop-nav">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../contact.html">Contact</a>
     </div>
     <button class="menu-icon" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
     <div class="mobile-nav-card" id="mobileNav">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../contact.html">Contact</a>
     </div>
   </div>
 </nav>
 <main>
   <section class="services-page">
     <div class="container">
-      <h2 class="section-title">Our Services</h2>
-      <div id="filterControls" class="filter-controls"></div>
-      <div class="services-grid" id="servicesGrid"></div>
+      <h1>Blog</h1>
+      <ul>
+        <li><a href="sample-post.html">Sample Post</a></li>
+      </ul>
     </div>
   </section>
 </main>
@@ -67,27 +68,8 @@
     <div class="map">
       <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15771.289271885958!2d78.1174878!3d8.8027577!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b03efb2fd3c3353%3A0x4e6da1e40f53b69d!2sAV%20INTERIOR%20DECORATION!5e0!3m2!1sen!2sin!4v1748697393710!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
-    <div id="reviews"></div>
   </div>
 </footer>
-<div id="subItemsModal" class="modal" aria-hidden="true">
-  <div class="modal-content">
-    <button class="modal-close" aria-label="Close">&times;</button>
-    <div class="modal-items"></div>
-    <a href="contact.html" id="quoteBtn" class="btn quote-btn">Get Quotation</a>
-  </div>
-</div>
-<script src="js/bundle.min.js" defer></script>
-<script>
-function toggleMenu(){
-  const menu=document.getElementById('mobileNav');
-  const btn=document.querySelector('.menu-icon');
-  menu.classList.toggle('active');
-  if(btn){
-    const expanded=btn.getAttribute('aria-expanded')==='true';
-    btn.setAttribute('aria-expanded',!expanded);
-  }
-}
-</script>
+<script src="../js/bundle.min.js" defer></script>
 </body>
 </html>

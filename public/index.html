@@ -1,89 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AV Interior Decoration | Thoothukudi All Interiors</title>
-  <meta name="description" content="AV Interior Decoration in Thoothukudi offers expert false ceiling, flooring, roller screens, aluminium partitions, and modern interior works for homes & offices. Trusted service in Pearl City.">
-
-  <!-- Styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interior Decoration Thoothukudi | AV Interior Decoration</title>
+  <meta name="description" content="AV Interior Decoration in Thoothukudi specializes in false ceiling, flooring and complete office décor solutions. Call today to transform your Pearl City space.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preload" href="css/style.min.css" as="style">
+  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="preload" href="assets/hero.jpg" as="image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "AV Interior Decoration",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Your Street Address",
+      "addressLocality": "Thoothukudi",
+      "addressRegion": "Tamil Nadu",
+      "postalCode": "628001",
+      "addressCountry": "IN"
+    },
+    "telephone": "+91-XXXXXXXXXX",
+    "url": "https://avinteriordecoration.com",
+    "image": "https://avinteriordecoration.com/assets/images/logo.webp",
+    "priceRange": "$$$"
+  }
+  </script>
 </head>
 <body>
-
-<!-- Navbar -->
-<header class="navbar">
+<nav class="navbar">
   <div class="container nav-container">
     <a href="index.html" class="logo">
-      <img src="assets/logo.jpg" alt="AV Logo" class="logo-img" />
+      <picture>
+        <source srcset="assets/logo.webp" type="image/webp">
+        <img src="assets/logo.jpg" alt="AV Interior Decoration logo" loading="lazy" class="logo-img">
+      </picture>
       <span>AV INTERIOR DECORATION</span>
     </a>
-
-
-    <!-- Desktop Nav -->
-    <nav class="nav-links desktop-nav">
+    <div class="nav-links desktop-nav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
       <a href="contact.html">Contact</a>
-    </nav>
-
-    <!-- Hamburger icon -->
+    </div>
     <button class="menu-icon" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
-
-    <!-- Mobile Floating Dropdown -->
     <div class="mobile-nav-card" id="mobileNav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
       <a href="contact.html">Contact</a>
     </div>
   </div>
-</header>
-
-
-
-  <!-- Hero Section -->
+</nav>
+<main>
   <section class="hero">
     <div class="hero-carousel" id="hero-carousel">
       <div class="slides">
-        <img src="assets/modular.jpg" alt="Project photo 1" loading="lazy" />
-        <img src="assets/hero1.jpg" alt="Project photo 2" loading="lazy" />
-        <img src="assets/hero2.jpg" alt="Project photo 3" loading="lazy" />
-        <img src="assets/a4.jpg" alt="Project photo 4" loading="lazy" />
-        <img src="assets/a5.jpg" alt="Project photo 5" loading="lazy" />
-        <img src="assets/a6.jpg" alt="Project photo 6" loading="lazy" />
+        <picture>
+          <source srcset="assets/modular.webp" type="image/webp">
+          <img src="assets/modular.jpg" alt="Modular kitchen installation" loading="lazy">
+        </picture>
+        <picture>
+          <source srcset="assets/hero1.webp" type="image/webp">
+          <img src="assets/hero1.jpg" alt="Stylish living room interior" loading="lazy">
+        </picture>
+        <picture>
+          <source srcset="assets/hero2.webp" type="image/webp">
+          <img src="assets/hero2.jpg" alt="False ceiling with recessed lighting" loading="lazy">
+        </picture>
+        <picture>
+          <source srcset="assets/a4.webp" type="image/webp">
+          <img src="assets/a4.jpg" alt="Aluminium partition work" loading="lazy">
+        </picture>
+        <picture>
+          <source srcset="assets/a5.webp" type="image/webp">
+          <img src="assets/a5.jpg" alt="Office cabin glass panel" loading="lazy">
+        </picture>
+        <picture>
+          <source srcset="assets/a6.webp" type="image/webp">
+          <img src="assets/a6.jpg" alt="Modern false ceiling" loading="lazy">
+        </picture>
       </div>
     </div>
     <div class="hero-blob" aria-hidden="true"></div>
     <div class="container hero-content">
-      <h2>Your Dream Space, Realized</h2>
+      <h1>Your Dream Space, Realized</h1>
       <p>Premium interior decoration for homes and offices. Expertly done. Perfectly delivered.</p>
       <div class="hero-actions">
         <a href="services.html" class="btn" aria-label="Explore our services">Explore Our Services</a>
         <a href="contact.html" class="btn" aria-label="Contact us">Contact Us</a>
       </div>
     </div>
-    <svg class="hero-wave transition duration-300 ease-in-out delay-150" width="100%" height="100%" id="svg" viewBox="0 0 1440 390" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M 0,400 L 0,0 C 147.7333333333333,38 295.4666666666666,76 472,100 C 648.5333333333334,124 853.8666666666668,134 1020,115 C 1186.1333333333332,95.99999999999999 1313.0666666666666,47.99999999999999 1440,0 L 1440,400 L 0,400 Z" stroke="none" stroke-width="0" fill="#fff" fill-opacity="1" class="transition-all duration-300 ease-in-out delay-150 path-0" />
-    </svg>
-    <div class="custom-shape-divider-bottom-1751090085">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z" class="shape-fill"></path>
-        </svg>
+  </section>
+  <section class="intro-text">
+    <div class="container">
+      <p>AV Interior Decoration has been the trusted choice for <strong>Interior Decoration Thoothukudi</strong> for more than a decade. Our skilled craftsmen create stunning spaces that balance style and functionality. Whether you desire a sleek corporate environment or a warm residential retreat, our team delivers bespoke solutions that capture your vision. We specialize in <strong>False Ceiling in Thoothukudi</strong>, modern flooring, aluminum partitions and custom cabinetry. Every project is executed with meticulous attention to detail, ensuring a seamless finish that enhances your property’s value.</p>
+      <p>From design consultation to final installation, we manage every aspect of your renovation. Our use of premium materials guarantees durability, while innovative layouts maximize the potential of your available space. With numerous successfully completed projects, we are proud to be synonymous with quality and reliability in the region. Clients across Pearl City rely on us for everything from stylish window blinds to high-end modular kitchens.</p>
+      <p>If you’re looking to elevate your business premises, our <strong>Office Décor Pearl City</strong> packages provide tailored décor that impresses clients and motivates employees. Homeowners can enjoy cozy living rooms, vibrant bedrooms and well-organized storage solutions that fit their lifestyle. Explore our wide range of services below and discover how we can transform your space.</p>
+      <ul>
+        <li><a href="services.html#false-ceiling">False Ceiling Services in Thoothukudi</a></li>
+        <li><a href="services.html#flooring">High-Quality Flooring Options</a></li>
+        <li><a href="services.html#aluminium">Aluminium Partitions and Windows</a></li>
+        <li><a href="services.html#office-decor">Office Décor Solutions</a></li>
+      </ul>
     </div>
   </section>
-
-  <!-- Experience Banner -->
   <section class="experience-banner">
     <div class="container">
-      <h3>10+ Years of Experience in Interior & Exterior Decoration</h3>
+      <h3>10+ Years of Experience in Interior &amp; Exterior Decoration</h3>
     </div>
-</section>
-
-  <!-- Carousel Section -->
+  </section>
   <section class="carousel-section">
       <svg class="wave wave-top" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0,60 C150,30 300,0 450,30 C600,60 750,60 900,30 C1050,0 1200,30 1440,60 V0 H0 V60 Z" />
@@ -91,9 +118,7 @@
       <h2 class="section-title">Our Project Highlights</h2>
       <p class="carousel-subtext">A glimpse of our recent work</p>
       <div class="carousel-container" id="carousel-container">
-        <div class="carousel-track" id="carousel-track">
-          <!-- Slides will be injected dynamically -->
-        </div>
+        <div class="carousel-track" id="carousel-track"></div>
       </div>
       <div class="scroll-hint" aria-hidden="true">
         <span>Scroll to view gallery</span>
@@ -103,17 +128,12 @@
         <path d="M0,0 C150,30 300,60 450,30 C600,0 750,0 900,30 C1050,60 1200,30 1440,0 V60 H0 V0 Z" />
       </svg>
   </section>
-
-  <!-- Categories Section -->
   <section class="categories">
     <div class="container">
       <h2 class="section-title">Service Categories</h2>
       <div class="service-list" id="service-list"></div>
-
     </div>
   </section>
-
-  <!-- Milestones Section -->
   <section class="milestones">
     <div class="container">
       <h2 class="section-title">Our Milestones</h2>
@@ -131,33 +151,33 @@
           <p>Client Satisfaction</p>
         </div>
       </div>
-
     </div>
   </section>
-
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2025 AV Interior Decoration. All rights reserved.</p>
+</main>
+<footer class="footer">
+  <div class="container">
+    <p>AV Interior Decoration<br>Your Street Address, Thoothukudi, Tamil Nadu 628001<br>+91-XXXXXXXXXX</p>
+    <div class="map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15771.289271885958!2d78.1174878!3d8.8027577!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b03efb2fd3c3353%3A0x4e6da1e40f53b69d!2sAV%20INTERIOR%20DECORATION!5e0!3m2!1sen!2sin!4v1748697393710!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
-  <script>
-  function toggleMenu() {
-    const menu = document.getElementById("mobileNav");
-    const btn = document.querySelector('.menu-icon');
-    menu.classList.toggle("active");
-    if (btn) {
-      btn.classList.toggle("active");
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !expanded);
-    }
+    <div id="reviews"></div>
+  </div>
+</footer>
+<script src="js/bundle.min.js" defer></script>
+<script>
+// npm scripts can be used to bundle and minify assets with tools like gulp or esbuild
+function toggleMenu(){
+  const menu=document.getElementById('mobileNav');
+  const btn=document.querySelector('.menu-icon');
+  menu.classList.toggle('active');
+  if(btn){
+    btn.classList.toggle('active');
+    const expanded=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',!expanded);
   }
+}
+// Example fetch of recent Google reviews
+// fetch('reviews-endpoint').then(r=>r.json()).then(showReviews);
 </script>
-
 </body>
 </html>

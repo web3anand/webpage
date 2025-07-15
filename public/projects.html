@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Interior Decoration Thoothukudi Services</title>
-  <meta name="description" content="Explore AV Interior Decoration services including false ceiling, flooring and office décor in Thoothukudi. Get a free quotation today.">
+  <title>Interior Decoration Thoothukudi Projects</title>
+  <meta name="description" content="View recent AV Interior Decoration projects in Thoothukudi including false ceilings and office décor installations.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="css/style.min.css" as="style">
@@ -42,22 +42,42 @@
     <div class="nav-links desktop-nav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </div>
     <button class="menu-icon" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
     <div class="mobile-nav-card" id="mobileNav">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </div>
   </div>
 </nav>
 <main>
-  <section class="services-page">
+  <section class="projects-page">
     <div class="container">
-      <h2 class="section-title">Our Services</h2>
-      <div id="filterControls" class="filter-controls"></div>
-      <div class="services-grid" id="servicesGrid"></div>
+      <h2 class="section-title">Project Gallery</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <picture>
+            <source srcset="assets/hero1.webp" type="image/webp">
+            <img src="assets/hero1.jpg" alt="Living room false ceiling" loading="lazy">
+          </picture>
+        </div>
+        <div class="project-card">
+          <picture>
+            <source srcset="assets/a5.webp" type="image/webp">
+            <img src="assets/a5.jpg" alt="Office partition work" loading="lazy">
+          </picture>
+        </div>
+        <div class="project-card">
+          <picture>
+            <source srcset="assets/a6.webp" type="image/webp">
+            <img src="assets/a6.jpg" alt="Modern ceiling design" loading="lazy">
+          </picture>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -70,13 +90,6 @@
     <div id="reviews"></div>
   </div>
 </footer>
-<div id="subItemsModal" class="modal" aria-hidden="true">
-  <div class="modal-content">
-    <button class="modal-close" aria-label="Close">&times;</button>
-    <div class="modal-items"></div>
-    <a href="contact.html" id="quoteBtn" class="btn quote-btn">Get Quotation</a>
-  </div>
-</div>
 <script src="js/bundle.min.js" defer></script>
 <script>
 function toggleMenu(){
