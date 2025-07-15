@@ -844,9 +844,46 @@ a {
 .footer {
   background: var(--dark-color);
   color: var(--accent-color);
-  text-align: center;
-  padding: var(--spacing-sm) 0;
   margin-top: auto;
+  padding: var(--spacing-md) 0;
+  font-size: 0.9rem;
+}
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footer-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+}
+.footer-links a {
+  color: var(--accent-color);
+  margin: 0 var(--spacing-sm);
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+.footer-contact a {
+  color: var(--accent-color);
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-links {
+    margin: var(--spacing-sm) 0;
+  }
 }
 
 /* RESPONSIVE CONTENT */
