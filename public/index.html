@@ -4,12 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Interior Decoration Thoothukudi | AV Interior Decoration</title>
-  <meta name="description" content="AV Interior Decoration in Thoothukudi specializes in false ceiling, flooring and complete office décor solutions. Call today to transform your Pearl City space.">
+  <meta name="description" content="AV Interior Decoration in Thoothukudi provides expert false ceilings, flooring, and office décor. Call for a free consultation and transform your space!">
+  <meta property="og:title" content="Interior Decoration Thoothukudi | AV Interior Decoration">
+  <meta property="og:description" content="AV Interior Decoration in Thoothukudi provides expert false ceilings, flooring, and office décor. Call for a free consultation and transform your space!">
+  <meta property="og:image" content="https://avinteriordecoration.com/assets/images/logo.webp">
+  <meta property="og:url" content="https://avinteriordecoration.com/index.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="css/style.min.css" as="style">
-  <link rel="stylesheet" href="css/style.min.css">
-  <link rel="preload" href="assets/hero.jpg" as="image">
+  <link rel="preload" href="assets/css/style.min.css" as="style">
+  <link rel="stylesheet" href="assets/css/style.min.css">
+  <link rel="preload" href="assets/images/hero.jpg" as="image">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -30,13 +34,14 @@
   }
   </script>
 </head>
-<body>
+<body id="top">
+<header>
 <nav class="navbar">
   <div class="container nav-container">
     <a href="index.html" class="logo">
       <picture>
-        <source srcset="assets/logo.webp" type="image/webp">
-        <img src="assets/logo.jpg" alt="AV Interior Decoration logo" loading="lazy" class="logo-img">
+        <source srcset="assets/images/logo.webp" type="image/webp">
+        <img src="assets/images/logo.jpg" alt="AV Interior Decoration logo" loading="lazy" class="logo-img">
       </picture>
       <span>AV INTERIOR DECORATION</span>
     </a>
@@ -51,35 +56,36 @@
       <a href="services.html">Services</a>
       <a href="contact.html">Contact</a>
     </div>
-  </div>
+    </div>
 </nav>
+</header>
 <main>
   <section class="hero">
     <div class="hero-carousel" id="hero-carousel">
       <div class="slides">
         <picture>
-          <source srcset="assets/modular.webp" type="image/webp">
-          <img src="assets/modular.jpg" alt="Modular kitchen installation" loading="lazy">
+          <source srcset="assets/images/modular.webp" type="image/webp">
+          <img src="assets/images/modular.jpg" alt="Modular kitchen installation" loading="lazy">
         </picture>
         <picture>
-          <source srcset="assets/hero1.webp" type="image/webp">
-          <img src="assets/hero1.jpg" alt="Stylish living room interior" loading="lazy">
+          <source srcset="assets/images/hero1.webp" type="image/webp">
+          <img src="assets/images/hero1.jpg" alt="Stylish living room interior" loading="lazy">
         </picture>
         <picture>
-          <source srcset="assets/hero2.webp" type="image/webp">
-          <img src="assets/hero2.jpg" alt="False ceiling with recessed lighting" loading="lazy">
+          <source srcset="assets/images/hero2.webp" type="image/webp">
+          <img src="assets/images/hero2.jpg" alt="False ceiling with recessed lighting" loading="lazy">
         </picture>
         <picture>
-          <source srcset="assets/a4.webp" type="image/webp">
-          <img src="assets/a4.jpg" alt="Aluminium partition work" loading="lazy">
+          <source srcset="assets/images/a4.webp" type="image/webp">
+          <img src="assets/images/a4.jpg" alt="Aluminium partition work" loading="lazy">
         </picture>
         <picture>
-          <source srcset="assets/a5.webp" type="image/webp">
-          <img src="assets/a5.jpg" alt="Office cabin glass panel" loading="lazy">
+          <source srcset="assets/images/a5.webp" type="image/webp">
+          <img src="assets/images/a5.jpg" alt="Office cabin glass panel" loading="lazy">
         </picture>
         <picture>
-          <source srcset="assets/a6.webp" type="image/webp">
-          <img src="assets/a6.jpg" alt="Modern false ceiling" loading="lazy">
+          <source srcset="assets/images/a6.webp" type="image/webp">
+          <img src="assets/images/a6.jpg" alt="Modern false ceiling" loading="lazy">
         </picture>
       </div>
     </div>
@@ -153,6 +159,7 @@
       </div>
     </div>
   </section>
+  <p class="back-top"><a href="#top">Back to top</a></p>
 </main>
 <footer class="footer">
   <div class="container">
@@ -163,9 +170,11 @@
     <div id="reviews"></div>
   </div>
 </footer>
-<script src="js/bundle.min.js" defer></script>
+<script src="assets/js/bundle.min.js" defer></script>
 <script>
-// npm scripts can be used to bundle and minify assets with tools like gulp or esbuild
+// Build step example:
+// npm install --save-dev gulp gulp-clean-css gulp-uglify
+// gulp.task('minify',()=>gulp.src('src/css/*.css').pipe(cleanCss()).pipe(gulp.dest('public/assets/css')));
 function toggleMenu(){
   const menu=document.getElementById('mobileNav');
   const btn=document.querySelector('.menu-icon');
@@ -177,7 +186,10 @@ function toggleMenu(){
   }
 }
 // Example fetch of recent Google reviews
-// fetch('reviews-endpoint').then(r=>r.json()).then(showReviews);
+// fetch('reviews.json').then(r=>r.json()).then(data=>{
+//   const wrap=document.getElementById('reviews');
+//   data.reviews.slice(0,3).forEach(rv=>{const p=document.createElement('p');p.textContent=rv.text;wrap.appendChild(p);});
+// });
 </script>
 </body>
 </html>

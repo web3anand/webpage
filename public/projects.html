@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Interior Decoration Thoothukudi Projects</title>
-  <meta name="description" content="View recent AV Interior Decoration projects in Thoothukudi including false ceilings and office décor installations.">
+  <meta name="description" content="View AV Interior Decoration projects in Thoothukudi, showcasing false ceilings, flooring and office décor. Get inspired and contact us to start your makeover.">
+  <meta property="og:title" content="Interior Decoration Thoothukudi Projects">
+  <meta property="og:description" content="View AV Interior Decoration projects in Thoothukudi, showcasing false ceilings, flooring and office décor. Get inspired and contact us to start your makeover.">
+  <meta property="og:image" content="https://avinteriordecoration.com/assets/images/logo.webp">
+  <meta property="og:url" content="https://avinteriordecoration.com/projects.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="css/style.min.css" as="style">
-  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="preload" href="assets/css/style.min.css" as="style">
+  <link rel="stylesheet" href="assets/css/style.min.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -29,13 +33,14 @@
   }
   </script>
 </head>
-<body>
+<body id="top">
+<header>
 <nav class="navbar">
   <div class="container nav-container">
     <a href="index.html" class="logo">
       <picture>
-        <source srcset="assets/logo.webp" type="image/webp">
-        <img src="assets/logo.jpg" alt="AV Interior Decoration logo" loading="lazy" class="logo-img">
+        <source srcset="assets/images/logo.webp" type="image/webp">
+        <img src="assets/images/logo.jpg" alt="AV Interior Decoration logo" loading="lazy" class="logo-img">
       </picture>
       <span>AV INTERIOR DECORATION</span>
     </a>
@@ -52,8 +57,9 @@
       <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </div>
-  </div>
+    </div>
 </nav>
+</header>
 <main>
   <section class="projects-page">
     <div class="container">
@@ -61,25 +67,26 @@
       <div class="projects-grid">
         <div class="project-card">
           <picture>
-            <source srcset="assets/hero1.webp" type="image/webp">
-            <img src="assets/hero1.jpg" alt="Living room false ceiling" loading="lazy">
+            <source srcset="assets/images/hero1.webp" type="image/webp">
+            <img src="assets/images/hero1.jpg" alt="Living room false ceiling" loading="lazy">
           </picture>
         </div>
         <div class="project-card">
           <picture>
-            <source srcset="assets/a5.webp" type="image/webp">
-            <img src="assets/a5.jpg" alt="Office partition work" loading="lazy">
+            <source srcset="assets/images/a5.webp" type="image/webp">
+            <img src="assets/images/a5.jpg" alt="Office partition work" loading="lazy">
           </picture>
         </div>
         <div class="project-card">
           <picture>
-            <source srcset="assets/a6.webp" type="image/webp">
-            <img src="assets/a6.jpg" alt="Modern ceiling design" loading="lazy">
+            <source srcset="assets/images/a6.webp" type="image/webp">
+            <img src="assets/images/a6.jpg" alt="Modern ceiling design" loading="lazy">
           </picture>
         </div>
       </div>
     </div>
   </section>
+  <p class="back-top"><a href="#top">Back to top</a></p>
 </main>
 <footer class="footer">
   <div class="container">
@@ -90,7 +97,7 @@
     <div id="reviews"></div>
   </div>
 </footer>
-<script src="js/bundle.min.js" defer></script>
+<script src="assets/js/bundle.min.js" defer></script>
 <script>
 function toggleMenu(){
   const menu=document.getElementById('mobileNav');
