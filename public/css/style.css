@@ -1055,3 +1055,140 @@ a {
   }
 }
 
+/* --- Footer Styles --- */
+.site-footer {
+  color: var(--text-color);
+}
+
+.site-footer .footer-main {
+  background: #f5f1e9;
+  padding: 60px 0;
+}
+
+.footer-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-logo img {
+  width: 120px;
+  height: auto;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-column h4 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.footer-column ul {
+  list-style: none;
+}
+
+.footer-column li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+.footer-newsletter h4 {
+  margin-bottom: 1rem;
+}
+
+.newsletter-form {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  min-width: 0;
+}
+
+.newsletter-form button {
+  padding: 0.5rem 1rem;
+  background: maroon;
+  color: #fff;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.newsletter-form button:hover {
+  opacity: 0.9;
+}
+
+.social-links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.social-links img {
+  width: 24px;
+  height: 24px;
+}
+
+.footer-bar {
+  background: #222;
+  color: #fff;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.footer-bar .bar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bar a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .footer-flex {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    border-radius: 4px;
+  }
+
+  .newsletter-form button {
+    margin-top: 0.5rem;
+  }
+
+  .footer-bar .bar-content {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
