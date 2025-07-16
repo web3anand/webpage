@@ -477,8 +477,17 @@ a {
 
 /* CATEGORIES */
 .categories {
-  padding: var(--spacing-lg) 0;
+  padding: 4rem 0;
   text-align: center;
+}
+
+.categories .container {
+  background: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 .category-grid {
   display: grid;
@@ -746,15 +755,18 @@ a {
 
 /* SERVICE LIST */
 .service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   max-width: 600px;
-  margin: auto;
+  margin: 0 auto;
   text-align: left;
 }
 .service-category {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1rem;
+  margin: 0;
   overflow: hidden;
 }
 .category-title {
