@@ -2,6 +2,7 @@
 :root {
   --primary-color: #a67c52;
   --accent-color: #dbc8a0;
+  --secondary-color: #6c757d;
   --dark-color: #2e2b29;
   --text-color: #2b2a28;
   --bg-light: #f8f6f1;
@@ -675,7 +676,8 @@ a {
 }
 
 .categories-card {
-  background-color: #ccc;
+  background-color: #fff;
+  color: var(--secondary-color);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
