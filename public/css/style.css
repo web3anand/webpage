@@ -476,10 +476,17 @@ a {
 }
 
 /* CATEGORIES */
-.categories {
+.service-categories {
   padding: var(--spacing-lg) 0;
   text-align: center;
-  background-color: #d3b89f;
+}
+
+.categories-card {
+  background-color: #ccc;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 2rem 0;
 }
 .category-grid {
   display: grid;
