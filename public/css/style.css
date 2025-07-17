@@ -481,6 +481,7 @@ a {
   text-align: center;
   background-color: #d4aa82;
   width: 70%;
+  align-items: center;
 }
 .category-grid {
   display: grid;
