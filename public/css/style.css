@@ -788,8 +788,8 @@ a {
   padding-bottom: 1rem;
 }
 .sub-services li {
-  background: #fff;
-  border: 1px solid var(--accent-color);
+  background: var(--bg-light);
+  border: none;
   border-radius: 6px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   padding: 0.5rem;
