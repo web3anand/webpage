@@ -487,8 +487,7 @@ a {
   gap: 1rem;
 }
 .category-card {
-  background: #fff;
-  border: 2px solid var(--primary-color);
+  background: #c2b9b9;
   padding: 1rem;
   border-radius: 8px;
   font-weight: 600;
