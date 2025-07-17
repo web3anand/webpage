@@ -10,6 +10,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalClose = modal ? modal.querySelector(".modal-close") : null;
   const quoteBtn = modal ? modal.querySelector("#quoteBtn") : null;
 
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.animate-title')
+          .forEach(el => observer.observe(el));
+
   const showQuoteButton = id => {
     if (!quoteBtn) return;
     quoteBtn.href = `contact.html?service=${id}`;
@@ -238,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const first = cat.services[0];
       card.innerHTML = `
         <img src="${first.img}" alt="${cat.name}">
-        <h3>${cat.name}</h3>
+        <h3 class="topic-title animate-title">${cat.name}</h3>
         <p>${descriptions[cat.name] || `Explore our ${cat.name.toLowerCase()} solutions.`}</p>
         <button class="details-toggle btn">View Details</button>
       `;
