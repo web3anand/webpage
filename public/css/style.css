@@ -476,18 +476,10 @@ a {
 }
 
 /* CATEGORIES */
-.service-categories {
+.categories {
   padding: var(--spacing-lg) 0;
   text-align: center;
-  background-color: #fff;
-}
-
-.categories-card {
-  background-color: var(--accent-color);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin: 2rem 0;
+  background-color: #d3b89f;
 }
 .category-grid {
   display: grid;
@@ -495,7 +487,8 @@ a {
   gap: 1rem;
 }
 .category-card {
-  background: #c2b9b9;
+  background: #fff;
+  border: 2px solid var(--primary-color);
   padding: 1rem;
   border-radius: 8px;
   font-weight: 600;
