@@ -1,0 +1,68 @@
+<section id="experience" class="relative overflow-hidden">
+  <!-- SVG Top Divider -->
+  <svg class="absolute top-0 left-0 w-full -mt-1" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 C150,30 300,0 450,30 C600,60 750,60 900,30 C1050,0 1200,30 1440,60 V0 H0 V60 Z" fill="currentColor" class="text-white"/>
+  </svg>
+  <!-- HTML Content -->
+  <div class="relative py-16 bg-gradient-to-br from-white/70 to-gray-100/60 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="bg-white/80 rounded-lg p-6 text-center transform transition hover:-translate-y-1 hover:shadow-lg">
+        <img src="icons/years.svg" alt="Years" class="w-12 h-12 mx-auto mb-4" />
+        <span class="count text-4xl font-bold text-gray-900" data-target="10">0</span>
+        <p class="mt-2 text-sm font-semibold tracking-widest text-gray-600">YEARS EXPERIENCE</p>
+      </div>
+      <div class="bg-white/80 rounded-lg p-6 text-center transform transition hover:-translate-y-1 hover:shadow-lg">
+        <img src="icons/projects.svg" alt="Projects" class="w-12 h-12 mx-auto mb-4" />
+        <span class="count text-4xl font-bold text-gray-900" data-target="120">0</span>
+        <p class="mt-2 text-sm font-semibold tracking-widest text-gray-600">PROJECTS COMPLETED</p>
+      </div>
+      <div class="bg-white/80 rounded-lg p-6 text-center transform transition hover:-translate-y-1 hover:shadow-lg">
+        <img src="icons/clients.svg" alt="Clients" class="w-12 h-12 mx-auto mb-4" />
+        <span class="count text-4xl font-bold text-gray-900" data-target="85">0</span>
+        <p class="mt-2 text-sm font-semibold tracking-widest text-gray-600">HAPPY CLIENTS</p>
+      </div>
+      <div class="bg-white/80 rounded-lg p-6 text-center transform transition hover:-translate-y-1 hover:shadow-lg">
+        <img src="icons/awards.svg" alt="Awards" class="w-12 h-12 mx-auto mb-4" />
+        <span class="count text-4xl font-bold text-gray-900" data-target="5">0</span>
+        <p class="mt-2 text-sm font-semibold tracking-widest text-gray-600">AWARDS WON</p>
+      </div>
+    </div>
+  </div>
+  <!-- SVG Bottom Divider -->
+  <svg class="absolute bottom-0 left-0 w-full rotate-180 -mb-1" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 C150,30 300,0 450,30 C600,60 750,60 900,30 C1050,0 1200,30 1440,60 V0 H0 V60 Z" fill="currentColor" class="text-white"/>
+  </svg>
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const counters = document.querySelectorAll('#experience .count');
+      const options = { threshold: 0.4 };
+
+      const animateCount = (el) => {
+        const target = +el.getAttribute('data-target');
+        let count = 0;
+        const step = () => {
+          count += target / 60;
+          if (count < target) {
+            el.textContent = Math.ceil(count);
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = target;
+          }
+        };
+        step();
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+            entry.target.classList.add('counted');
+            animateCount(entry.target);
+          }
+        });
+      }, options);
+
+      counters.forEach(counter => observer.observe(counter));
+    });
+  </script>
+</section>
