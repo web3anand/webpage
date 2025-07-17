@@ -479,9 +479,7 @@ a {
 .categories {
   padding: var(--spacing-lg) 0;
   text-align: center;
-  background-color: #d4aa82;
-  width: 70%;
-  align-items: center;
+  background-color: #d3b89f;
 }
 .category-grid {
   display: grid;
