@@ -876,7 +876,7 @@ a {
     margin-bottom: 1.2rem;
   }
   .hero {
-    min-height: 50vh;
+    min-height: 60vh;
     background: none;
     padding: 0 0 var(--spacing-md);
     justify-content: flex-end;
@@ -892,7 +892,7 @@ a {
   background: rgba(252, 246, 246, 0.603); /* light frosted glass */
   backdrop-filter: blur(16px);
   border-radius: 16px;
-  max-width: 90%;
+  max-width: 80%;
   box-shadow: 0 6px 30px rgba(219, 200, 160, 0.2); /* warm glow */
   color: var(--dark-color);
   border: 1px solid rgba(255, 255, 255, 0.12);
