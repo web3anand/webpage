@@ -1113,10 +1113,10 @@ a {
 .footer-bar {
   background: #222;
   color: #fff;
-  height: 30px;
   display: flex;
   align-items: center;
   font-size: 0.875rem;
+  padding: 0.5rem 0;
 }
 
 .footer-bar .bar-content {
