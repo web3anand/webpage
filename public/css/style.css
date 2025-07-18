@@ -220,7 +220,7 @@ a {
   position: relative;
   background: url('../assets/hero.jpg') center/cover no-repeat;
   color: var(--dark-color);
-  min-height: 65vh;
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -876,7 +876,7 @@ a {
     margin-bottom: 1.2rem;
   }
   .hero {
-    min-height: 60vh;
+    min-height: 80vh;
     background: none;
     padding: 0 0 var(--spacing-md);
     justify-content: flex-end;
@@ -927,17 +927,17 @@ a {
 /* Desktop view adjustments */
 @media (min-width: 769px) {
   .hero {
-    min-height: 70vh;
+    min-height: 80vh;
     background: none;
   }
 
   .hero-carousel {
     display: block;
-    height: 70vh;
+    height: 80vh;
   }
 
   .hero-carousel img {
-    height: 70vh;
+    height: 80vh;
   }
 
 
