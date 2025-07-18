@@ -876,6 +876,7 @@ a {
     margin-bottom: 1.2rem;
   }
   .hero {
+    min-height: 50vh;
     background: none;
     padding: 0 0 var(--spacing-md);
     justify-content: flex-end;
