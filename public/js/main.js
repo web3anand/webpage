@@ -1,289 +1,287 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const carouselTrack = document.getElementById("carousel-track");
-  const carouselContainer = document.getElementById("carousel-container");
-  const serviceListEl = document.getElementById("service-list");
-  const servicesGrid = document.getElementById("servicesGrid");
-  const filterControls = document.getElementById("filterControls");
-  const heroCarousel = document.getElementById("hero-carousel");
-  const modal = document.getElementById("subItemsModal");
-  const modalItems = modal ? modal.querySelector(".modal-items") : null;
-  const modalClose = modal ? modal.querySelector(".modal-close") : null;
-  const quoteBtn = modal ? modal.querySelector("#quoteBtn") : null;
+/**
+ * AV Interior Decoration — page behaviour.
+ *
+ * Small, dependency-free progressive enhancements:
+ *   · sticky header shadow
+ *   · mobile navigation panel
+ *   · project photo lightbox
+ *   · quotation form that composes a WhatsApp message
+ */
+(() => {
+  "use strict";
 
-  const showQuoteButton = id => {
-    if (!quoteBtn) return;
-    quoteBtn.href = `contact.html?service=${id}`;
-    quoteBtn.style.display = "block";
-    quoteBtn.classList.remove("animate");
-    void quoteBtn.offsetWidth;
-    quoteBtn.classList.add("animate");
-  };
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
-  const openModal = (items, highlightId = null) => {
-    if (!modal || !modalItems) return;
-    modalItems.innerHTML = "";
-    items.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "sub-item-card";
-      div.dataset.serviceId = item.id;
-      if (highlightId && item.id === highlightId) div.classList.add("highlight");
-      div.innerHTML = `
-        <img src="${item.img}" alt="${item.name}">
-        <h4>${item.name}</h4>`;
-      div.addEventListener("click", () => {
-        modalItems.querySelectorAll(".sub-item-card").forEach(el => el.classList.remove("highlight"));
-        div.classList.add("highlight");
-        showQuoteButton(item.id);
-      });
-      modalItems.appendChild(div);
-    });
-    modal.classList.add("open");
-    if (quoteBtn) {
-      quoteBtn.style.display = "none";
-      quoteBtn.classList.remove("animate");
-    }
-    if (highlightId) {
-      const el = modalItems.querySelector(`.sub-item-card[data-service-id="${highlightId}"]`);
-      if (el) {
-        showQuoteButton(highlightId);
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }
-  };
+  /* ------------------------------------------------------------- header */
 
-  const closeModal = () => {
-    if (modal) modal.classList.remove("open");
-    if (quoteBtn) {
-      quoteBtn.style.display = "none";
-      quoteBtn.classList.remove("animate");
-    }
-  };
-
-  if (modalClose) modalClose.addEventListener("click", closeModal);
-  if (modal) {
-    modal.addEventListener("click", e => {
-      if (e.target === modal) closeModal();
-    });
+  const header = $("[data-header]");
+  if (header) {
+    const setStuck = () => header.classList.toggle("is-stuck", window.scrollY > 8);
+    setStuck();
+    window.addEventListener("scroll", setStuck, { passive: true });
   }
 
-  if (heroCarousel) {
-    const slidesContainer = heroCarousel.querySelector(".slides");
-    const slides = heroCarousel.querySelectorAll("img");
-    let heroIndex = 0;
-    const heroInterval = 4000;
+  /* -------------------------------------------------------- mobile menu (bottom sheet) */
 
-    const updateHeroSlide = () => {
-      slidesContainer.style.transform = `translateX(-${heroIndex * 100}%)`;
-    };
+  const menuBtns = $$("[data-menu-btn]");
+  const mobileNav = $("[data-mobile-nav]");
+  const backdrop = $("[data-sheet-backdrop]");
+  const closeBtns = $$("[data-sheet-close]");
 
-    const nextHeroSlide = () => {
-      heroIndex = (heroIndex + 1) % slides.length;
-      updateHeroSlide();
-    };
-
-    let heroTimer = setInterval(nextHeroSlide, heroInterval);
-    let startX = 0;
-    heroCarousel.addEventListener("touchstart", e => {
-      startX = e.touches[0].clientX;
-      clearInterval(heroTimer);
-    });
-    heroCarousel.addEventListener("touchend", e => {
-      const diff = e.changedTouches[0].clientX - startX;
-      if (diff > 50) {
-        heroIndex = (heroIndex - 1 + slides.length) % slides.length;
-      } else if (diff < -50) {
-        heroIndex = (heroIndex + 1) % slides.length;
-      }
-      updateHeroSlide();
-      heroTimer = setInterval(nextHeroSlide, heroInterval);
-    });
-  }
-
-  if (carouselTrack && carouselContainer) {
-    projectImages.forEach(project => {
-      const slide = document.createElement("div");
-      slide.className = "carousel-item";
-      slide.innerHTML = `<img src="${project.src}" alt="${project.alt}">`;
-      carouselTrack.appendChild(slide);
-    });
-
-    // Duplicate slides for seamless looping
-    const slides = Array.from(carouselTrack.children);
-    slides.forEach(slide => {
-      const clone = slide.cloneNode(true);
-      clone.classList.add("clone");
-      carouselTrack.appendChild(clone);
-    });
-
-    let frameId;
-    const speed = 20; // pixels per frame
-    const maxScroll = carouselTrack.scrollWidth / 2;
-    const startContinuousScroll = () => {
-      const step = () => {
-        carouselContainer.scrollLeft += speed;
-        if (carouselContainer.scrollLeft >= maxScroll) {
-          carouselContainer.scrollLeft = 0;
-        }
-        frameId = requestAnimationFrame(step);
-      };
-      frameId = requestAnimationFrame(step);
-    };
-    const stopContinuousScroll = () => cancelAnimationFrame(frameId);
-
-    carouselContainer.addEventListener("mouseenter", stopContinuousScroll);
-    carouselContainer.addEventListener("touchstart", stopContinuousScroll);
-    carouselContainer.addEventListener("mouseleave", startContinuousScroll);
-    carouselContainer.addEventListener("touchend", startContinuousScroll);
-
-    const enlargeImage = img => {
-      document.querySelectorAll(".carousel-item img").forEach(el => el.classList.remove("enlarged"));
-      img.classList.add("enlarged");
-      setTimeout(() => {
-        img.classList.remove("enlarged");
-      }, 3000);
-    };
-
-    carouselTrack.addEventListener("click", e => {
-      const img = e.target.closest("img");
-      if (img) enlargeImage(img);
-    });
-    carouselTrack.addEventListener("touchstart", e => {
-      const img = e.target.closest("img");
-      if (img) enlargeImage(img);
-    });
-    startContinuousScroll();
-  }
-
-  if (serviceListEl) {
-    serviceList.forEach(cat => {
-      const wrapper = document.createElement("div");
-      wrapper.className = "service-category";
-
-      const title = document.createElement("div");
-      title.className = "category-title";
-      title.textContent = cat.name;
-
-      const list = document.createElement("ul");
-      list.className = "sub-services";
-
-      cat.services.forEach(item => {
-        const li = document.createElement("li");
-        li.className = "sub-card";
-        li.innerHTML = `
-          <a href="services.html?item=${item.id}">
-            <img src="${item.img}" alt="${item.name}" />
-            <span>${item.name}</span>
-          </a>`;
-        list.appendChild(li);
-      });
-
-      title.addEventListener("click", () => {
-        document.querySelectorAll(".service-category .sub-services").forEach(el => {
-          if (el !== list) {
-            el.classList.remove("open");
-            el.style.maxHeight = null;
+  if (mobileNav) {
+    const setOpen = (open) => {
+      if (open) {
+        mobileNav.hidden = false;
+        if (backdrop) backdrop.hidden = false;
+        // Trigger reflow for CSS slide-up transition
+        void mobileNav.offsetHeight;
+        mobileNav.classList.add("is-open");
+        if (backdrop) backdrop.classList.add("is-visible");
+      } else {
+        mobileNav.classList.remove("is-open");
+        if (backdrop) backdrop.classList.remove("is-visible");
+        setTimeout(() => {
+          if (!mobileNav.classList.contains("is-open")) {
+            mobileNav.hidden = true;
+            if (backdrop) backdrop.hidden = true;
           }
-        });
-        document.querySelectorAll(".service-category .category-title").forEach(el => {
-          if (el !== title) el.classList.remove("open");
-        });
+        }, 320);
+      }
 
-        const isOpen = list.classList.toggle("open");
-        title.classList.toggle("open");
-        if (isOpen) {
-          list.style.maxHeight = list.scrollHeight + "px";
-        } else {
-          list.style.maxHeight = null;
-        }
+      menuBtns.forEach((btn) => {
+        btn.setAttribute("aria-expanded", String(open));
+        btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        btn.classList.toggle("is-active", open);
       });
-
-      wrapper.appendChild(title);
-      wrapper.appendChild(list);
-      serviceListEl.appendChild(wrapper);
-    });
-  }
-
-  if (servicesGrid) {
-    const descriptions = {
-      "Cupboards": "Modular kitchens and custom storage solutions.",
-      "Glass Works": "Quality glass partitions and railings.",
-      "Blinds": "Range of blinds and curtains for every need.",
-      "False Ceiling": "Stylish designs to enhance your interiors.",
-      "MosquitoNet": "Durable nets for doors and windows.",
-      "Flooring": "Vinyl, wooden and carpet options.",
-      "Aluminium works": "Partitions, windows and more.",
-      "UPVC Work": "UPVC windows, doors and partitions."
+      document.body.classList.toggle("nav-open", open);
     };
 
-    const frag = document.createDocumentFragment();
-    const allBtn = document.createElement("button");
-    allBtn.className = "filter-btn active";
-    allBtn.dataset.filter = "all";
-    allBtn.textContent = "All";
-    frag.appendChild(allBtn);
-
-    serviceList.forEach(cat => {
-      const btn = document.createElement("button");
-      btn.className = "filter-btn";
-      btn.dataset.filter = cat.name;
-      btn.textContent = cat.name;
-      frag.appendChild(btn);
-    });
-    if (filterControls) filterControls.appendChild(frag);
-
-    serviceList.forEach(cat => {
-      const card = document.createElement("div");
-      card.className = "service-card";
-      card.dataset.category = cat.name;
-      const first = cat.services[0];
-      card.innerHTML = `
-        <img src="${first.img}" alt="${cat.name}">
-        <h3>${cat.name}</h3>
-        <p>${descriptions[cat.name] || `Explore our ${cat.name.toLowerCase()} solutions.`}</p>
-        <button class="details-toggle btn">View Details</button>
-      `;
-
-      const toggleBtn = card.querySelector(".details-toggle");
-      toggleBtn.addEventListener("click", e => {
-        e.preventDefault();
-        openModal(cat.services);
+    menuBtns.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const isOpen = mobileNav.classList.contains("is-open");
+        setOpen(!isOpen);
       });
-
-      servicesGrid.appendChild(card);
     });
 
-    if (filterControls) {
-      filterControls.addEventListener("click", e => {
-        const btn = e.target.closest(".filter-btn");
-        if (!btn) return;
-        filterControls.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        const filter = btn.dataset.filter;
-        servicesGrid.querySelectorAll(".service-card").forEach(card => {
-          const show = filter === "all" || card.dataset.category === filter;
-          card.style.display = show ? "" : "none";
-        });
+    closeBtns.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setOpen(false);
       });
+    });
+
+    if (backdrop) {
+      backdrop.addEventListener("click", () => setOpen(false));
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const itemId = params.get("item");
-    if (itemId) {
-      const cat = serviceList.find(c => c.services.some(s => s.id === itemId));
-      if (cat) {
-        if (filterControls) {
-          const targetBtn = filterControls.querySelector(`[data-filter="${cat.name}"]`);
-          if (targetBtn) {
-            filterControls.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-            targetBtn.classList.add("active");
-          }
-        }
-        servicesGrid.querySelectorAll(".service-card").forEach(card => {
-          const show = card.dataset.category === cat.name;
-          card.style.display = show ? "" : "none";
-        });
-        openModal(cat.services, itemId);
+    $$("a", mobileNav).forEach((link) => link.addEventListener("click", () => setOpen(false)));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && mobileNav.classList.contains("is-open")) {
+        setOpen(false);
+        if (menuBtns[0]) menuBtns[0].focus();
       }
-    }
+    });
+
+    const desktop = window.matchMedia("(min-width: 1025px)");
+    desktop.addEventListener("change", (event) => {
+      if (event.matches && mobileNav.classList.contains("is-open")) {
+        setOpen(false);
+      }
+    });
   }
-});
+
+  /* ----------------------------------------------------------- lightbox */
+
+  const lightbox = $("[data-lightbox]");
+  const lightboxImg = $("[data-lightbox-img]", lightbox || document);
+  const lightboxCaption = $("[data-lightbox-caption]", lightbox || document);
+  const lightboxClose = $("[data-lightbox-close]", lightbox || document);
+  let lastFocused = null;
+
+  const closeLightbox = () => {
+    if (!lightbox || lightbox.hidden) return;
+    lightbox.hidden = true;
+    document.body.classList.remove("nav-open");
+    lightboxImg.removeAttribute("src");
+    if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+  };
+
+  const openLightbox = (item) => {
+    if (!lightbox) return;
+    const image = $("img", item);
+    lastFocused = item;
+    lightboxImg.src = item.getAttribute("href");
+    lightboxImg.alt = image ? image.alt : "";
+    lightboxCaption.textContent = item.dataset.caption || (image ? image.alt : "");
+    lightbox.hidden = false;
+    document.body.classList.add("nav-open");
+    lightboxClose.focus();
+  };
+
+  if (lightbox) {
+    $$("[data-lightbox-item]").forEach((item) => {
+      item.addEventListener("click", (event) => {
+        event.preventDefault();
+        openLightbox(item);
+      });
+    });
+
+    lightboxClose.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !lightbox.hidden) closeLightbox();
+    });
+  }
+
+  /* ------------------------------------------------------- scroll motion */
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const progress = document.createElement("div");
+  progress.className = "scroll-progress";
+  progress.setAttribute("aria-hidden", "true");
+  document.body.appendChild(progress);
+
+  const parallaxItems = $$("[data-parallax]");
+  let frame = null;
+  let scrollMax = 0;
+
+  const onScroll = () => {
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = null;
+
+      if (!scrollMax) {
+        scrollMax = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      }
+
+      const ratio = scrollMax > 0 ? Math.min(window.scrollY / scrollMax, 1) : 0;
+      progress.style.transform = `scaleX(${ratio})`;
+
+      if (reduceMotion) return;
+
+      const viewport = window.innerHeight;
+      parallaxItems.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < -80 || rect.top > viewport + 80) return;
+        const offset = (rect.top + rect.height / 2 - viewport / 2) / viewport;
+        const shift = Math.max(-32, Math.min(32, offset * -34));
+        el.style.setProperty("--py", `${shift.toFixed(1)}px`);
+      });
+    });
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", () => {
+    scrollMax = 0;
+    onScroll();
+  });
+
+  const revealItems = $$("[data-reveal]");
+
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    const revealer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-in");
+          revealer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -6% 0px", threshold: 0.08 },
+    );
+    revealItems.forEach((el) => revealer.observe(el));
+  } else {
+    revealItems.forEach((el) => el.classList.add("is-in"));
+  }
+
+  /* ------------------------------------------------------- quote form */
+
+  const form = $("[data-quote-form]");
+
+  if (form) {
+    const status = $("[data-form-status]", form);
+    const serviceSelect = $("#service", form);
+    const serviceMap = (() => {
+      try {
+        return JSON.parse(form.dataset.serviceMap || "{}");
+      } catch {
+        return {};
+      }
+    })();
+
+    // Preselect a service when arriving from /contact?service=slug
+    const requested = new URLSearchParams(window.location.search).get("service");
+    const requestedName = requested ? serviceMap[requested] : "";
+    if (requestedName && serviceSelect) {
+      const match = [...serviceSelect.options].find((option) =>
+        option.value.startsWith(`${requestedName} —`),
+      );
+      if (match) serviceSelect.value = match.value;
+    }
+
+    const setStatus = (message, state = "") => {
+      if (!status) return;
+      status.textContent = message;
+      status.classList.toggle("is-error", state === "error");
+      status.classList.toggle("is-ok", state === "ok");
+    };
+
+    const whatsappNumber = (() => {
+      const callLink = $('a[href^="tel:"]');
+      const digits = callLink ? callLink.getAttribute("href").replace(/\D/g, "") : "";
+      return digits || "919715032513";
+    })();
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const name = String(data.get("name") || "").trim();
+      const phone = String(data.get("phone") || "").trim();
+      const location = String(data.get("location") || "").trim();
+      const service = String(data.get("service") || "").trim();
+      const message = String(data.get("message") || "").trim();
+
+      if (!name) {
+        setStatus("Please add your name so we know who to reply to.", "error");
+        $("#name", form).focus();
+        return;
+      }
+
+      if (phone.replace(/\D/g, "").length < 10) {
+        setStatus("Please check the phone number — it needs at least 10 digits.", "error");
+        $("#phone", form).focus();
+        return;
+      }
+
+      const lines = [
+        "Hello AV Interior Decoration, I would like a quotation.",
+        "",
+        `Name: ${name}`,
+        `Phone: ${phone}`,
+        location ? `Area: ${location}` : "",
+        service ? `Service: ${service}` : "",
+        message ? `Details: ${message}` : "",
+      ].filter(Boolean);
+
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join("\n"))}`;
+
+      setStatus("Opening WhatsApp with your details…", "ok");
+      window.open(url, "_blank", "noopener");
+    });
+
+    form.addEventListener("input", () => {
+      if (status && (status.classList.contains("is-error") || status.classList.contains("is-ok"))) {
+        setStatus("We reply during working hours, usually the same day.");
+      }
+    });
+  }
+})();

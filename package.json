@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "AV Interior Decoration website",
   "scripts": {
+    "build": "node tools/build.mjs",
+    "optimize": "node tools/optimize-images.mjs",
+    "logo": "node tools/logo.mjs",
+    "start": "node tools/serve.mjs",
     "test": "echo \"No tests specified\""
   }
 }

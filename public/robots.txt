@@ -1,0 +1,5 @@
+# AV Interior Decoration
+User-agent: *
+Allow: /
+
+Sitemap: https://avinteriordecoration.com/sitemap.xml
