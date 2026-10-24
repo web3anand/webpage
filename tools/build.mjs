@@ -525,6 +525,12 @@ function page({
         "@id": `${site.url}/#website`,
         url: `${site.url}/`,
         name: site.name,
+        alternateName: [
+          "AV Interior",
+          "AV Interior Thoothukudi",
+          "AV Interiors",
+          "AV Interior Decoration Thoothukudi"
+        ],
         inLanguage: "en-IN",
         publisher: { "@id": `${site.url}/#business` },
       },
@@ -574,10 +580,14 @@ function page({
 <meta name="twitter:image" content="${site.url}/assets/img/og-cover.jpg">
 <meta name="twitter:image:alt" content="AV Interior Decoration, Thoothukudi, serving Tamil Nadu">
 
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/favicon.png" type="image/png" sizes="64x64">
-<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
-<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="/icon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/icon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16">
+<link rel="shortcut icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/icon-180.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="alternate" hreflang="en-in" href="${canonical}">
@@ -818,7 +828,7 @@ const pages = [];
 pages.push({
   file: "index.html",
   urlPath: "/",
-  title: "Interior Designers in Thoothukudi | AV Interior Decoration",
+  title: "AV Interior Decoration | Interior Designers in Thoothukudi",
   description:
     "Modular kitchens, false ceilings, UPVC windows, blinds and flooring in Thoothukudi and across Tamil Nadu. One team from measurement to fitting.",
   body: homeBody,

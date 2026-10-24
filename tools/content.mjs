@@ -28,7 +28,8 @@ export const site = {
     // { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "09:00", closes: "19:00" },
   ],
   sameAs: [
-    // "https://www.google.com/maps/place/...", "https://www.facebook.com/...", "https://www.instagram.com/..."
+    "https://maps.app.goo.gl/hczv264ixzfb3xq18",
+    "https://www.google.com/maps/place/AV+INTERIOR+DECORATION/@8.8027577,78.1174878,17z/data=!3m1!4b1!4m6!3m5!1s0x3b03efb2fd3c3353:0x4e6da1e40f53b69d!8m2!3d8.8027577!4d78.1174878!16s%2Fg%2F11j7d3d9tr",
   ],
   geo: { lat: 8.8027577, lng: 78.1174878 },
   mapsLink: "https://maps.app.goo.gl/hczv264ixzfb3xq18",

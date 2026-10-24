@@ -101,12 +101,21 @@ const icon = await sharp(iconBase)
   .png()
   .toBuffer();
 
-for (const size of [512, 192, 180]) {
+for (const size of [512, 192, 180, 144, 96, 48]) {
   await sharp(icon).resize(size, size).png({ compressionLevel: 9 }).toFile(path.join(out, `icon-${size}.png`));
 }
-await sharp(icon).resize(64, 64).png({ compressionLevel: 9 }).toFile(path.join(out, "favicon.png"));
+await sharp(icon).resize(48, 48).png({ compressionLevel: 9 }).toFile(path.join(out, "favicon.png"));
 await sharp(icon).resize(32, 32).png({ compressionLevel: 9 }).toFile(path.join(out, "favicon-32x32.png"));
 await sharp(icon).resize(16, 16).png({ compressionLevel: 9 }).toFile(path.join(out, "favicon-16x16.png"));
+
+// Scalable SVG favicon for modern browsers and search engines
+const iconBase64 = (await sharp(icon).resize(256, 256).png().toBuffer()).toString("base64");
+const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#1B100B"/>
+  <rect x="14" y="14" width="484" height="484" rx="100" fill="none" stroke="#3A2419" stroke-width="2"/>
+  <image href="data:image/png;base64,${iconBase64}" width="512" height="512"/>
+</svg>`;
+fs.writeFileSync(path.join(out, "favicon.svg"), faviconSvg.trim());
 
 // Generate standard multi-resolution favicon.ico
 const icoSizes = [16, 32, 48];
