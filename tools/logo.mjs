@@ -105,8 +105,43 @@ for (const size of [512, 192, 180]) {
   await sharp(icon).resize(size, size).png({ compressionLevel: 9 }).toFile(path.join(out, `icon-${size}.png`));
 }
 await sharp(icon).resize(64, 64).png({ compressionLevel: 9 }).toFile(path.join(out, "favicon.png"));
+await sharp(icon).resize(32, 32).png({ compressionLevel: 9 }).toFile(path.join(out, "favicon-32x32.png"));
+await sharp(icon).resize(16, 16).png({ compressionLevel: 9 }).toFile(path.join(out, "favicon-16x16.png"));
+
+// Generate standard multi-resolution favicon.ico
+const icoSizes = [16, 32, 48];
+const pngBuffers = [];
+for (const s of icoSizes) {
+  const buf = await sharp(icon).resize(s, s).png({ compressionLevel: 9 }).toBuffer();
+  pngBuffers.push({ size: s, buf });
+}
+
+const count = pngBuffers.length;
+const header = Buffer.alloc(6);
+header.writeUInt16LE(0, 0); // reserved
+header.writeUInt16LE(1, 2); // ICO type 1 = icon
+header.writeUInt16LE(count, 4); // number of images
+
+let offset = 6 + count * 16;
+const entries = [];
+for (const item of pngBuffers) {
+  const entry = Buffer.alloc(16);
+  entry.writeUInt8(item.size >= 256 ? 0 : item.size, 0); // width
+  entry.writeUInt8(item.size >= 256 ? 0 : item.size, 1); // height
+  entry.writeUInt8(0, 2); // color palette count
+  entry.writeUInt8(0, 3); // reserved
+  entry.writeUInt16LE(1, 4); // color planes
+  entry.writeUInt16LE(32, 6); // bits per pixel
+  entry.writeUInt32LE(item.buf.length, 8); // size of image data
+  entry.writeUInt32LE(offset, 12); // offset of image data
+  entries.push(entry);
+  offset += item.buf.length;
+}
+
+const icoBuffer = Buffer.concat([header, ...entries, ...pngBuffers.map((p) => p.buf)]);
+fs.writeFileSync(path.join(out, "favicon.ico"), icoBuffer);
 
 // Dark, low-contrast wood chip used by the OG image if it is regenerated.
 void WOOD;
 
-console.log("wrote transparent logo marks, favicon and app icons");
+console.log("wrote transparent logo marks, favicon.ico, favicons and app icons");

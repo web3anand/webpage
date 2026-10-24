@@ -454,4 +454,13 @@
         if (timer) window.clearTimeout(timer);
       });
   }
+
+  /* ----------------------------------------------------------- favorite toggle */
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-fav-btn]");
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    btn.classList.toggle("is-active");
+  });
 })();

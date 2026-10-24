@@ -48,8 +48,17 @@ Everything customer-facing lives in `tools/content.mjs`:
   the generated page and its schema.
 - `gallery`, `homeFaqs`, `whyPoints`, `processSteps`, `trustPoints` — home page
   sections.
+- `testimonials` — real client reviews for the home page (`name`, `place`,
+  `rating`, `text`). It is intentionally empty: until real quotes are added, the
+  reviews section shows the Google reviews link and the review form.
 
 After editing, run `npm run build` and commit the regenerated `public/` files.
+
+The footer visitor count uses [Abacus](https://abacus.jasoncameron.dev). Production
+uses the `av-interior-decoration` namespace and localhost uses `av-interior-dev`,
+so previewing the site never changes the live number. It counts one visit per
+browser, stores only a flag in local storage, respects Do Not Track, and stays
+hidden if the service cannot be reached.
 
 ## Images
 

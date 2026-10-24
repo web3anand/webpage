@@ -115,11 +115,14 @@ const icons = {
   phone: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 3h2.2l1.5 4-2 1.4a12 12 0 005.4 5.4l1.4-2 4 1.5v2.2A2.5 2.5 0 0116.5 18C9.6 17.6 6.4 14.4 6 7.5A2.5 2.5 0 016.5 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
   whatsapp: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5a8.4 8.4 0 00-7.2 12.7L3.6 20.4l4.3-1.1A8.4 8.4 0 1012 3.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.1.3 0 .5.5.9 1.2 1.6 2.1 2.1.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .5-.4 1-.9 1.2-.6.2-1.4.2-2.5-.2a9 9 0 01-4.7-4.7c-.4-1.1-.4-1.9-.2-2.5.1-.4.4-.6.7-.7z" fill="currentColor"/></svg>`,
   pin: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>`,
+  layers: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5l8.5 4.5-8.5 4.5L3.5 8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4.8 12.4L12 16.2l7.2-3.8M4.8 16.4L12 20.2l7.2-3.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   plus: `<svg class="faq-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
   close: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
   menu: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6.5h16M4 12h16M4 17.5h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
   mail: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 7.5l7.5 5.6 7.5-5.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
   star: `<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 2.4l2.3 4.7 5.2.8-3.8 3.6.9 5.1-4.6-2.4-4.6 2.4.9-5.1L2.5 7.9l5.2-.8L10 2.4z" fill="currentColor"/></svg>`,
+  link: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  heart: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
 /* ------------------------------------------------------------------ header */
@@ -430,7 +433,7 @@ function reviewsBlock() {
           <h3>See what others say.</h3>
           <p>Our reviews live on our Google Business profile, from homes, offices and shops across Thoothukudi and Tamil Nadu.</p>
         </div>
-        <a class="btn btn--ink" href="${site.mapsLink}" target="_blank" rel="noopener">Read reviews on Google${icons.arrow}</a>
+        <a class="btn btn--ink" href="${site.mapsLink}" target="_blank" rel="noopener">Read &amp; place reviews on Google${icons.arrow}</a>
       </div>
 
       <form class="review-form" data-review-form data-whatsapp="${site.whatsapp}" data-reveal>
@@ -571,7 +574,10 @@ function page({
 <meta name="twitter:image" content="${site.url}/assets/img/og-cover.jpg">
 <meta name="twitter:image:alt" content="AV Interior Decoration, Thoothukudi, serving Tamil Nadu">
 
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64">
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16">
 <link rel="apple-touch-icon" href="/icon-180.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="alternate" hreflang="en-in" href="${canonical}">
@@ -617,19 +623,25 @@ ${footer()}
 
 /* -------------------------------------------------------------------- home */
 
-function serviceCard(s, index) {
-  return `<a class="service-card" href="/services/${s.slug}" data-reveal style="--i:${index % 4}">
-    ${img(s.cardImg, {
-      alt: s.heroAlt,
-      sizes: "(max-width: 620px) 50vw, (max-width: 1080px) 33vw, 25vw",
-    })}
-    <span class="service-card__badge" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
-    <span class="service-card__more" aria-hidden="true">${icons.arrow}</span>
-    <div class="service-card__body">
-      <h3>${esc(s.name)}</h3>
-      <p class="service-card__text">${esc(s.short)}</p>
+function serviceCard(s, index, options = {}) {
+  const titleId = `service-card-${s.slug}`;
+  const cardId = options.id ? ` id="${esc(options.id)}"` : "";
+  const href = `/services/${s.slug}`;
+
+  return `<article class="service-card"${cardId} data-reveal style="--i:${index % 4}">
+    <div class="service-card__media">
+      ${img(s.cardImg, {
+        alt: s.heroAlt,
+        className: "service-card__img",
+        sizes: "(max-width: 720px) 50vw, (max-width: 1024px) 33vw, 25vw",
+      })}
     </div>
-  </a>`;
+    <div class="service-card__scrim" aria-hidden="true"></div>
+    <a class="service-card__cover" href="${href}" aria-labelledby="${titleId}"></a>
+    <div class="service-card__content">
+      <h3 id="${titleId}" class="service-card__title">${esc(s.name)}</h3>
+    </div>
+  </article>`;
 }
 
 const homeBody = `
@@ -834,27 +846,11 @@ const serviceIndexBody = `
   </div>
 </section>
 
-<section class="section section--tight">
-  <div class="shell service-index">
-    ${services
-      .map(
-        (s, i) => `<article class="service-block" id="${s.slug}" aria-labelledby="${s.slug}-title" data-reveal style="--i:${i % 2}">
-      <div class="service-block__media">
-        ${img(s.cardImg, {
-          alt: s.heroAlt,
-          sizes: "(max-width: 900px) 100vw, 48vw",
-        })}
-      </div>
-      <div class="service-block__body">
-        <p class="eyebrow">${String(i + 1).padStart(2, "0")} — Service</p>
-        <h2 id="${s.slug}-title"><a href="/services/${s.slug}">${esc(s.name)}</a></h2>
-        <p class="service-block__intro">${esc(s.short)}</p>
-        <ul class="tag-list">${s.types.map((t) => `<li>${esc(t.name)}</li>`).join("")}</ul>
-        <a class="link-arrow" href="/services/${s.slug}">More about ${esc(nameLower(s.name))}${icons.arrow}</a>
-      </div>
-    </article>`,
-      )
-      .join("")}
+<section class="section section--tight" id="all-services">
+  <div class="shell">
+    <div class="service-grid">
+      ${services.map((s, i) => serviceCard(s, i, { id: s.slug })).join("")}
+    </div>
   </div>
 </section>
 

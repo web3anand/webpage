@@ -1227,113 +1227,132 @@ p {
   gap: clamp(16px, 1.8vw, 22px);
 }
 
-.service-card {
-  position: relative;
-  display: block;
-  min-width: 0;
-  overflow: hidden;
-  aspect-ratio: 4 / 4.8;
-  border-radius: 20px;
-  background: var(--wood);
-  box-shadow: 0 2px 10px rgba(42, 26, 17, 0.14);
-  isolation: isolate;
-  transition: box-shadow 0.35s var(--ease), transform 0.35s var(--ease);
+/* Three related services on a detail page: let them fill the row. */
+.service-grid--related {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* Full-bleed photo, the card itself is the frame. */
-.service-card > img {
+.service-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 3 / 3.9;
+  border-radius: 16px;
+  background: #14100d;
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.28), 0 1px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  isolation: isolate;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+/* Inner border dots/stitches matching brand accent, made bigger and colored */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 4.5px;
+  border: 2px dotted #e2b478;
+  border-radius: calc(16px - 4.5px);
+  pointer-events: none;
+  z-index: 6;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  transition: border-color 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+
+.service-card:hover::after {
+  border-color: #ffd899;
+}
+
+/* Media wrapper */
+.service-card__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Base sharp photo */
+.service-card__img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.service-card:hover {
-  box-shadow: 0 24px 48px -22px rgba(0, 0, 0, 0.6);
-  transform: translateY(-4px);
+.service-card:hover .service-card__img {
+  transform: scale(1.04);
 }
 
-.service-card:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-/* Glass chips over the photo. */
-.service-card__badge,
-.service-card__more {
+/* Clean dark contrast scrim gradient behind title (unblurred, sharp photography) */
+.service-card__scrim,
+.service-card__frosted {
   position: absolute;
-  top: 12px;
-  z-index: 2;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.16);
-  color: #fff;
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 42%,
+    rgba(14, 10, 8, 0.18) 60%,
+    rgba(14, 10, 8, 0.62) 80%,
+    rgba(14, 10, 8, 0.92) 100%
+  );
 }
 
-.service-card__badge {
-  left: 12px;
-  padding: 5px 11px;
-  border-radius: var(--radius-pill);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-}
-
-.service-card__more {
-  right: 12px;
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  transition: background 0.25s var(--ease), color 0.25s var(--ease),
-    transform 0.25s var(--ease);
-}
-
-.service-card__more svg {
-  width: 15px;
-  height: 15px;
-}
-
-.service-card:hover .service-card__more {
-  background: #fff;
-  color: var(--ink);
-  transform: translateX(2px);
-}
-
-.service-card__body {
+/* Whole-card link cover */
+.service-card__cover {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-  padding: 14px 16px 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(180deg, rgba(20, 13, 9, 0.56) 0%, rgba(20, 13, 9, 0.74) 100%);
-  backdrop-filter: blur(16px) saturate(135%);
-  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
 }
 
-.service-card h3 {
-  font-size: 17.5px;
+.service-card__cover:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -3px;
+}
+
+/* Title alone at bottom with clean Geist font */
+.service-card__content {
+  position: relative;
+  z-index: 5;
+  margin-top: auto;
+  padding: 22px 20px 24px;
+  pointer-events: none;
+}
+
+.service-card__title {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   line-height: 1.25;
-  color: #fff;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s var(--ease);
 }
 
-.service-card__text {
-  margin-top: 5px;
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.82);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.service-card:hover .service-card__title {
+  transform: translateY(-2px);
 }
+
+
 
 /* ------------------------------------------------------------------- split */
 
@@ -2320,12 +2339,20 @@ html:not(.js) .review-form button[type="submit"] {
 }
 
 .type-card {
+  position: relative;
   margin: 0;
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 20px;
   background: var(--surface);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+.type-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -10px rgba(0, 0, 0, 0.16);
 }
 
 .type-card img {
@@ -2333,14 +2360,21 @@ html:not(.js) .review-form button[type="submit"] {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   background: var(--soft);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.type-card:hover img {
+  transform: scale(1.05);
 }
 
 .type-card figcaption {
-  padding: 10px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink-soft);
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
 }
+
 
 /* ------------------------------------------------------------- notes grid */
 
@@ -3441,27 +3475,30 @@ html:not(.js) .quote-form button[type="submit"] {
     display: none;
   }
 
-  .service-card__badge {
-    top: 9px;
-    left: 9px;
-    padding: 4px 9px;
-    font-size: 9.5px;
+  .service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
 
-  .service-card__more {
-    top: 9px;
-    right: 9px;
-    width: 30px;
-    height: 30px;
+  .service-card {
+    aspect-ratio: 1 / 1.18;
+    border-radius: 14px;
   }
 
-  .service-card__more svg {
-    width: 14px;
-    height: 14px;
+  .service-card::after {
+    inset: 3px;
+    border-width: 1.6px;
+    border-radius: calc(14px - 3px);
   }
 
-  .service-card__text {
-    font-size: 11.5px;
+  .service-card__content {
+    padding: 12px 10px 14px;
+  }
+
+  .service-card__title {
+    font-size: 14.5px;
+    letter-spacing: -0.015em;
+    line-height: 1.22;
   }
 
   .type-grid {
@@ -3598,14 +3635,6 @@ html:not(.js) .quote-form button[type="submit"] {
 
   .trust-bar p {
     font-size: 10.5px;
-  }
-
-  .service-card__body {
-    padding: 12px 12px 14px;
-  }
-
-  .service-card h3 {
-    font-size: 15px;
   }
 
   .process-list {
@@ -3761,6 +3790,50 @@ html:not(.js) .quote-form button[type="submit"] {
   }
 }
 
+/* Two-up cards need slightly tighter type, but a full-width phone card does not. */
+@media (min-width: 561px) and (max-width: 720px) {
+  .service-card__body {
+    padding: 12px 14px 10px;
+  }
+
+  .service-card h3 {
+    font-size: 15.5px;
+  }
+
+  .service-card__short {
+    font-size: 11px;
+  }
+
+  .service-card__index {
+    font-size: 18px;
+  }
+
+  .service-card__meta {
+    gap: 5px 9px;
+    font-size: 10px;
+  }
+
+  .service-card__fact {
+    padding: 9px 10px 10px;
+  }
+
+  .service-card__fact:first-child {
+    padding-left: 14px;
+  }
+
+  .service-card__fact:last-child {
+    padding-right: 14px;
+  }
+
+  .service-card__fact-label {
+    font-size: 8.5px;
+  }
+
+  .service-card__fact-value {
+    font-size: 12.5px;
+  }
+}
+
 @media (max-width: 420px) {
   .hero-copy h1 {
     font-size: 2rem;
@@ -3779,19 +3852,7 @@ html:not(.js) .quote-form button[type="submit"] {
   }
 
   .service-grid {
-    gap: 8px;
-  }
-
-  .service-card__body {
-    padding: 10px 10px 12px;
-  }
-
-  .service-card h3 {
-    font-size: 13.5px;
-  }
-
-  .service-card__text {
-    font-size: 11px;
+    gap: 10px;
   }
 
   .footer-wordmark {
