@@ -17,6 +17,7 @@ import {
   gallery,
   homeFaqs,
   services,
+  testimonials,
 } from "./content.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
@@ -38,16 +39,32 @@ const abs = (p) => `${site.url}${p === "/" ? "/" : p}`;
 
 /* ------------------------------------------------------------------ images */
 
+/**
+ * Variants for one image, keyed by their *actual* pixel width from the
+ * manifest — not the width in the filename. Small sources are never enlarged,
+ * so several requested widths can collapse to the same file size; those are
+ * deduplicated so `srcset` never repeats a descriptor.
+ */
 function variantsFor(name) {
   const base = name.replace(/-\d+$/, "");
   const pattern = new RegExp(`^${base}-(\\d+)$`);
+  const seen = new Set();
   return Object.keys(manifest)
     .map((key) => {
       const match = key.replace(/\.webp$/, "").match(pattern);
-      return match ? { key: key.replace(/\.webp$/, ""), w: Number(match[1]) } : null;
+      if (!match) return null;
+      return {
+        key: key.replace(/\.webp$/, ""),
+        w: manifest[key]?.w || Number(match[1]),
+      };
     })
     .filter(Boolean)
-    .sort((a, b) => a.w - b.w);
+    .sort((a, b) => a.w - b.w)
+    .filter((variant) => {
+      if (seen.has(variant.w)) return false;
+      seen.add(variant.w);
+      return true;
+    });
 }
 
 function img(name, { alt, className = "", sizes, loading = "lazy", priority = false } = {}) {
@@ -67,11 +84,28 @@ function img(name, { alt, className = "", sizes, loading = "lazy", priority = fa
 }
 
 function srcset(name, widths) {
+  const seen = new Set();
   return widths
-    .map((w) => (manifest[`${name}-${w}.webp`] ? `/assets/img/${name}-${w}.webp ${w}w` : null))
+    .map((w) => {
+      const key = `${name}-${w}`;
+      const meta = manifest[`${key}.webp`];
+      if (!meta || seen.has(meta.w)) return null;
+      seen.add(meta.w);
+      return `/assets/img/${key}.webp ${meta.w}w`;
+    })
     .filter(Boolean)
     .join(", ");
 }
+
+/* ---------------------------------------------------------------- helpers */
+
+/** Service names are title-cased; keep acronyms upper-case in running text. */
+const nameLower = (name) => name.toLowerCase().replace(/^upvc\b/, "UPVC");
+
+const waHref = (text) =>
+  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`;
+
+const WA_DEFAULT = "Hello AV Interior Decoration, I would like a quotation for interior work.";
 
 /* ------------------------------------------------------------------- icons */
 
@@ -85,6 +119,7 @@ const icons = {
   close: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
   menu: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6.5h16M4 12h16M4 17.5h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
   mail: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 7.5l7.5 5.6 7.5-5.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+  star: `<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 2.4l2.3 4.7 5.2.8-3.8 3.6.9 5.1-4.6-2.4-4.6 2.4.9-5.1L2.5 7.9l5.2-.8L10 2.4z" fill="currentColor"/></svg>`,
 };
 
 /* ------------------------------------------------------------------ header */
@@ -141,16 +176,15 @@ function footer() {
 
   <div class="shell footer-top">
     <div class="footer-brand">
-      <a class="brand brand--footer" href="/" aria-label="AV Interior Decoration home">
+      <a class="footer-logo" href="/" aria-label="AV Interior Decoration home">
         <img class="brand-mark brand-mark--footer" src="/assets/img/logo-mark.png" width="800" height="830" alt="" aria-hidden="true" decoding="async">
       </a>
-      <p class="footer-blurb">We do interior and exterior finishing for homes, offices and shops. Our office is in Thoothukudi and we work across Tamil Nadu. Ceilings, cupboards, windows, blinds and flooring, fitted by people you can call by name.</p>
-      <p class="footer-tamil" lang="ta">தூத்துக்குடியிலிருந்து, தமிழ்நாடு முழுவதும் சேவை.</p>
-      <address class="footer-address">
-        ${esc(site.street)},<br>${esc(site.locality)}, ${esc(site.region)}<br>
-        <a href="tel:${site.phone}">${esc(site.phoneDisplay)}</a><br>
-        <a href="mailto:${site.email}">${esc(site.email)}</a><br>
-        <a href="mailto:${site.ownerEmail}">${esc(site.ownerEmail)}</a>
+      <p class="footer-name">AV Interior Decoration</p>
+      <p class="footer-tagline">Interiors and exterior finishing for homes, offices and shops across Tamil Nadu.</p>
+      <address class="footer-contact">
+        <a href="tel:${site.phone}">${esc(site.phoneDisplay)}</a>
+        <a href="mailto:${site.email}">${esc(site.email)}</a>
+        <span>${esc(site.street)}, ${esc(site.locality)}, ${esc(site.region)}</span>
       </address>
     </div>
 
@@ -165,13 +199,11 @@ function footer() {
       <h2>Company</h2>
       <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/services">All services</a></li>
         <li><a href="/#work">Our work</a></li>
         <li><a href="/#process">How we work</a></li>
         <li><a href="/#faq">FAQs</a></li>
+        <li><a href="/#reviews">Reviews</a></li>
         <li><a href="/contact">Contact</a></li>
-        <li><a href="/privacy">Privacy</a></li>
-        <li><a href="/terms">Terms</a></li>
       </ul>
     </nav>
 
@@ -179,8 +211,7 @@ function footer() {
       <h2>Start a project</h2>
       <p>Tell us which rooms you want to change. We will visit, measure and send you a clear quote.</p>
       <a class="btn btn--beige btn--block" href="/contact">Book a site visit${icons.arrow}</a>
-      <a class="footer-wa" href="https://wa.me/${site.whatsapp}" target="_blank" rel="noopener">${icons.whatsapp}WhatsApp ${esc(site.phoneDisplay)}</a>
-      <p class="footer-note" lang="ta">வணக்கம். தமிழ்நாடு முழுவதும் எங்கள் சேவை.</p>
+      <a class="footer-wa" href="${waHref(WA_DEFAULT)}" target="_blank" rel="noopener">${icons.whatsapp}WhatsApp ${esc(site.phoneDisplay)}</a>
     </div>
   </div>
 
@@ -191,7 +222,9 @@ function footer() {
 
   <div class="footer-bar">
     <div class="shell footer-bar__inner">
-      <p>© ${YEAR} ${esc(site.name)}. All rights reserved.</p>
+      <p>© ${YEAR} ${esc(site.name)}</p>
+      <p class="footer-legal"><a href="/privacy">Privacy</a><span aria-hidden="true">·</span><a href="/terms">Terms</a></p>
+      <p class="footer-visits" data-visits hidden>Visitors <span data-visit-count>0</span></p>
       <p>Made in Thoothukudi · Serving Tamil Nadu</p>
     </div>
   </div>
@@ -247,7 +280,7 @@ function footer() {
     <span class="mobile-bar__label mobile-bar__label--close">Close</span>
   </button>
   <a class="mobile-bar__btn mobile-bar__btn--call" href="tel:${site.phone}">${icons.phone}<span>Call</span></a>
-  <a class="mobile-bar__btn mobile-bar__btn--wa" href="https://wa.me/${site.whatsapp}" target="_blank" rel="noopener">${icons.whatsapp}<span>WhatsApp</span></a>
+  <a class="mobile-bar__btn mobile-bar__btn--wa" href="${waHref(WA_DEFAULT)}" target="_blank" rel="noopener">${icons.whatsapp}<span>WhatsApp</span></a>
   <a class="mobile-bar__cta" href="/contact">${icons.arrow}<span>Get a quote</span></a>
 </nav>`;
 }
@@ -284,8 +317,21 @@ function localBusiness() {
       streetAddress: site.street,
       addressLocality: site.locality,
       addressRegion: site.region,
+      ...(site.postalCode ? { postalCode: site.postalCode } : {}),
       addressCountry: site.country,
     },
+    hasMap: site.mapsLink,
+    ...(site.sameAs?.length ? { sameAs: site.sameAs } : {}),
+    ...(site.openingHours?.length
+      ? {
+          openingHoursSpecification: site.openingHours.map((slot) => ({
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: slot.days,
+            opens: slot.opens,
+            closes: slot.closes,
+          })),
+        }
+      : {}),
     geo: {
       "@type": "GeoCoordinates",
       latitude: site.geo.lat,
@@ -335,6 +381,84 @@ function breadcrumbs(items) {
         }</li>`,
     )
     .join("")}</ol></nav>`;
+}
+
+function reviewStars(rating) {
+  const score = Math.max(0, Math.min(5, Number(rating) || 0));
+  return `<span class="review-card__stars" role="img" aria-label="${score} out of 5">${Array.from(
+    { length: 5 },
+    (_, i) => `<span class="${i < score ? "is-on" : ""}">${icons.star}</span>`,
+  ).join("")}</span>`;
+}
+
+function reviewCard(r, i) {
+  return `<figure class="review-card" data-reveal style="--i:${i % 3}">
+    ${reviewStars(r.rating)}
+    <blockquote><p>${esc(r.text)}</p></blockquote>
+    <figcaption>
+      <span class="review-card__name">${esc(r.name)}</span>
+      ${r.place ? `<span class="review-card__place">${esc(r.place)}</span>` : ""}
+    </figcaption>
+  </figure>`;
+}
+
+function reviewsBlock() {
+  const ratingInputs = [5, 4, 3, 2, 1]
+    .map(
+      (n) =>
+        `<input type="radio" id="review-rating-${n}" name="rating" value="${n}"${n === 5 ? " checked" : ""}>
+        <label for="review-rating-${n}" title="${n} out of 5"><span aria-hidden="true">&#9733;</span><span class="sr-only">${n} out of 5</span></label>`,
+    )
+    .join("");
+
+  return `<section class="section reviews-section" id="reviews" aria-labelledby="reviews-title">
+  <div class="shell">
+    <header class="section-head" data-reveal>
+      <p class="eyebrow">Reviews</p>
+      <div class="section-head__row">
+        <h2 id="reviews-title">What clients say.</h2>
+        <p class="section-lead">Read verified reviews on Google, or tell us how your own project went. Real feedback helps the next family choose with confidence.</p>
+      </div>
+    </header>
+
+    ${testimonials.length ? `<div class="review-grid">${testimonials.map(reviewCard).join("")}</div>` : ""}
+
+    <div class="reviews-layout">
+      <div class="reviews-google" data-reveal>
+        <p class="reviews-google__kicker">${icons.star} Google reviews</p>
+        <div>
+          <h3>See what others say.</h3>
+          <p>Our reviews live on our Google Business profile, from homes, offices and shops across Thoothukudi and Tamil Nadu.</p>
+        </div>
+        <a class="btn btn--ink" href="${site.mapsLink}" target="_blank" rel="noopener">Read reviews on Google${icons.arrow}</a>
+      </div>
+
+      <form class="review-form" data-review-form data-whatsapp="${site.whatsapp}" data-reveal>
+        <h3>Leave a review</h3>
+        <p class="review-form__lead">Tell us how the work went. We may publish it here with your name.</p>
+        <div class="field">
+          <label for="review-name">Your name <span aria-hidden="true">*</span></label>
+          <input id="review-name" name="name" type="text" autocomplete="name" maxlength="60" required placeholder="e.g. Priya Raman">
+        </div>
+        <fieldset class="review-rating">
+          <legend>Your rating</legend>
+          <div class="review-stars">${ratingInputs}</div>
+        </fieldset>
+        <div class="field">
+          <label for="review-message">Your review <span aria-hidden="true">*</span></label>
+          <textarea id="review-message" name="review" rows="4" maxlength="600" required placeholder="What did we fit, how did it go, and would you recommend us?"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn--accent" type="submit">Send review${icons.whatsapp}</button>
+          <p class="form-note" data-review-status role="status" aria-live="polite">Opens WhatsApp with your review. We may publish it with your name.</p>
+          <noscript>
+            <p class="form-note form-note--noscript">This form needs JavaScript to compose the message. You can still <a href="${waHref("Hello AV Interior Decoration, I would like to leave a review.")}" target="_blank" rel="noopener">send your review on WhatsApp</a> or <a href="mailto:${site.email}?subject=Review%20for%20AV%20Interior%20Decoration">email it</a>.</p>
+          </noscript>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>`;
 }
 
 function faqBlock(faqs, { title = "Questions, answered", lead } = {}) {
@@ -456,7 +580,7 @@ function page({
 <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 ${preload || ""}
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="/css/style.css?v=4">
+<link rel="stylesheet" href="/css/style.css?v=5">
 ${jsonLd(fullGraph)}
 </head>
 <body class="${className}">
@@ -495,18 +619,16 @@ ${footer()}
 
 function serviceCard(s, index) {
   return `<a class="service-card" href="/services/${s.slug}" data-reveal style="--i:${index % 4}">
-    <span class="service-card__media">
-      ${img(s.cardImg, {
-        alt: s.heroAlt,
-        sizes: "(max-width: 620px) 50vw, (max-width: 1080px) 33vw, 25vw",
-      })}
-    </span>
-    <span class="service-card__body">
-      <span class="service-card__index">${String(index + 1).padStart(2, "0")}</span>
+    ${img(s.cardImg, {
+      alt: s.heroAlt,
+      sizes: "(max-width: 620px) 50vw, (max-width: 1080px) 33vw, 25vw",
+    })}
+    <span class="service-card__badge" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+    <span class="service-card__more" aria-hidden="true">${icons.arrow}</span>
+    <div class="service-card__body">
       <h3>${esc(s.name)}</h3>
-      <span class="service-card__text">${esc(s.short)}</span>
-      <span class="service-card__more">View details${icons.arrow}</span>
-    </span>
+      <p class="service-card__text">${esc(s.short)}</p>
+    </div>
   </a>`;
 }
 
@@ -523,9 +645,9 @@ const homeBody = `
       </div>
       <p class="hero-local"><span lang="ta">நம்ம ஊரு, நம்ம வீடு.</span> Our town, our homes.</p>
       <div class="hero-stats">
-        <div><strong data-count="10" data-suffix="+">10+</strong><span>years on site</span></div>
-        <div><strong data-count="500" data-suffix="+">500+</strong><span>projects delivered</span></div>
-        <div><strong data-count="8">8</strong><span>service lines</span></div>
+        <div><strong>10+</strong><span>years on site</span></div>
+        <div><strong>500+</strong><span>projects delivered</span></div>
+        <div><strong>8</strong><span>service lines</span></div>
       </div>
     </div>
 
@@ -566,7 +688,7 @@ const homeBody = `
   </div>
 </section>
 
-<section class="section services-section" aria-labelledby="services-title">
+<section class="section services-section" id="services" aria-labelledby="services-title">
   <div class="shell">
     <header class="section-head" data-reveal>
       <p class="eyebrow">What we do</p>
@@ -658,11 +780,11 @@ const homeBody = `
   </div>
 </section>
 
+${reviewsBlock()}
+
 ${faqBlock(homeFaqs, {
   lead: "The things people usually ask before a first site visit.",
 })}
-
-${ctaBlock()}
 `;
 
 const homeGraph = [
@@ -684,15 +806,15 @@ const pages = [];
 pages.push({
   file: "index.html",
   urlPath: "/",
-  title: "Interior Designers in Thoothukudi & Tamil Nadu | AV Interior Decoration",
+  title: "Interior Designers in Thoothukudi | AV Interior Decoration",
   description:
-    "Modular kitchens, false ceilings, UPVC windows, blinds and flooring. Based in Thoothukudi, working across Tamil Nadu. One team from measurement to fitting. Call +91 97150 32513.",
+    "Modular kitchens, false ceilings, UPVC windows, blinds and flooring in Thoothukudi and across Tamil Nadu. One team from measurement to fitting.",
   body: homeBody,
   graph: homeGraph,
   preload: `<link rel="preload" as="image" href="/assets/img/hero1-1440.webp" imagesrcset="${srcset(
     "hero1",
     [960, 1440, 2000],
-  )}" imagesizes="(max-width: 960px) 100vw, 46vw" fetchpriority="high">`,
+  )}" imagesizes="(max-width: 960px) 100vw, 46vw" media="(min-width: 961px)" fetchpriority="high">`,
 });
 
 /* services index */
@@ -728,7 +850,7 @@ const serviceIndexBody = `
         <h2 id="${s.slug}-title"><a href="/services/${s.slug}">${esc(s.name)}</a></h2>
         <p class="service-block__intro">${esc(s.short)}</p>
         <ul class="tag-list">${s.types.map((t) => `<li>${esc(t.name)}</li>`).join("")}</ul>
-        <a class="link-arrow" href="/services/${s.slug}">More about ${esc(s.name.toLowerCase())}${icons.arrow}</a>
+        <a class="link-arrow" href="/services/${s.slug}">More about ${esc(nameLower(s.name))}${icons.arrow}</a>
       </div>
     </article>`,
       )
@@ -742,9 +864,9 @@ ${ctaBlock({ title: "Not sure which of these you need?" })}
 pages.push({
   file: "services/index.html",
   urlPath: "/services",
-  title: "Interior Services in Thoothukudi & Tamil Nadu | AV Interior Decoration",
+  title: "Interior Services in Thoothukudi | AV Interior Decoration",
   description:
-    "False ceilings, modular kitchens, blinds, UPVC windows, aluminium and glass work, flooring and mosquito nets. Based in Thoothukudi, working across Tamil Nadu.",
+    "False ceilings, modular kitchens, blinds, UPVC windows, aluminium and glass work, flooring and mosquito nets. Thoothukudi, serving Tamil Nadu.",
   body: serviceIndexBody,
   graph: [
     breadcrumbSchema([
@@ -862,7 +984,7 @@ ${faqBlock(s.faqs, { title: `${s.name}: common questions` })}
       <p class="eyebrow">Related</p>
       <div class="section-head__row">
         <h2 id="related-title">Often done at the same time</h2>
-        <p class="section-lead">If you are already moving trades in, these are the services most clients pair with ${esc(s.name.toLowerCase())}.</p>
+        <p class="section-lead">If you are already moving trades in, these are the services most clients pair with ${esc(nameLower(s.name))}.</p>
       </div>
     </header>
     <div class="service-grid service-grid--related">
@@ -871,7 +993,7 @@ ${faqBlock(s.faqs, { title: `${s.name}: common questions` })}
   </div>
 </section>
 
-${ctaBlock({ title: `Planning ${s.name.toLowerCase()}?` })}
+${ctaBlock({ title: `Planning ${nameLower(s.name)}?` })}
 `;
 
   pages.push({
@@ -968,6 +1090,9 @@ const contactBody = `
         <div class="field field--full form-actions">
           <button class="btn btn--accent btn--lg" type="submit">Send on WhatsApp${icons.whatsapp}</button>
           <p class="form-note" data-form-status role="status" aria-live="polite">We reply during working hours, usually the same day.</p>
+          <noscript>
+            <p class="form-note form-note--noscript">This form needs JavaScript to compose the message. You can still call <a href="tel:${site.phone}">${esc(site.phoneDisplay)}</a> or <a href="${waHref(WA_DEFAULT)}" target="_blank" rel="noopener">message us on WhatsApp</a> directly.</p>
+          </noscript>
         </div>
       </form>
     </div>
@@ -981,7 +1106,7 @@ const contactBody = `
         </li>
         <li>
           <span class="contact-list__icon">${icons.whatsapp}</span>
-          <div><h3>WhatsApp</h3><a href="https://wa.me/${site.whatsapp}" target="_blank" rel="noopener">Message us</a></div>
+          <div><h3>WhatsApp</h3><a href="${waHref(WA_DEFAULT)}" target="_blank" rel="noopener">Message us</a></div>
         </li>
         <li>
           <span class="contact-list__icon">${icons.mail}</span>
@@ -1075,7 +1200,7 @@ pages.push({
     {
       h: "Details you send us",
       p: [
-        "The quotation form prepares a message in WhatsApp using the details you type. That message is sent from your own WhatsApp account and is subject to WhatsApp's privacy terms. We use the details only to reply, arrange a site visit and prepare a quotation.",
+        "The quotation form and the review form prepare a message in WhatsApp using the details you type. That message is sent from your own WhatsApp account and is subject to WhatsApp's privacy terms. We use the details only to reply, arrange a site visit and prepare a quotation, and we ask before publishing a review.",
         "If you call or message us directly, we keep the contact details and measurements needed to quote for and carry out the work. We do not sell or rent your details to anyone.",
       ],
     },
@@ -1083,6 +1208,7 @@ pages.push({
       h: "Analytics and embedded content",
       p: [
         "We use Vercel Web Analytics to see which pages are visited. It records aggregate page views and does not use cookies or build a personal profile. We do not use it to identify individual visitors.",
+        "The footer shows a small visitor count. The first time a browser opens the site it adds one to the count; repeat visits only read the number. It sends no personal data, uses no cookies, and a flag in your browser's local storage stops repeat counting. If your browser sends Do Not Track, the count is skipped entirely.",
         "The contact page embeds a Google Map. Loading it may allow Google to set cookies or collect usage data under its own policies. If you prefer not to load the map, use the phone number or the Google Maps link instead.",
       ],
     },
@@ -1159,6 +1285,8 @@ pages.push({
 
 /* ------------------------------------------------------------------ write */
 
+const written = new Set();
+
 for (const p of pages) {
   const html = page({
     urlPath: p.urlPath,
@@ -1174,8 +1302,24 @@ for (const p of pages) {
   const file = path.join(out, p.file);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, html);
+  written.add(path.resolve(file));
   console.log(`wrote public/${p.file.replace(/\\/g, "/")} (${Math.round(html.length / 1024)} KB)`);
 }
+
+/* Remove HTML pages left behind by renames or deleted services. */
+function pruneHtml(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      pruneHtml(full);
+    } else if (entry.name.endsWith(".html") && !written.has(path.resolve(full))) {
+      fs.unlinkSync(full);
+      console.log(`removed stale public/${path.relative(out, full).replace(/\\/g, "/")}`);
+    }
+  }
+}
+if (fs.existsSync(out)) pruneHtml(out);
+
 
 /* robots + sitemap + manifest */
 

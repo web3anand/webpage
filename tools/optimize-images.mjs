@@ -44,7 +44,6 @@ const plan = {
   "upvcopen.jpg": [700, 1000],
   "carpet.jpg": [700, 1000],
   "aluminiumcupboard.jpg": [700, 1000],
-  "a12.jpg": [700, 1000],
 };
 
 const thumbs = [
@@ -67,8 +66,21 @@ for (const [file, widths] of Object.entries(plan)) {
     continue;
   }
   const meta = await sharp(input).metadata();
+  let previousTarget = 0;
   for (const w of widths) {
     const target = Math.min(w, meta.width);
+    if (target === previousTarget) {
+      console.warn(
+        `${file}: "${w}" would duplicate the ${target}px variant — skipped ` +
+          `(the source is only ${meta.width}px wide).`,
+      );
+      continue;
+    }
+    if (w > meta.width) {
+      console.warn(
+        `${file}: source is ${meta.width}px wide, so the "${w}" variant is written at ${target}px.`,
+      );
+    }
     const name = `${slug(file)}-${w}.webp`;
     const out = path.join(outDir, name);
     await sharp(input)
@@ -78,6 +90,7 @@ for (const [file, widths] of Object.entries(plan)) {
       .toFile(out);
     const made = await sharp(out).metadata();
     manifest[name] = { w: made.width, h: made.height };
+    previousTarget = target;
     report.push({ file: name, kb: Math.round(fs.statSync(out).size / 1024) });
   }
 }

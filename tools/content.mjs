@@ -19,8 +19,17 @@ export const site = {
   street: "Annai Theresa Nagar",
   locality: "Thoothukudi",
   region: "Tamil Nadu",
+  postalCode: "", // TODO: add the 6-digit PIN code for the Thoothukudi office
   country: "IN",
   countryName: "India",
+  // TODO: fill these in with the real details. Empty lists are skipped in the
+  // structured data, so nothing incorrect is published while they are blank.
+  openingHours: [
+    // { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "09:00", closes: "19:00" },
+  ],
+  sameAs: [
+    // "https://www.google.com/maps/place/...", "https://www.facebook.com/...", "https://www.instagram.com/..."
+  ],
   geo: { lat: 8.8027577, lng: 78.1174878 },
   mapsLink: "https://maps.google.com/?cid=5658656810334090653",
   mapsEmbed:
@@ -35,6 +44,13 @@ export const nav = [
   { href: "/#process", label: "Process" },
   { href: "/contact", label: "Contact" },
 ];
+
+/**
+ * Real client reviews. Add entries here once you have permission to publish.
+ * Shape: { name: "Priya R.", place: "Thoothukudi", rating: 5, text: "..." }
+ * The review cards only render when this list has entries.
+ */
+export const testimonials = [];
 
 export const trustPoints = [
   "Free, itemised quotation",
@@ -126,7 +142,7 @@ export const gallery = [
     caption: "Glass balcony railings",
   },
   {
-    img: "aluminiumcupboard-1000",
+    img: "aluminiumcupboard-700",
     alt: "Aluminium wardrobe with dark grey shutters",
     caption: "Aluminium wardrobe",
   },
@@ -177,7 +193,7 @@ export const services = [
       "Modular kitchen with L-shaped counters, glossy brown upper cabinets and cream lower shutters",
     title: "Modular Kitchens & Cupboards | Thoothukudi & Tamil Nadu",
     description:
-      "Modular kitchens, wardrobes and TV units built to measure. Based in Thoothukudi, working across Tamil Nadu. PVC, MDF, plywood and aluminium, with a free itemised quote.",
+      "Modular kitchens, wardrobes and TV units built to measure in Thoothukudi and across Tamil Nadu. PVC, MDF, plywood and aluminium. Free itemised quote.",
     h1: "Modular kitchens and cupboards, built to measure",
     lead:
       "A kitchen has to survive steam, oil, monsoon damp and a family using it every day. We plan the layout around how you cook, then choose the carcass and shutter materials that will still look right years from now.",

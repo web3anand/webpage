@@ -1,12 +1,20 @@
 {
-  "name": "webpage",
+  "name": "av-interior-decoration",
   "version": "1.0.0",
-  "description": "AV Interior Decoration website",
+  "private": true,
+  "description": "AV Interior Decoration website — static site generated into public/",
+  "engines": {
+    "node": ">=20.11"
+  },
   "scripts": {
     "build": "node tools/build.mjs",
+    "start": "node tools/serve.mjs",
     "optimize": "node tools/optimize-images.mjs",
     "logo": "node tools/logo.mjs",
-    "start": "node tools/serve.mjs",
-    "test": "echo \"No tests specified\""
+    "check": "node tools/build.mjs && node tools/check.mjs",
+    "test": "node tools/build.mjs && node tools/check.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
   }
 }

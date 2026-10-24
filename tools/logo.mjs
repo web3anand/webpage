@@ -106,13 +106,6 @@ for (const size of [512, 192, 180]) {
 }
 await sharp(icon).resize(64, 64).png({ compressionLevel: 9 }).toFile(path.join(out, "favicon.png"));
 
-// Simple monogram used if a browser asks for the SVG icon.
-const markData = lightBuffer.toString("base64");
-fs.writeFileSync(
-  path.join(out, "favicon.svg"),
-  `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#1B100B"/><image x="76" y="120" width="360" height="272" href="data:image/png;base64,${markData}"/></svg>`,
-);
-
 // Dark, low-contrast wood chip used by the OG image if it is regenerated.
 void WOOD;
 

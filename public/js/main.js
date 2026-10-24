@@ -13,6 +13,46 @@
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
+  // Reveal-on-scroll is only hidden once this file is actually running, so a
+  // script failure leaves the page fully readable instead of blank.
+  document.documentElement.classList.add("reveal");
+
+  /* ------------------------------------------------------------ a11y helpers */
+
+  const FOCUSABLE =
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  const focusables = (container) =>
+    $$(FOCUSABLE, container).filter(
+      (el) => !el.hasAttribute("hidden") && el.getClientRects().length > 0,
+    );
+
+  const trapTab = (container, event) => {
+    if (event.key !== "Tab") return;
+    const items = focusables(container);
+    if (!items.length) {
+      event.preventDefault();
+      return;
+    }
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  const pageRegions = $$(".top-shell, main, .site-footer, .mobile-bar");
+
+  const setPageInert = (inert) => {
+    pageRegions.forEach((el) => {
+      el.inert = inert;
+    });
+  };
+
   /* ------------------------------------------------------------- header */
 
   const header = $("[data-header]");
@@ -30,17 +70,23 @@
   const closeBtns = $$("[data-sheet-close]");
 
   if (mobileNav) {
+    let lastMenuTrigger = null;
+
     const setOpen = (open) => {
       if (open) {
+        lastMenuTrigger =
+          document.activeElement instanceof HTMLElement ? document.activeElement : menuBtns[0];
         mobileNav.hidden = false;
         if (backdrop) backdrop.hidden = false;
         // Trigger reflow for CSS slide-up transition
         void mobileNav.offsetHeight;
         mobileNav.classList.add("is-open");
         if (backdrop) backdrop.classList.add("is-visible");
+        setPageInert(true);
       } else {
         mobileNav.classList.remove("is-open");
         if (backdrop) backdrop.classList.remove("is-visible");
+        setPageInert(false);
         setTimeout(() => {
           if (!mobileNav.classList.contains("is-open")) {
             mobileNav.hidden = true;
@@ -55,6 +101,14 @@
         btn.classList.toggle("is-active", open);
       });
       document.body.classList.toggle("nav-open", open);
+
+      if (open) {
+        const target = $("[data-sheet-close]", mobileNav) || focusables(mobileNav)[0];
+        target?.focus();
+      } else if (lastMenuTrigger) {
+        lastMenuTrigger.focus();
+        lastMenuTrigger = null;
+      }
     };
 
     menuBtns.forEach((btn) => {
@@ -78,10 +132,13 @@
 
     $$("a", mobileNav).forEach((link) => link.addEventListener("click", () => setOpen(false)));
 
+    mobileNav.addEventListener("keydown", (event) => {
+      trapTab(mobileNav, event);
+    });
+
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && mobileNav.classList.contains("is-open")) {
         setOpen(false);
-        if (menuBtns[0]) menuBtns[0].focus();
       }
     });
 
@@ -105,6 +162,7 @@
     if (!lightbox || lightbox.hidden) return;
     lightbox.hidden = true;
     document.body.classList.remove("nav-open");
+    setPageInert(false);
     lightboxImg.removeAttribute("src");
     if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
   };
@@ -118,6 +176,7 @@
     lightboxCaption.textContent = item.dataset.caption || (image ? image.alt : "");
     lightbox.hidden = false;
     document.body.classList.add("nav-open");
+    setPageInert(true);
     lightboxClose.focus();
   };
 
@@ -133,6 +192,10 @@
 
     lightbox.addEventListener("click", (event) => {
       if (event.target === lightbox) closeLightbox();
+    });
+
+    lightbox.addEventListener("keydown", (event) => {
+      trapTab(lightbox, event);
     });
 
     document.addEventListener("keydown", (event) => {
@@ -283,5 +346,112 @@
         setStatus("We reply during working hours, usually the same day.");
       }
     });
+  }
+
+  /* ------------------------------------------------------------ review form */
+
+  const reviewForm = $("[data-review-form]");
+
+  if (reviewForm) {
+    const reviewStatus = $("[data-review-status]", reviewForm);
+    const reviewNumber = String(reviewForm.dataset.whatsapp || "").replace(/\D/g, "");
+
+    const setReviewStatus = (message, state) => {
+      if (!reviewStatus) return;
+      reviewStatus.textContent = message;
+      reviewStatus.classList.toggle("is-error", state === "error");
+      reviewStatus.classList.toggle("is-ok", state === "ok");
+    };
+
+    reviewForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const data = new FormData(reviewForm);
+      const name = String(data.get("name") || "").trim();
+      const rating = String(data.get("rating") || "5");
+      const review = String(data.get("review") || "").trim();
+
+      if (!name) {
+        setReviewStatus("Please add your name with the review.", "error");
+        $("#review-name", reviewForm).focus();
+        return;
+      }
+
+      if (review.length < 10) {
+        setReviewStatus("Please write a little more — at least a sentence.", "error");
+        $("#review-message", reviewForm).focus();
+        return;
+      }
+
+      const lines = [
+        "Hello AV Interior Decoration, I would like to leave a review.",
+        "",
+        `Name: ${name}`,
+        `Rating: ${rating} / 5`,
+        `Review: ${review}`,
+      ];
+
+      const url = `https://wa.me/${reviewNumber}?text=${encodeURIComponent(lines.join("\n"))}`;
+      setReviewStatus("Opening WhatsApp with your review…", "ok");
+      window.open(url, "_blank", "noopener");
+    });
+
+    reviewForm.addEventListener("input", () => {
+      if (
+        reviewStatus &&
+        (reviewStatus.classList.contains("is-error") || reviewStatus.classList.contains("is-ok"))
+      ) {
+        setReviewStatus("Opens WhatsApp with your review. We may publish it with your name.");
+      }
+    });
+  }
+
+  /* -------------------------------------------------------- visitor counter */
+
+  const visitWrap = $("[data-visits]");
+  const visitCount = $("[data-visit-count]");
+  const dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+
+  if (visitWrap && visitCount && dnt !== "1" && dnt !== "yes") {
+    const isLocal = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+    const storageKey = isLocal ? "av-visit-counted-dev" : "av-visit-counted";
+    const namespace = isLocal ? "av-interior-dev" : "av-interior-decoration";
+    let seen = null;
+
+    try {
+      seen = localStorage.getItem(storageKey);
+    } catch {
+      /* storage blocked — count this load */
+    }
+
+    const endpoint = seen ? "get" : "hit";
+    const controller = typeof AbortController === "function" ? new AbortController() : null;
+    const timer = controller ? window.setTimeout(() => controller.abort(), 5000) : 0;
+
+    fetch(`https://abacus.jasoncameron.dev/${endpoint}/${namespace}/site-visits`, {
+      cache: "no-store",
+      signal: controller ? controller.signal : undefined,
+    })
+      .then((response) =>
+        response.ok ? response.json() : Promise.reject(new Error(String(response.status))),
+      )
+      .then((data) => {
+        if (!data || typeof data.value !== "number") return;
+        visitCount.textContent = data.value.toLocaleString("en-IN");
+        visitWrap.hidden = false;
+        if (!seen) {
+          try {
+            localStorage.setItem(storageKey, "1");
+          } catch {
+            /* ignore */
+          }
+        }
+      })
+      .catch(() => {
+        /* the counter is optional — leave it hidden if the service is down */
+      })
+      .finally(() => {
+        if (timer) window.clearTimeout(timer);
+      });
   }
 })();
