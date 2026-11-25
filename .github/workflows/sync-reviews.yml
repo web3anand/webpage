@@ -1,0 +1,55 @@
+name: Sync Google Reviews
+
+on:
+  schedule:
+    # Check for new Google Reviews every 6 hours
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-google-reviews
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Fetch latest Google reviews
+        env:
+          FEATURABLE_WIDGET_ID: ${{ secrets.FEATURABLE_WIDGET_ID }}
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
+        run: node tools/sync-reviews.mjs
+
+      - name: Check if reviews changed
+        id: diff
+        run: |
+          if git diff --quiet tools/google-reviews.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rebuild static site and run security/SEO checks
+        if: steps.diff.outputs.changed == 'true'
+        run: node tools/build.mjs && node tools/check.mjs
+
+      - name: Commit and push updated reviews
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/google-reviews.json public/
+          git commit -m "chore: sync latest Google reviews"
+          git push

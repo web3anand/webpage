@@ -39,21 +39,31 @@
 <link rel="shortcut icon" href="/favicon.ico?v=3">
 <link rel="apple-touch-icon" href="/icon-180.png?v=3">
 <link rel="manifest" href="/site.webmanifest?v=3">
+<link rel="alternate" type="text/plain" title="LLMs.txt" href="/llms.txt">
 <link rel="alternate" hreflang="en-in" href="https://avinteriordecoration.com/terms">
 <link rel="alternate" hreflang="x-default" href="https://avinteriordecoration.com/terms">
 <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="/css/style.css?v=5">
+<link rel="stylesheet" href="/css/style.css?v=bf6f88d3">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "HomeAndConstructionBusiness",
       "@id": "https://avinteriordecoration.com/#business",
+      "additionalType": "https://en.wikipedia.org/wiki/Interior_design",
       "name": "AV Interior Decoration",
-      "description": "Interior and exterior decoration from Thoothukudi, serving Tamil Nadu. Modular kitchens, false ceilings, blinds, UPVC windows, aluminium and glass works, flooring and mosquito nets.",
+      "alternateName": [
+        "AV Interior",
+        "AV Interior Thoothukudi",
+        "AV Interior Tuticorin",
+        "AV Interiors",
+        "AV Interior Decoration Thoothukudi",
+        "AV Interior Decoration Tuticorin"
+      ],
+      "description": "Interior and exterior decoration company in Thoothukudi (Tuticorin), serving Tamil Nadu. Modular kitchens, false ceilings, blinds, curtains, UPVC windows, aluminium partitions, toughened glass railings, vinyl and wooden flooring, and mosquito nets.",
       "url": "https://avinteriordecoration.com/",
       "image": "https://avinteriordecoration.com/assets/img/og-cover.jpg",
       "logo": "https://avinteriordecoration.com/icon-512.png",
@@ -73,15 +83,32 @@
       "priceRange": "₹₹",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Annai Theresa Nagar",
+        "streetAddress": "No. 2H/702A, Annai Theresa Nagar, Millerpuram",
         "addressLocality": "Thoothukudi",
         "addressRegion": "Tamil Nadu",
+        "postalCode": "628008",
         "addressCountry": "IN"
       },
-      "hasMap": "https://maps.app.goo.gl/hczv264ixzfb3xq18",
+      "hasMap": "https://maps.app.goo.gl/CGsX2YnmGyaSUxBZ6",
       "sameAs": [
+        "https://maps.app.goo.gl/CGsX2YnmGyaSUxBZ6",
         "https://maps.app.goo.gl/hczv264ixzfb3xq18",
         "https://www.google.com/maps/place/AV+INTERIOR+DECORATION/@8.8027577,78.1174878,17z/data=!3m1!4b1!4m6!3m5!1s0x3b03efb2fd3c3353:0x4e6da1e40f53b69d!8m2!3d8.8027577!4d78.1174878!16s%2Fg%2F11j7d3d9tr"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
       ],
       "geo": {
         "@type": "GeoCoordinates",
@@ -94,13 +121,44 @@
           "name": "Thoothukudi"
         },
         {
-          "@type": "AdministrativeArea",
-          "name": "Thoothukudi district"
+          "@type": "City",
+          "name": "Tuticorin"
+        },
+        {
+          "@type": "City",
+          "name": "Tiruchendur"
+        },
+        {
+          "@type": "City",
+          "name": "Kovilpatti"
+        },
+        {
+          "@type": "City",
+          "name": "Tirunelveli"
+        },
+        {
+          "@type": "City",
+          "name": "Nagercoil"
+        },
+        {
+          "@type": "City",
+          "name": "Madurai"
         },
         {
           "@type": "AdministrativeArea",
           "name": "Tamil Nadu"
         }
+      ],
+      "knowsAbout": [
+        "Modular Kitchens and Cupboards",
+        "Gypsum, Grid and PVC False Ceilings",
+        "Zebra, Roller, Roman, Venetian and Bamboo Blinds",
+        "UPVC Sliding and Openable Windows and Doors",
+        "Powder-Coated Aluminium Partitions and Windows",
+        "12 mm Toughened Glass Partitions and Balcony Railings",
+        "Vinyl, Engineered Wooden and Carpet Flooring",
+        "Pleated, Honeycomb and Magnetic Mosquito Nets",
+        "Coastal Humidity-Resistant Interior Materials"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
@@ -110,7 +168,7 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Modular Kitchens & Cupboards",
+              "name": "Modular Kitchens \u0026 Cupboards",
               "url": "https://avinteriordecoration.com/services/modular-kitchens"
             }
           },
@@ -126,7 +184,7 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Blinds & Curtains",
+              "name": "Blinds \u0026 Curtains",
               "url": "https://avinteriordecoration.com/services/blinds-and-curtains"
             }
           },
@@ -134,7 +192,7 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "UPVC Windows & Doors",
+              "name": "UPVC Windows \u0026 Doors",
               "url": "https://avinteriordecoration.com/services/upvc-windows-and-doors"
             }
           },
@@ -150,7 +208,7 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Glass Partitions & Railings",
+              "name": "Glass Partitions \u0026 Railings",
               "url": "https://avinteriordecoration.com/services/glass-partitions-and-railings"
             }
           },
@@ -181,6 +239,7 @@
       "alternateName": [
         "AV Interior",
         "AV Interior Thoothukudi",
+        "AV Interior Tuticorin",
         "AV Interiors",
         "AV Interior Decoration Thoothukudi"
       ],
@@ -200,6 +259,20 @@
       },
       "about": {
         "@id": "https://avinteriordecoration.com/#business"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://avinteriordecoration.com/assets/img/og-cover.jpg"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          ".hero-lead",
+          ".page-hero__lead",
+          ".aeo-facts",
+          ".faq-answer"
+        ]
       },
       "inLanguage": "en-IN"
     }
@@ -274,7 +347,8 @@
       <address class="footer-contact">
         <a href="tel:+919715032513">+91 97150 32513</a>
         <a href="mailto:contact@avinteriordecoration.com">contact@avinteriordecoration.com</a>
-        <span>Annai Theresa Nagar, Thoothukudi, Tamil Nadu</span>
+        <span>No. 2H/702A, Annai Theresa Nagar, Millerpuram, Thoothukudi, Tamil Nadu 628008</span>
+        <span>Mon – Sat, 9:00 AM – 6:00 PM (Sun closed)</span>
       </address>
     </div>
 
@@ -299,7 +373,7 @@
       <h2>Start a project</h2>
       <p>Tell us which rooms you want to change. We will visit, measure and send you a clear quote.</p>
       <a class="btn btn--beige btn--block" href="/contact">Book a site visit<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="footer-wa" href="https://wa.me/919715032513?text=Hello%20AV%20Interior%20Decoration%2C%20I%20would%20like%20a%20quotation%20for%20interior%20work." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5a8.4 8.4 0 00-7.2 12.7L3.6 20.4l4.3-1.1A8.4 8.4 0 1012 3.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.1.3 0 .5.5.9 1.2 1.6 2.1 2.1.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .5-.4 1-.9 1.2-.6.2-1.4.2-2.5-.2a9 9 0 01-4.7-4.7c-.4-1.1-.4-1.9-.2-2.5.1-.4.4-.6.7-.7z" fill="currentColor"/></svg>WhatsApp +91 97150 32513</a>
+      <a class="footer-wa" href="https://wa.me/919715032513?text=Hello%20AV%20Interior%20Decoration%2C%20I%20would%20like%20a%20quotation%20for%20interior%20work." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5a8.4 8.4 0 00-7.2 12.7L3.6 20.4l4.3-1.1A8.4 8.4 0 1012 3.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.1.3 0 .5.5.9 1.2 1.6 2.1 2.1.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .5-.4 1-.9 1.2-.6.2-1.4.2-2.5-.2a9 9 0 01-4.7-4.7c-.4-1.1-.4-1.9-.2-2.5.1-.4.4-.6.7-.7z" fill="currentColor"/></svg>WhatsApp +91 97150 32513</a>
     </div>
   </div>
 
@@ -312,7 +386,6 @@
     <div class="shell footer-bar__inner">
       <p>© 2026 AV Interior Decoration</p>
       <p class="footer-legal"><a href="/privacy">Privacy</a><span aria-hidden="true">·</span><a href="/terms">Terms</a></p>
-      <p class="footer-visits" data-visits hidden>Visitors <span data-visit-count>0</span></p>
       <p>Made in Thoothukudi · Serving Tamil Nadu</p>
     </div>
   </div>
@@ -368,7 +441,7 @@
     <span class="mobile-bar__label mobile-bar__label--close">Close</span>
   </button>
   <a class="mobile-bar__btn mobile-bar__btn--call" href="tel:+919715032513"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 3h2.2l1.5 4-2 1.4a12 12 0 005.4 5.4l1.4-2 4 1.5v2.2A2.5 2.5 0 0116.5 18C9.6 17.6 6.4 14.4 6 7.5A2.5 2.5 0 016.5 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Call</span></a>
-  <a class="mobile-bar__btn mobile-bar__btn--wa" href="https://wa.me/919715032513?text=Hello%20AV%20Interior%20Decoration%2C%20I%20would%20like%20a%20quotation%20for%20interior%20work." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5a8.4 8.4 0 00-7.2 12.7L3.6 20.4l4.3-1.1A8.4 8.4 0 1012 3.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.1.3 0 .5.5.9 1.2 1.6 2.1 2.1.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .5-.4 1-.9 1.2-.6.2-1.4.2-2.5-.2a9 9 0 01-4.7-4.7c-.4-1.1-.4-1.9-.2-2.5.1-.4.4-.6.7-.7z" fill="currentColor"/></svg><span>WhatsApp</span></a>
+  <a class="mobile-bar__btn mobile-bar__btn--wa" href="https://wa.me/919715032513?text=Hello%20AV%20Interior%20Decoration%2C%20I%20would%20like%20a%20quotation%20for%20interior%20work." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5a8.4 8.4 0 00-7.2 12.7L3.6 20.4l4.3-1.1A8.4 8.4 0 1012 3.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.1.3 0 .5.5.9 1.2 1.6 2.1 2.1.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .5-.4 1-.9 1.2-.6.2-1.4.2-2.5-.2a9 9 0 01-4.7-4.7c-.4-1.1-.4-1.9-.2-2.5.1-.4.4-.6.7-.7z" fill="currentColor"/></svg><span>WhatsApp</span></a>
   <a class="mobile-bar__cta" href="/contact"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Get a quote</span></a>
 </nav>
 <div class="lightbox" data-lightbox hidden>
@@ -378,10 +451,7 @@
     <p class="lightbox__caption" data-lightbox-caption></p>
   </div>
 </div>
-<script src="/js/main.js" defer></script>
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
+<script src="/js/main.js?v=cd097e5a" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

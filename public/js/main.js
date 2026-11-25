@@ -10,6 +10,13 @@
 (() => {
   "use strict";
 
+  // Queue stub for Vercel Web Analytics (avoids needing an inline <script>).
+  window.va =
+    window.va ||
+    function () {
+      (window.vaq = window.vaq || []).push(arguments);
+    };
+
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
@@ -169,9 +176,11 @@
 
   const openLightbox = (item) => {
     if (!lightbox) return;
+    const href = item.getAttribute("href") || "";
+    if (!href.startsWith("/assets/")) return;
     const image = $("img", item);
     lastFocused = item;
-    lightboxImg.src = item.getAttribute("href");
+    lightboxImg.src = href;
     lightboxImg.alt = image ? image.alt : "";
     lightboxCaption.textContent = item.dataset.caption || (image ? image.alt : "");
     lightbox.hidden = false;
@@ -338,7 +347,8 @@
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join("\n"))}`;
 
       setStatus("Opening WhatsApp with your details…", "ok");
-      window.open(url, "_blank", "noopener");
+      const popup = window.open(url, "_blank", "noopener,noreferrer");
+      if (!popup) window.location.href = url;
     });
 
     form.addEventListener("input", () => {
@@ -393,7 +403,8 @@
 
       const url = `https://wa.me/${reviewNumber}?text=${encodeURIComponent(lines.join("\n"))}`;
       setReviewStatus("Opening WhatsApp with your review…", "ok");
-      window.open(url, "_blank", "noopener");
+      const popup = window.open(url, "_blank", "noopener,noreferrer");
+      if (!popup) window.location.href = url;
     });
 
     reviewForm.addEventListener("input", () => {
@@ -406,61 +417,30 @@
     });
   }
 
-  /* -------------------------------------------------------- visitor counter */
+  /* --------------------------------------------------- gallery category filter */
 
-  const visitWrap = $("[data-visits]");
-  const visitCount = $("[data-visit-count]");
-  const dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+  const filterBar = $("[data-gallery-filters]");
+  const galleryGrid = $("[data-gallery-grid]");
 
-  if (visitWrap && visitCount && dnt !== "1" && dnt !== "yes") {
-    const isLocal = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
-    const storageKey = isLocal ? "av-visit-counted-dev" : "av-visit-counted";
-    const namespace = isLocal ? "av-interior-dev" : "av-interior-decoration";
-    let seen = null;
+  if (filterBar && galleryGrid) {
+    const filterButtons = $$("[data-gallery-filter]", filterBar);
+    const galleryItems = $$("[data-category]", galleryGrid);
 
-    try {
-      seen = localStorage.getItem(storageKey);
-    } catch {
-      /* storage blocked — count this load */
-    }
-
-    const endpoint = seen ? "get" : "hit";
-    const controller = typeof AbortController === "function" ? new AbortController() : null;
-    const timer = controller ? window.setTimeout(() => controller.abort(), 5000) : 0;
-
-    fetch(`https://abacus.jasoncameron.dev/${endpoint}/${namespace}/site-visits`, {
-      cache: "no-store",
-      signal: controller ? controller.signal : undefined,
-    })
-      .then((response) =>
-        response.ok ? response.json() : Promise.reject(new Error(String(response.status))),
-      )
-      .then((data) => {
-        if (!data || typeof data.value !== "number") return;
-        visitCount.textContent = data.value.toLocaleString("en-IN");
-        visitWrap.hidden = false;
-        if (!seen) {
-          try {
-            localStorage.setItem(storageKey, "1");
-          } catch {
-            /* ignore */
-          }
-        }
-      })
-      .catch(() => {
-        /* the counter is optional — leave it hidden if the service is down */
-      })
-      .finally(() => {
-        if (timer) window.clearTimeout(timer);
+    const applyFilter = (category) => {
+      filterButtons.forEach((btn) => {
+        btn.setAttribute("aria-pressed", String(btn.dataset.galleryFilter === category));
       });
-  }
+      galleryItems.forEach((item) => {
+        const show = category === "all" || item.dataset.category === category;
+        item.hidden = !show;
+        if (show) item.classList.add("is-in");
+      });
+    };
 
-  /* ----------------------------------------------------------- favorite toggle */
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-fav-btn]");
-    if (!btn) return;
-    e.preventDefault();
-    e.stopPropagation();
-    btn.classList.toggle("is-active");
-  });
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        applyFilter(btn.dataset.galleryFilter || "all");
+      });
+    });
+  }
 })();

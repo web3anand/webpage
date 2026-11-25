@@ -12,11 +12,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
+import { services } from "./content.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const srcDir = path.join(root, "assets-src");
+const categoriesDir = path.join(srcDir, "categories");
 const outDir = path.join(root, "public", "assets", "img");
 fs.mkdirSync(outDir, { recursive: true });
+
+const ALLOWED_IMAGE_EXT = /\.(jpe?g|png|webp|avif)$/i;
 
 const slug = (file) =>
   path
@@ -24,6 +28,16 @@ const slug = (file) =>
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+
+const captionFromFile = (file) => {
+  const clean = path
+    .basename(file, path.extname(file))
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!clean) return "Project photo";
+  return clean.charAt(0).toUpperCase() + clean.slice(1);
+};
 
 // widths per source image. Cards/heroes get large variants, thumbnails stay small.
 const plan = {
@@ -95,9 +109,79 @@ for (const [file, widths] of Object.entries(plan)) {
   }
 }
 
+const generatedCategoryFiles = new Set();
+const categoryGallery = {};
+
+for (const service of services) {
+  const dir = path.join(categoriesDir, service.slug);
+  if (!fs.existsSync(dir)) {
+    categoryGallery[service.slug] = [];
+    continue;
+  }
+
+  const files = fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && ALLOWED_IMAGE_EXT.test(entry.name))
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+
+  const items = [];
+  for (const file of files) {
+    const input = path.join(dir, file);
+    const base = `cat-${service.slug}-${slug(file)}`;
+    const meta = await sharp(input).metadata();
+    if (!meta.width) continue;
+
+    let previousTarget = 0;
+    const writtenKeys = [];
+    for (const w of [700, 1200]) {
+      const target = Math.min(w, meta.width);
+      if (target === previousTarget) continue;
+      const name = `${base}-${w}.webp`;
+      const out = path.join(outDir, name);
+      // .rotate() applies EXIF orientation; omitting .withMetadata() strips EXIF/GPS privacy data.
+      await sharp(input)
+        .rotate()
+        .resize({ width: target, withoutEnlargement: true })
+        .webp({ quality: 78, effort: 5 })
+        .toFile(out);
+      const made = await sharp(out).metadata();
+      manifest[name] = { w: made.width, h: made.height };
+      generatedCategoryFiles.add(name);
+      writtenKeys.push(name.replace(/\.webp$/, ""));
+      previousTarget = target;
+      report.push({ file: name, kb: Math.round(fs.statSync(out).size / 1024) });
+    }
+
+    if (writtenKeys.length) {
+      const caption = captionFromFile(file);
+      items.push({
+        thumb: writtenKeys[0],
+        img: writtenKeys[writtenKeys.length - 1],
+        caption,
+        alt: `${caption} — ${service.name}`,
+      });
+    }
+  }
+  categoryGallery[service.slug] = items;
+}
+
+// Prune stale generated category WebP files when source photos are removed.
+for (const entry of fs.readdirSync(outDir)) {
+  if (entry.startsWith("cat-") && entry.endsWith(".webp") && !generatedCategoryFiles.has(entry)) {
+    fs.unlinkSync(path.join(outDir, entry));
+    console.log(`removed stale category image: public/assets/img/${entry}`);
+  }
+}
+
 fs.writeFileSync(
   path.join(root, "tools", "image-manifest.json"),
   JSON.stringify(manifest, null, 2),
+);
+
+fs.writeFileSync(
+  path.join(root, "tools", "category-gallery.json"),
+  JSON.stringify(categoryGallery, null, 2),
 );
 
 // ---------------------------------------------------------------- social card

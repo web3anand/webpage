@@ -13,8 +13,10 @@ what gets deployed.
 | `npm run build` | Regenerate every page, `sitemap.xml`, `robots.txt` and `site.webmanifest`. |
 | `npm start` | Preview `public/` at <http://localhost:3000> with clean URLs and the custom 404. |
 | `npm run check` | Build, then verify every internal link, image and required root file resolves. |
+| `npm run reviews:sync` | Sync live Google Reviews into `tools/google-reviews.json`, rebuild pages, and run checks. |
 | `npm test` | Same as `npm run check` (used by CI / pre-deploy). |
-| `npm run optimize` | Re-cut WebP variants from `assets-src/` and rewrite `tools/image-manifest.json`. |
+| `npm run optimize` | Re-cut WebP variants from `assets-src/` (and `assets-src/categories/<slug>/`) and update manifests. |
+| `npm run sync` | Optimize new photos, rebuild all pages, and run link + security checks in one step. |
 | `npm run logo` | Regenerate the logo marks, favicons and app icons. |
 
 Node 20.11 or newer is required (`import.meta.dirname`).
@@ -53,12 +55,7 @@ Everything customer-facing lives in `tools/content.mjs`:
   reviews section shows the Google reviews link and the review form.
 
 After editing, run `npm run build` and commit the regenerated `public/` files.
-
-The footer visitor count uses [Abacus](https://abacus.jasoncameron.dev). Production
-uses the `av-interior-decoration` namespace and localhost uses `av-interior-dev`,
-so previewing the site never changes the live number. It counts one visit per
-browser, stores only a flag in local storage, respects Do Not Track, and stays
-hidden if the service cannot be reached.
+The build also generates `public/llms.txt` and `public/llms-full.txt` for AI answer engines (AEO).
 
 ## Images
 
@@ -69,9 +66,22 @@ and `srcset`, so a small source that cannot be enlarged is never advertised at a
 width it does not have. The generator also de-duplicates variants that resolve
 to the same actual width.
 
-To add a photo: drop the original in `assets-src/`, add it to the `plan` (or
-`thumbs`) map in `tools/optimize-images.mjs`, run `npm run optimize`, then
-reference the base name (e.g. `modular-900`) from `content.mjs`.
+To add photos under a service category (static git-push workflow):
+
+1. Drop `.jpg`, `.png`, `.webp`, or `.avif` photos into `assets-src/categories/<service-slug>/` (e.g. `assets-src/categories/modular-kitchens/l-shaped-pvc-kitchen.jpg`).
+2. Run `npm run sync` — this generates responsive WebP variants, strips EXIF/GPS metadata, rebuilds the pages, and runs link + security checks.
+3. Commit and `git push` to deploy.
+
+To display Google Reviews automatically on the homepage (`#reviews`), JSON-LD (`AggregateRating` + `Review`), and `llms-full.txt`:
+
+- **Automatic sync via GitHub Actions** (`.github/workflows/sync-reviews.yml` runs every 6 hours and on manual trigger):
+  Add **either** of these in **GitHub → Repo Settings → Secrets and variables → Actions**:
+  - **Free, no Google Cloud billing (Featurable)**: `FEATURABLE_WIDGET_ID` (from featurable.com connected to your Google Business Profile)
+  - **Official Google Places API (New)**: `GOOGLE_PLACES_API_KEY` and `GOOGLE_PLACE_ID` (`ChIJ...`)
+  Whenever a new review or rating change is detected, GitHub Actions updates `tools/google-reviews.json`, rebuilds `public/`, verifies all security/SEO checks, and pushes — triggering an automatic Vercel deploy.
+- **Manual local sync**: Put the same variables in a local `.env` file and run `npm run reviews:sync`, or edit `tools/google-reviews.json` directly and run `npm test`.
+
+To open Google's direct 5-star review popup from the "Write a Google review" button, set `googlePlaceId` (or `googleReviewLink`) in `tools/content.mjs` and run `npm run build`.
 
 ## Deployment
 

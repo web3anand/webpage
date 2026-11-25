@@ -16,23 +16,43 @@ export const site = {
   whatsapp: "919715032513",
   email: "contact@avinteriordecoration.com",
   ownerEmail: "anand@avinteriordecoration.com",
-  street: "Annai Theresa Nagar",
+  street: "No. 2H/702A, Annai Theresa Nagar, Millerpuram",
   locality: "Thoothukudi",
+  localityAlt: "Tuticorin",
   region: "Tamil Nadu",
-  postalCode: "", // TODO: add the 6-digit PIN code for the Thoothukudi office
+  postalCode: "628008",
   country: "IN",
   countryName: "India",
-  // TODO: fill these in with the real details. Empty lists are skipped in the
-  // structured data, so nothing incorrect is published while they are blank.
+  hoursDisplay: "Mon – Sat, 9:00 AM – 6:00 PM (Sun closed)",
   openingHours: [
-    // { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "09:00", closes: "19:00" },
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  ],
+  serviceAreas: [
+    "Thoothukudi",
+    "Tuticorin",
+    "Tiruchendur",
+    "Kovilpatti",
+    "Tirunelveli",
+    "Nagercoil",
+    "Madurai",
+    "Tamil Nadu",
   ],
   sameAs: [
+    "https://maps.app.goo.gl/CGsX2YnmGyaSUxBZ6",
     "https://maps.app.goo.gl/hczv264ixzfb3xq18",
     "https://www.google.com/maps/place/AV+INTERIOR+DECORATION/@8.8027577,78.1174878,17z/data=!3m1!4b1!4m6!3m5!1s0x3b03efb2fd3c3353:0x4e6da1e40f53b69d!8m2!3d8.8027577!4d78.1174878!16s%2Fg%2F11j7d3d9tr",
   ],
   geo: { lat: 8.8027577, lng: 78.1174878 },
-  mapsLink: "https://maps.app.goo.gl/hczv264ixzfb3xq18",
+  mapsLink: "https://maps.app.goo.gl/CGsX2YnmGyaSUxBZ6",
+  // Optional: add your Google Business Place ID (starts with "ChIJ...") to open the
+  // direct 5-star review popup (https://search.google.com/local/writereview?placeid=...).
+  // You can also paste your Google Business Profile "Ask for reviews" short link in googleReviewLink.
+  googlePlaceId: "",
+  googleReviewLink: "",
   mapsEmbed:
     "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15771.289271885958!2d78.1174878!3d8.8027577!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b03efb2fd3c3353%3A0x4e6da1e40f53b69d!2sAV%20INTERIOR%20DECORATION!5e0!3m2!1sen!2sin!4v1748697393710!5m2!1sen!2sin",
   yearsExperience: "10+",
@@ -47,9 +67,18 @@ export const nav = [
 ];
 
 /**
- * Real client reviews. Add entries here once you have permission to publish.
- * Shape: { name: "Priya R.", place: "Thoothukudi", rating: 5, text: "..." }
- * The review cards only render when this list has entries.
+ * Real client reviews. Add entries here once you have permission to publish
+ * (or copy verified reviews from your Google Business Profile).
+ * Shape:
+ *   {
+ *     name: "Priya R.",
+ *     place: "Thoothukudi",
+ *     rating: 5,
+ *     text: "...",
+ *     source: "Google", // optional badge (e.g. "Google")
+ *     date: "2026-10",  // optional display label
+ *   }
+ * The review cards and Review JSON-LD only render when this list has entries.
  */
 export const testimonials = [];
 
@@ -109,46 +138,55 @@ export const processSteps = [
 export const gallery = [
   {
     img: "a10-1000",
+    category: "false-ceiling",
     alt: "False ceiling with a wooden inlay border and warm cove lighting",
     caption: "False ceiling with warm cove lighting",
   },
   {
     img: "ssg-1000",
+    category: "glass-partitions-and-railings",
     alt: "Glass staircase railing with a wooden handrail",
     caption: "Staircase railing in glass and steel",
   },
   {
     img: "zebra-1000",
+    category: "blinds-and-curtains",
     alt: "Zebra blinds fitted to a bedroom window",
     caption: "Zebra blinds for a bedroom",
   },
   {
     img: "gypsum-1000",
+    category: "false-ceiling",
     alt: "Gypsum false ceiling with concealed lighting above a television wall",
     caption: "Gypsum ceiling and TV wall",
   },
   {
     img: "upvcopen-1000",
+    category: "upvc-windows-and-doors",
     alt: "Openable UPVC window with a white frame",
     caption: "Openable UPVC windows",
   },
   {
     img: "woodenflooring-1000",
+    category: "flooring",
     alt: "Herringbone wooden flooring in a bright room",
     caption: "Herringbone wooden flooring",
   },
   {
     img: "hero2-1400",
+    category: "glass-partitions-and-railings",
     alt: "Glass balcony railings on an apartment building",
     caption: "Glass balcony railings",
   },
   {
     img: "aluminiumcupboard-700",
+    category: "modular-kitchens",
     alt: "Aluminium wardrobe with dark grey shutters",
     caption: "Aluminium wardrobe",
   },
   {
     img: "toughen-1000",
+    category: "glass-partitions-and-railings",
     alt: "Toughened glass partition in an office",
     caption: "Toughened glass office partition",
   },
@@ -156,28 +194,32 @@ export const gallery = [
 
 export const homeFaqs = [
   {
-    q: "Which areas do you work in?",
-    a: "Our office is in Annai Theresa Nagar, Thoothukudi. We work in Thoothukudi and travel to homes, offices and shops across Tamil Nadu. Send us your location and we will tell you when we can visit.",
+    q: "Which areas around Thoothukudi and Tamil Nadu do you work in?",
+    a: "Our office is at No. 2H/702A, Annai Theresa Nagar, Millerpuram, Thoothukudi (Tuticorin) 628008. We carry out site visits and installations across Thoothukudi, Tiruchendur, Kovilpatti, Tirunelveli, Nagercoil, Madurai and anywhere in Tamil Nadu.",
   },
   {
-    q: "How do I get a price?",
-    a: "Send the rooms you want to change, or call and describe them. We visit, measure and give you an itemised quote that separates material and labour.",
+    q: "How do I get a price or book a free site visit?",
+    a: "Call or WhatsApp +91 97150 32513 with the rooms you want to work on, or submit the contact form. We visit your site, take exact measurements, bring material samples and give you a free itemised quotation separating material and labour.",
+  },
+  {
+    q: "Which interior materials last best in Thoothukudi's coastal humidity?",
+    a: "Salt air and humidity affect untreated wood and cheap hardware. For kitchens, utility zones and coastal openings, we recommend PVC or UPVC cupboards, powder-coated aluminium, multi-chamber steel-reinforced UPVC windows, waterproof vinyl flooring and marine-grade stainless steel glass fittings.",
   },
   {
     q: "Do you supply materials or work with what I have?",
-    a: "Both. Most customers ask us to supply and fit everything. We also fit blinds, nets, windows or flooring that you have already bought.",
+    a: "Both. Most customers ask us to supply and fit everything so measurements and warranties stay with one team. We also fit blinds, mosquito nets, windows or flooring that you have already bought.",
   },
   {
-    q: "How long does a modular kitchen take?",
-    a: "It depends on the size, the material and how ready the site is. Once measurements are final, we give you a written timeline with the quote and update you as the work moves.",
+    q: "How long does a modular kitchen or false ceiling take?",
+    a: "Timelines depend on the room size, material selection and site readiness. Once measurements are finalised, we provide a written room-by-room schedule with your quotation and keep you updated until handover.",
   },
   {
-    q: "Do you handle offices and commercial spaces?",
-    a: "Yes. A lot of our aluminium, glass partition and grid ceiling work is for offices, clinics and shops. We can work after hours if the business needs to stay open.",
+    q: "Do you handle offices, clinics and commercial spaces?",
+    a: "Yes. We regularly install aluminium and 12 mm toughened glass partitions, grid ceilings, roller or zebra blinds and vinyl flooring for offices, clinics and retail shops, including after-hours fitting when needed.",
   },
   {
-    q: "Can you handle a single room?",
-    a: "Yes. One bedroom, a kitchen, a balcony railing or a set of blinds is a normal job for us. We take small jobs.",
+    q: "Can you take up a single room or small renovation?",
+    a: "Yes. One modular kitchen, a bedroom wardrobe, a balcony glass railing, a set of blinds or window mosquito nets is a regular job for our team.",
   },
 ];
 

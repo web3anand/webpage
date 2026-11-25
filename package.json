@@ -12,6 +12,8 @@
     "optimize": "node tools/optimize-images.mjs",
     "logo": "node tools/logo.mjs",
     "check": "node tools/build.mjs && node tools/check.mjs",
+    "reviews:sync": "node tools/sync-reviews.mjs && node tools/build.mjs && node tools/check.mjs",
+    "sync": "node tools/optimize-images.mjs && node tools/build.mjs && node tools/check.mjs",
     "test": "node tools/build.mjs && node tools/check.mjs"
   },
   "devDependencies": {

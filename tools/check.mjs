@@ -1,13 +1,14 @@
 /**
- * Post-build checks.
+ * Post-build & security checks.
  *
  *   npm test        (builds first, then runs these checks)
  *   npm run check   (checks the current public/ output)
  *
- * Catches the class of bug that only shows up in production: a link to a page
- * that was never generated, an image that does not exist, or a required root
- * file (robots.txt, sitemap.xml, icons) missing from the deploy.
+ * Catches broken links/assets, missing root files, and security regressions
+ * (CSP hash drift, missing headers, unsafe target="_blank", raw JSON-LD tags,
+ * or sensitive files accidentally shipped in public/).
  */
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -50,6 +51,45 @@ function fileFor(urlPath) {
   return candidates.find(isFile) || null;
 }
 
+/* ----------------------------------------------------- security header check */
+
+const vercelPath = path.join(root, "vercel.json");
+let cspScriptHashes = new Set();
+
+if (!isFile(vercelPath)) {
+  errors.push("vercel.json is missing");
+} else {
+  const vercelConfig = JSON.parse(fs.readFileSync(vercelPath, "utf8"));
+  const globalRule = vercelConfig.headers?.find((r) => r.source === "/(.*)");
+  const headerMap = new Map(
+    (globalRule?.headers || []).map((h) => [h.key.toLowerCase(), h.value]),
+  );
+
+  for (const requiredHeader of [
+    "strict-transport-security",
+    "x-content-type-options",
+    "referrer-policy",
+    "x-frame-options",
+    "cross-origin-opener-policy",
+    "permissions-policy",
+    "content-security-policy",
+  ]) {
+    if (!headerMap.get(requiredHeader)) {
+      errors.push(`vercel.json: missing global security header "${requiredHeader}"`);
+    }
+  }
+
+  const csp = headerMap.get("content-security-policy") || "";
+  if (/script-src[^;]*'unsafe-inline'/i.test(csp)) {
+    errors.push("vercel.json: CSP script-src must not allow 'unsafe-inline'");
+  }
+  for (const match of csp.matchAll(/'(sha256-[A-Za-z0-9+/=]+)'/g)) {
+    cspScriptHashes.add(match[1]);
+  }
+}
+
+/* --------------------------------------------------------- HTML & link checks */
+
 const htmlFiles = walk(out).filter((f) => f.endsWith(".html"));
 const referenced = new Set();
 
@@ -71,7 +111,7 @@ for (const file of htmlFiles) {
     if (!raw || raw.startsWith("#")) continue;
     if (/^(https?:|mailto:|tel:|data:|javascript:)/i.test(raw)) continue;
     if (raw.startsWith("/_vercel/")) continue;
-    if (!raw.startsWith("/")) continue; // fragment-relative links are not used here
+    if (!raw.startsWith("/")) continue;
 
     const [pathname] = raw.split("#");
     const found = fileFor(pathname);
@@ -82,8 +122,6 @@ for (const file of htmlFiles) {
     referenced.add(rel(path.relative(out, found)));
   }
 
-  // Absolute URLs in meta tags (og:image, twitter:image) count as references
-  // when they point at a file we ship, but external hosts are not errors.
   for (const match of html.matchAll(/content="(https?:\/\/[^"]+)"/g)) {
     let url;
     try {
@@ -93,6 +131,53 @@ for (const file of htmlFiles) {
     }
     const found = fileFor(url.pathname);
     if (found) referenced.add(rel(path.relative(out, found)));
+  }
+
+  // Security check: every target="_blank" link must include rel="noopener noreferrer"
+  for (const match of html.matchAll(/<a\b[^>]*\btarget="_blank"[^>]*>/gi)) {
+    const tag = match[0];
+    const relMatch = tag.match(/\brel="([^"]*)"/i);
+    const relTokens = new Set((relMatch?.[1] || "").toLowerCase().split(/\s+/).filter(Boolean));
+    if (!relTokens.has("noopener") || !relTokens.has("noreferrer")) {
+      errors.push(`${where}: target="_blank" link missing rel="noopener noreferrer" -> ${tag}`);
+    }
+  }
+
+  // SEO/AEO checks on every HTML page
+  if (!/<title>[^<]+<\/title>/i.test(html)) errors.push(`${where}: missing <title>`);
+  if (!/<meta\s+name="description"\s+content="[^"]+"/i.test(html)) {
+    errors.push(`${where}: missing meta description`);
+  }
+  if (!/<link\s+rel="canonical"\s+href="https?:\/\/[^"]+"/i.test(html)) {
+    errors.push(`${where}: missing canonical link`);
+  }
+  if (!/<h1\b[^>]*>[\s\S]*?<\/h1>/i.test(html)) errors.push(`${where}: missing <h1>`);
+  if (/abacus\.jasoncameron\.dev|data-visits|data-visit-count/i.test(html)) {
+    errors.push(`${where}: leftover visitor counter markup found`);
+  }
+
+  // Security check: every inline executable <script> must match a SHA-256 hash in CSP
+  for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    const attrs = match[1];
+    const content = match[2];
+    if (/\bsrc=/i.test(attrs)) continue;
+    if (/\btype="application\/ld\+json"/i.test(attrs)) {
+      if (/<\/script/i.test(content)) {
+        errors.push(`${where}: unescaped </script> inside JSON-LD block`);
+      }
+      try {
+        JSON.parse(content);
+      } catch (err) {
+        errors.push(`${where}: invalid JSON-LD (${err.message})`);
+      }
+      continue;
+    }
+    const digest = `sha256-${crypto.createHash("sha256").update(content).digest("base64")}`;
+    if (!cspScriptHashes.has(digest)) {
+      errors.push(
+        `${where}: inline <script> hash ${digest} is not allowlisted in vercel.json Content-Security-Policy`,
+      );
+    }
   }
 }
 
@@ -121,6 +206,8 @@ for (const required of [
   "robots.txt",
   "sitemap.xml",
   "site.webmanifest",
+  "llms.txt",
+  "llms-full.txt",
   "favicon.ico",
   "favicon.svg",
   "favicon.png",
@@ -135,6 +222,31 @@ for (const required of [
   "404.html",
 ]) {
   if (!isFile(path.join(out, required))) errors.push(`public/${required} is missing`);
+}
+
+/* Security check: ensure tools/google-reviews.json has valid shape and no leaked API keys. */
+const googleReviewsFile = path.join(root, "tools", "google-reviews.json");
+if (isFile(googleReviewsFile)) {
+  const raw = fs.readFileSync(googleReviewsFile, "utf8");
+  if (/AIza[0-9A-Za-z_-]{20,}/.test(raw)) {
+    errors.push("tools/google-reviews.json: looks like a Google API key was written into the repo");
+  }
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed.reviews)) {
+      errors.push("tools/google-reviews.json: reviews must be an array");
+    }
+  } catch (err) {
+    errors.push(`tools/google-reviews.json: invalid JSON (${err.message})`);
+  }
+}
+
+/* Security check: ensure no sensitive or unauthenticated admin files ship in public/. */
+for (const file of walk(out)) {
+  const relFile = rel(path.relative(out, file));
+  if (/(^|\/)(\.env|\.git|admin\.html$)|(\.(pem|key|sqlite|db|bak)$)/i.test(relFile)) {
+    errors.push(`public/${relFile}: sensitive or forbidden file must not be deployed`);
+  }
 }
 
 /* Images and fonts that ship but nothing references. */
@@ -167,6 +279,6 @@ if (errors.length) {
 }
 
 console.log(
-  `checked ${htmlFiles.length} pages — all internal links, assets and required files resolve.` +
+  `checked ${htmlFiles.length} pages — all links, assets, required files and security checks pass.` +
     (warnings.length ? ` (${warnings.length} warning(s))` : ""),
 );
