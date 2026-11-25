@@ -351,7 +351,15 @@ function localBusiness() {
       "Interior and exterior decoration company in Thoothukudi (Tuticorin), serving Tamil Nadu. Modular kitchens, false ceilings, blinds, curtains, UPVC windows, aluminium partitions, toughened glass railings, vinyl and wooden flooring, and mosquito nets.",
     url: `${site.url}/`,
     image: `${site.url}/assets/img/og-cover.jpg`,
-    logo: `${site.url}/icon-512.png`,
+    logo: {
+      "@type": "ImageObject",
+      "@id": `${site.url}/#logo`,
+      url: `${site.url}/icon-512.png`,
+      contentUrl: `${site.url}/icon-512.png`,
+      width: 512,
+      height: 512,
+      caption: site.name,
+    },
     telephone: site.phone,
     email: site.email,
     contactPoint: {
@@ -736,15 +744,13 @@ function page({
 <meta name="twitter:image" content="${site.url}/assets/img/og-cover.jpg">
 <meta name="twitter:image:alt" content="AV Interior Decoration, Thoothukudi, serving Tamil Nadu">
 
-<link rel="icon" href="/favicon.ico?v=3" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3">
-<link rel="icon" type="image/png" sizes="48x48" href="/icon-48.png?v=3">
-<link rel="icon" type="image/png" sizes="96x96" href="/icon-96.png?v=3">
-<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=3">
-<link rel="shortcut icon" href="/favicon.ico?v=3">
-<link rel="apple-touch-icon" href="/icon-180.png?v=3">
-<link rel="manifest" href="/site.webmanifest?v=3">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/icon-96.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/icon-48.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="alternate" type="text/plain" title="LLMs.txt" href="/llms.txt">
 <link rel="alternate" hreflang="en-in" href="${canonical}">
 <link rel="alternate" hreflang="x-default" href="${canonical}">
@@ -1012,9 +1018,9 @@ const pages = [];
 pages.push({
   file: "index.html",
   urlPath: "/",
-  title: "AV Interior Decoration | Interior Designers in Thoothukudi (Tuticorin)",
+  title: "AV Interior Decoration | Interior Designers in Thoothukudi",
   description:
-    "Modular kitchens, false ceilings, UPVC windows, blinds, glass railings, flooring & mosquito nets in Thoothukudi (Tuticorin) & across Tamil Nadu. Free site visit & itemised quote.",
+    "Trusted interior designers in Thoothukudi (Tuticorin) & Tamil Nadu. Modular kitchens, false ceilings, UPVC windows, blinds & flooring. Free site visit.",
   body: homeBody,
   graph: homeGraph,
   preload: `<link rel="preload" as="image" href="/assets/img/hero1-1440.webp" imagesrcset="${srcset(
@@ -1056,7 +1062,7 @@ pages.push({
   urlPath: "/services",
   title: "Interior Services in Thoothukudi | AV Interior Decoration",
   description:
-    "False ceilings, modular kitchens, blinds, UPVC windows, aluminium and glass work, flooring and mosquito nets. Thoothukudi, serving Tamil Nadu.",
+    "Complete home & office interior services in Thoothukudi (Tuticorin) & Tamil Nadu: kitchens, ceilings, UPVC windows, blinds, glass railings & flooring.",
   body: serviceIndexBody,
   graph: [
     breadcrumbSchema([
@@ -1393,9 +1399,9 @@ const contactBody = `
 pages.push({
   file: "contact.html",
   urlPath: "/contact",
-  title: "Contact AV Interior Decoration | Thoothukudi & Tamil Nadu",
+  title: "Contact AV Interior Decoration | Thoothukudi, Tamil Nadu",
   description:
-    "Request a site visit or a quote for interiors in Thoothukudi or anywhere in Tamil Nadu. Call +91 97150 32513, message on WhatsApp, or send the form.",
+    "Book a free interior site visit & itemised quote in Thoothukudi (Tuticorin) or anywhere in Tamil Nadu. Call or WhatsApp +91 97150 32513 today.",
   body: contactBody,
   graph: [
     breadcrumbSchema([
@@ -1714,6 +1720,9 @@ fs.writeFileSync(
       background_color: "#F6EFE4",
       theme_color: "#1B100B",
       icons: [
+        { src: "/icon-48.png", sizes: "48x48", type: "image/png" },
+        { src: "/icon-96.png", sizes: "96x96", type: "image/png" },
+        { src: "/icon-144.png", sizes: "144x144", type: "image/png" },
         { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
         { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
       ],

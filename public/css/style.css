@@ -71,6 +71,7 @@
 html {
   background: var(--bg);
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 16px);
 }
@@ -184,10 +185,39 @@ p {
   color: #fff;
 }
 
+a,
+button,
+summary,
+label,
+input,
+select,
+textarea,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  a:focus,
+  a:focus-visible,
+  button:focus,
+  button:focus-visible,
+  summary:focus,
+  summary:focus-visible,
+  .service-card__cover:focus-visible,
+  .type-card__link:focus-visible {
+    outline: none;
+  }
 }
 
 /* ------------------------------------------------------------------ layout */

@@ -145,11 +145,17 @@ for (const file of htmlFiles) {
 
   // SEO/AEO checks on every HTML page
   if (!/<title>[^<]+<\/title>/i.test(html)) errors.push(`${where}: missing <title>`);
-  if (!/<meta\s+name="description"\s+content="[^"]+"/i.test(html)) {
+  const descMatch = html.match(/<meta\s+name="description"\s+content="([^"]+)"/i);
+  if (!descMatch) {
     errors.push(`${where}: missing meta description`);
+  } else if (descMatch[1].length > 165 && !where.endsWith("404.html") && !where.endsWith("privacy.html") && !where.endsWith("terms.html")) {
+    warnings.push(`${where}: meta description is ${descMatch[1].length} chars (recommended <= 160)`);
   }
   if (!/<link\s+rel="canonical"\s+href="https?:\/\/[^"]+"/i.test(html)) {
     errors.push(`${where}: missing canonical link`);
+  }
+  if (/<link[^>]+rel="icon"[^>]+href="[^"]*\?v=/i.test(html)) {
+    errors.push(`${where}: favicon link should use a stable URL without ?v= query strings`);
   }
   if (!/<h1\b[^>]*>[\s\S]*?<\/h1>/i.test(html)) errors.push(`${where}: missing <h1>`);
   if (/abacus\.jasoncameron\.dev|data-visits|data-visit-count/i.test(html)) {
