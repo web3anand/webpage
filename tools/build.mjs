@@ -39,13 +39,34 @@ const googleReviews = Array.isArray(googleReviewsData.reviews) ? googleReviewsDa
 const allReviews = [...googleReviews, ...testimonials];
 const YEAR = String(new Date().getFullYear());
 const TODAY = new Date().toISOString().slice(0, 10);
+
+function minifyCss(css) {
+  const strings = [];
+  const masked = css
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/(["'])(?:\\.|(?!\1).)*\1/g, (m) => {
+      strings.push(m);
+      return `__STR_${strings.length - 1}__`;
+    })
+    .replace(/\s+/g, " ")
+    .replace(/\s*([{}:;,>~])\s*/g, "$1")
+    .replace(/;}/g, "}")
+    .replace(/\b(and|or|not)\(/g, "$1 (")
+    .trim();
+  return masked.replace(/__STR_(\d+)__/g, (_, i) => strings[Number(i)]);
+}
+
+const rawCss = fs.readFileSync(path.join(out, "css", "style.css"), "utf8");
+const minCss = minifyCss(rawCss);
+fs.writeFileSync(path.join(out, "css", "style.min.css"), minCss);
+
 const assetHash = (relPath) =>
   crypto
     .createHash("sha256")
     .update(fs.readFileSync(path.join(out, relPath)))
     .digest("hex")
     .slice(0, 8);
-const CSS_V = assetHash("css/style.css");
+const CSS_V = assetHash("css/style.min.css");
 const JS_V = assetHash("js/main.js");
 
 const esc = (value = "") =>
@@ -102,11 +123,9 @@ function img(name, { alt, className = "", sizes, loading = "lazy", priority = fa
       ? ` srcset="${variants.map((v) => `/assets/img/${v.key}.webp ${v.w}w`).join(", ")}"`
       : "";
   const sizesAttr = srcsetAttr ? ` sizes="${sizes || "(max-width: 900px) 100vw, 50vw"}"` : "";
-  return `<img src="/assets/img/${name}.webp" width="${meta.w}" height="${meta.h}"${srcsetAttr}${sizesAttr}${
-    className ? ` class="${className}"` : ""
-  } alt="${esc(alt)}" loading="${loading}" decoding="async"${
-    priority ? ' fetchpriority="high"' : ""
-  }>`;
+  return `<img src="/assets/img/${name}.webp" width="${meta.w}" height="${meta.h}"${srcsetAttr}${sizesAttr}${className ? ` class="${className}"` : ""
+    } alt="${esc(alt)}" loading="${loading}" decoding="async"${priority ? ' fetchpriority="high"' : ""
+    }>`;
 }
 
 function srcset(name, widths) {
@@ -137,6 +156,7 @@ const resolvedPlaceId = site.googlePlaceId || googleReviewsData.placeId || "";
 const googleProfileHref = googleReviewsData.profileUrl || site.mapsLink;
 const googleReviewHref =
   site.googleReviewLink ||
+  googleReviewsData.writeReviewUrl ||
   (resolvedPlaceId
     ? `https://search.google.com/local/writereview?placeid=${encodeURIComponent(resolvedPlaceId)}`
     : googleProfileHref);
@@ -149,8 +169,9 @@ const icons = {
   phone: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 3h2.2l1.5 4-2 1.4a12 12 0 005.4 5.4l1.4-2 4 1.5v2.2A2.5 2.5 0 0116.5 18C9.6 17.6 6.4 14.4 6 7.5A2.5 2.5 0 016.5 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
   whatsapp: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5a8.4 8.4 0 00-7.2 12.7L3.6 20.4l4.3-1.1A8.4 8.4 0 1012 3.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.1.3 0 .5.5.9 1.2 1.6 2.1 2.1.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .5-.4 1-.9 1.2-.6.2-1.4.2-2.5-.2a9 9 0 01-4.7-4.7c-.4-1.1-.4-1.9-.2-2.5.1-.4.4-.6.7-.7z" fill="currentColor"/></svg>`,
   pin: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>`,
-  layers: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5l8.5 4.5-8.5 4.5L3.5 8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4.8 12.4L12 16.2l7.2-3.8M4.8 16.4L12 20.2l7.2-3.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   plus: `<svg class="faq-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  prev: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  next: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   close: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
   menu: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6.5h16M4 12h16M4 17.5h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
   mail: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 7.5l7.5 5.6 7.5-5.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
@@ -176,7 +197,7 @@ function header(urlPath) {
   return `<header class="site-header" data-header>
   <div class="shell header-bar">
     <a class="brand" href="/">
-      <img class="brand-mark brand-mark--header" src="/assets/img/logo-mark-ink.png" width="800" height="830" alt="" aria-hidden="true" decoding="async">
+      <img class="brand-mark brand-mark--header" src="/assets/img/logo-mark-ink.webp" width="240" height="249" alt="" aria-hidden="true" decoding="async">
       <span class="brand-copy">
         <span class="brand-name">AV Interior Decoration</span>
         <span class="brand-sub">Thoothukudi · Tamil Nadu</span>
@@ -213,7 +234,7 @@ function footer() {
   <div class="shell footer-top">
     <div class="footer-brand">
       <a class="footer-logo" href="/" aria-label="AV Interior Decoration home">
-        <img class="brand-mark brand-mark--footer" src="/assets/img/logo-mark.png" width="800" height="830" alt="" aria-hidden="true" decoding="async">
+        <img class="brand-mark brand-mark--footer" src="/assets/img/logo-mark.webp" width="400" height="415" alt="" aria-hidden="true" loading="lazy" decoding="async">
       </a>
       <p class="footer-name">AV Interior Decoration</p>
       <p class="footer-tagline">Interiors and exterior finishing for homes, offices and shops across Tamil Nadu.</p>
@@ -228,8 +249,8 @@ function footer() {
     <nav class="footer-col" aria-label="Services">
       <h2>Services</h2>
       <ul>${services
-        .map((s) => `<li><a href="/services/${s.slug}">${esc(s.name)}</a></li>`)
-        .join("")}</ul>
+      .map((s) => `<li><a href="/services/${s.slug}">${esc(s.name)}</a></li>`)
+      .join("")}</ul>
     </nav>
 
     <nav class="footer-col" aria-label="Company">
@@ -324,7 +345,7 @@ function footer() {
 /* -------------------------------------------------------------- page shell */
 
 function jsonLd(graph) {
-  const safe = JSON.stringify(graph, null, 2)
+  const safe = JSON.stringify(graph)
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026")
@@ -383,13 +404,13 @@ function localBusiness() {
     ...(site.sameAs?.length ? { sameAs: site.sameAs } : {}),
     ...(site.openingHours?.length
       ? {
-          openingHoursSpecification: site.openingHours.map((slot) => ({
-            "@type": "OpeningHoursSpecification",
-            dayOfWeek: slot.days,
-            opens: slot.opens,
-            closes: slot.closes,
-          })),
-        }
+        openingHoursSpecification: site.openingHours.map((slot) => ({
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: slot.days,
+          opens: slot.opens,
+          closes: slot.closes,
+        })),
+      }
       : {}),
     geo: {
       "@type": "GeoCoordinates",
@@ -426,31 +447,31 @@ function localBusiness() {
       })),
     },
     ...(typeof googleReviewsData.rating === "number" &&
-    typeof googleReviewsData.totalReviews === "number" &&
-    googleReviewsData.totalReviews > 0
+      typeof googleReviewsData.totalReviews === "number" &&
+      googleReviewsData.totalReviews > 0
       ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: googleReviewsData.rating,
-            reviewCount: googleReviewsData.totalReviews,
-            bestRating: 5,
-            worstRating: 1,
-          },
-        }
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: googleReviewsData.rating,
+          reviewCount: googleReviewsData.totalReviews,
+          bestRating: 5,
+          worstRating: 1,
+        },
+      }
       : {}),
     ...(allReviews.length
       ? {
-          review: allReviews.map((r) => ({
-            "@type": "Review",
-            author: { "@type": "Person", name: r.name },
-            reviewRating: {
-              "@type": "Rating",
-              ratingValue: Math.max(1, Math.min(5, Number(r.rating) || 5)),
-              bestRating: 5,
-            },
-            reviewBody: r.text,
-          })),
-        }
+        review: allReviews.map((r) => ({
+          "@type": "Review",
+          author: { "@type": "Person", name: r.name },
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: Math.max(1, Math.min(5, Number(r.rating) || 5)),
+            bestRating: 5,
+          },
+          reviewBody: r.text,
+        })),
+      }
       : {}),
   };
 }
@@ -472,10 +493,9 @@ function breadcrumbs(items) {
   return `<nav class="breadcrumbs" aria-label="Breadcrumb"><ol>${items
     .map(
       (item, i) =>
-        `<li>${
-          i === items.length - 1
-            ? `<span aria-current="page">${esc(item.label)}</span>`
-            : `<a href="${item.href}">${esc(item.label)}</a>`
+        `<li>${i === items.length - 1
+          ? `<span aria-current="page">${esc(item.label)}</span>`
+          : `<a href="${item.href}">${esc(item.label)}</a>`
         }</li>`,
     )
     .join("")}</ol></nav>`;
@@ -533,27 +553,38 @@ function reviewsBlock() {
     typeof googleReviewsData.totalReviews === "number" &&
     googleReviewsData.totalReviews > 0;
 
+  const carouselControls =
+    allReviews.length > 1
+      ? `<div class="review-carousel__controls" aria-label="Scroll reviews">
+          <button class="review-carousel__btn" type="button" data-review-prev aria-label="Previous reviews">${icons.prev}</button>
+          <button class="review-carousel__btn" type="button" data-review-next aria-label="Next reviews">${icons.next}</button>
+        </div>`
+      : "";
+
   const summaryBanner = hasGoogleSummary
     ? `<div class="reviews-summary" data-reveal>
       <div class="reviews-summary__score">
-        <span class="reviews-summary__brand">${icons.googleG}<span>Google Reviews</span></span>
-        <div class="reviews-summary__row">
-          <strong class="reviews-summary__num">${esc(googleReviewsData.rating.toFixed(1))}</strong>
-          <div>
-            ${reviewStars(Math.round(googleReviewsData.rating))}
-            <p class="reviews-summary__count">Based on ${esc(googleReviewsData.totalReviews)} Google review${googleReviewsData.totalReviews === 1 ? "" : "s"}</p>
-          </div>
-        </div>
+        <span class="reviews-summary__brand">${icons.googleG}<span>Google</span></span>
+        <strong class="reviews-summary__num">${esc(googleReviewsData.rating.toFixed(1))}</strong>
+        ${reviewStars(Math.round(googleReviewsData.rating))}
+        <span class="reviews-summary__count">${esc(googleReviewsData.totalReviews)} review${googleReviewsData.totalReviews === 1 ? "" : "s"}</span>
       </div>
       <div class="reviews-summary__actions">
-        <a class="btn btn--ink btn--sm" href="${esc(googleReviewHref)}" target="_blank" rel="noopener noreferrer">Write a Google review${icons.arrow}</a>
-        <a class="link-arrow" href="${esc(googleProfileHref)}" target="_blank" rel="noopener noreferrer">View all on Google${icons.arrow}</a>
+        <a class="btn btn--ink btn--sm" href="${esc(googleReviewHref)}" target="_blank" rel="noopener noreferrer">Write a review${icons.arrow}</a>
+        ${carouselControls}
       </div>
     </div>`
     : "";
 
+  const reviewsCarousel = allReviews.length
+    ? `<div class="review-carousel" data-review-carousel>
+        ${!hasGoogleSummary && carouselControls ? `<div class="review-carousel__bar">${carouselControls}</div>` : ""}
+        <div class="review-track" data-review-track tabindex="0" role="region" aria-label="Customer reviews">${allReviews.map(reviewCard).join("")}</div>
+      </div>`
+    : "";
+
   const googleAttribution = googleReviews.length
-    ? `<p class="reviews-attribution">${icons.googleG}<span>Verified customer reviews from our <a href="${esc(googleProfileHref)}" target="_blank" rel="noopener noreferrer">Google Business Profile</a>${googleReviewsData.syncedAt ? ` · Updated ${esc(googleReviewsData.syncedAt)}` : ""}.</span></p>`
+    ? `<p class="reviews-attribution">${icons.googleG}<span>Verified reviews from our <a href="${esc(googleProfileHref)}" target="_blank" rel="noopener noreferrer">Google Business Profile</a>${googleReviewsData.syncedAt ? ` · Updated ${esc(googleReviewsData.syncedAt)}` : ""}.</span></p>`
     : "";
 
   return `<section class="section reviews-section" id="reviews" aria-labelledby="reviews-title">
@@ -567,7 +598,7 @@ function reviewsBlock() {
     </header>
 
     ${summaryBanner}
-    ${allReviews.length ? `<div class="review-grid">${allReviews.map(reviewCard).join("")}</div>` : ""}
+    ${reviewsCarousel}
     ${googleAttribution}
 
     <div class="reviews-layout">
@@ -578,14 +609,12 @@ function reviewsBlock() {
           <p>Our reviews live on our Google Business profile, from homes, offices and shops across Thoothukudi and Tamil Nadu.</p>
         </div>
         <div class="reviews-google__actions">
-          <a class="btn btn--ink" href="${esc(googleReviewHref)}" target="_blank" rel="noopener noreferrer">${
-            hasDirectReviewLink ? "Write a Google review" : "Read &amp; place reviews on Google"
-          }${icons.arrow}</a>
-          ${
-            hasDirectReviewLink
-              ? `<a class="link-arrow" href="${esc(googleProfileHref)}" target="_blank" rel="noopener noreferrer">Read all reviews on Google${icons.arrow}</a>`
-              : ""
-          }
+          <a class="btn btn--ink" href="${esc(googleReviewHref)}" target="_blank" rel="noopener noreferrer">${hasDirectReviewLink ? "Write a Google review" : "Read &amp; place reviews on Google"
+    }${icons.arrow}</a>
+          ${hasDirectReviewLink
+      ? `<a class="link-arrow" href="${esc(googleProfileHref)}" target="_blank" rel="noopener noreferrer">Read all reviews on Google${icons.arrow}</a>`
+      : ""
+    }
         </div>
       </div>
 
@@ -645,9 +674,9 @@ function ctaBlock({ title = "Tell us about your space.", body } = {}) {
       <p class="eyebrow eyebrow--light">Next step</p>
       <h2 id="cta-title">${esc(title)}</h2>
       <p>${esc(
-        body ||
-          "Tell us which rooms you want to change. We will visit, measure and send you a clear quote.",
-      )}</p>
+    body ||
+    "Tell us which rooms you want to change. We will visit, measure and send you a clear quote.",
+  )}</p>
     </div>
     <div class="cta-band__actions">
       <a class="btn btn--beige btn--lg" href="/contact">Book a site visit${icons.arrow}</a>
@@ -758,7 +787,7 @@ function page({
 <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 ${preload || ""}
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="/css/style.css?v=${CSS_V}">
+<link rel="stylesheet" href="/css/style.min.css?v=${CSS_V}">
 ${jsonLd(fullGraph)}
 </head>
 <body class="${className}">
@@ -779,8 +808,13 @@ ${footer()}
 <div class="lightbox" data-lightbox hidden>
   <div class="lightbox__inner" role="dialog" aria-modal="true" aria-label="Project photo">
     <button class="lightbox__close" type="button" data-lightbox-close aria-label="Close photo">${icons.close}</button>
+    <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="Previous photo" hidden>${icons.prev}</button>
     <img alt="" data-lightbox-img>
-    <p class="lightbox__caption" data-lightbox-caption></p>
+    <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Next photo" hidden>${icons.next}</button>
+    <div class="lightbox__bar">
+      <p class="lightbox__caption" data-lightbox-caption></p>
+      <span class="lightbox__counter" data-lightbox-counter></span>
+    </div>
   </div>
 </div>
 <script src="/js/main.js?v=${JS_V}" defer></script>
@@ -800,10 +834,10 @@ function serviceCard(s, index, options = {}) {
   return `<article class="service-card"${cardId} data-reveal style="--i:${index % 4}">
     <div class="service-card__media">
       ${img(s.cardImg, {
-        alt: s.heroAlt,
-        className: "service-card__img",
-        sizes: "(max-width: 720px) 50vw, (max-width: 1024px) 33vw, 25vw",
-      })}
+    alt: s.heroAlt,
+    className: "service-card__img",
+    sizes: "(max-width: 720px) 50vw, (max-width: 1024px) 33vw, 25vw",
+  })}
     </div>
     <div class="service-card__scrim" aria-hidden="true"></div>
     <a class="service-card__cover" href="${href}" aria-labelledby="${titleId}"></a>
@@ -816,31 +850,30 @@ function serviceCard(s, index, options = {}) {
 const galleryCategories = [...new Set(gallery.map((item) => item.category).filter((slug) => slug && serviceBySlug[slug]))];
 
 const homeGalleryHtml = `
-    ${
-      galleryCategories.length > 1
-        ? `<div class="chip-row gallery-filters" role="group" aria-label="Filter work by category" data-gallery-filters>
+    ${galleryCategories.length > 1
+    ? `<div class="chip-row gallery-filters" role="group" aria-label="Filter work by category" data-gallery-filters>
       <button class="chip" type="button" data-gallery-filter="all" aria-pressed="true">All</button>
       ${galleryCategories
-        .map(
-          (slug) =>
-            `<button class="chip" type="button" data-gallery-filter="${esc(slug)}" aria-pressed="false">${esc(serviceBySlug[slug].name)}</button>`,
-        )
-        .join("")}
+      .map(
+        (slug) =>
+          `<button class="chip" type="button" data-gallery-filter="${esc(slug)}" aria-pressed="false">${esc(serviceBySlug[slug].name)}</button>`,
+      )
+      .join("")}
     </div>`
-        : ""
-    }
+    : ""
+  }
     <div class="gallery" data-gallery-grid>
       ${gallery
-        .map(
-          (item, i) => `<a class="gallery__item" href="/assets/img/${largestVariantFor(item.img)}.webp" data-lightbox-item data-caption="${esc(item.caption)}" data-category="${esc(item.category || "")}" data-reveal style="--i:${i % 3}">
+    .map(
+      (item, i) => `<a class="gallery__item" href="/assets/img/${largestVariantFor(item.img)}.webp" data-lightbox-item data-caption="${esc(item.caption)}" data-category="${esc(item.category || "")}" data-reveal style="--i:${i % 3}">
         ${img(item.img, {
-          alt: item.alt,
-          sizes: "(max-width: 700px) 100vw, 33vw",
-        })}
+        alt: item.alt,
+        sizes: "(max-width: 700px) 100vw, 33vw",
+      })}
         <span class="gallery__label">${esc(item.caption)}</span>
       </a>`,
-        )
-        .join("")}
+    )
+    .join("")}
     </div>`;
 
 const homeBody = `
@@ -872,11 +905,11 @@ const homeBody = `
       </span>
       <figure>
         ${img("hero1-1440", {
-          alt: "Living and dining room with wooden flooring, window blinds and warm pendant lights",
-          sizes: "(max-width: 960px) 100vw, 46vw",
-          loading: "eager",
-          priority: true,
-        })}
+  alt: "Living and dining room with wooden flooring, window blinds and warm pendant lights",
+  sizes: "(max-width: 960px) 100vw, 46vw",
+  loading: "eager",
+  priority: true,
+})}
         <figcaption class="hero-badge">
           <span class="hero-badge__num">10+ years</span>
           <span class="hero-badge__text">interior &amp; exterior work across Tamil Nadu</span>
@@ -919,9 +952,9 @@ const homeBody = `
   <div class="shell split">
     <figure class="split__media split__media--tall" data-reveal>
       ${img("a8-960", {
-        alt: "Bedroom with a blue accent wall, layered false ceiling and soft curtains",
-        sizes: "(max-width: 900px) 100vw, 46vw",
-      })}
+  alt: "Bedroom with a blue accent wall, layered false ceiling and soft curtains",
+  sizes: "(max-width: 900px) 100vw, 46vw",
+})}
       <figcaption>Bedroom with a layered ceiling and made-to-measure curtains</figcaption>
     </figure>
     <div class="split__body" data-reveal>
@@ -930,13 +963,13 @@ const homeBody = `
       <p class="section-lead">We are based in Thoothukudi and work across Tamil Nadu. On most interior jobs, things go wrong between one trade and the next. We stay on the job until the handover is done.</p>
       <ul class="why-list">
         ${whyPoints
-          .map(
-            (point) => `<li>
+    .map(
+      (point) => `<li>
           <h3>${esc(point.title)}</h3>
           <p>${esc(point.body)}</p>
         </li>`,
-          )
-          .join("")}
+    )
+    .join("")}
       </ul>
       <p class="split__note">${icons.pin}Based in ${esc(site.street)}, ${esc(site.locality)}. Site visits across Tamil Nadu.</p>
     </div>
@@ -954,14 +987,14 @@ const homeBody = `
     </header>
     <ol class="process-list">
       ${processSteps
-        .map(
-          (step, i) => `<li data-reveal style="--i:${i}">
+    .map(
+      (step, i) => `<li data-reveal style="--i:${i}">
         <span class="process-list__num">${String(i + 1).padStart(2, "0")}</span>
         <h3>${esc(step.title)}</h3>
         <p>${esc(step.body)}</p>
       </li>`,
-        )
-        .join("")}
+    )
+    .join("")}
     </ol>
   </div>
 </section>
@@ -982,8 +1015,8 @@ const homeBody = `
 ${reviewsBlock()}
 
 ${faqBlock(homeFaqs, {
-  lead: "The things people usually ask before a first site visit.",
-})}
+      lead: "The things people usually ask before a first site visit.",
+    })}
 `;
 
 const homeGraph = [
@@ -1026,7 +1059,7 @@ pages.push({
   preload: `<link rel="preload" as="image" href="/assets/img/hero1-1440.webp" imagesrcset="${srcset(
     "hero1",
     [960, 1440, 2000],
-  )}" imagesizes="(max-width: 960px) 100vw, 46vw" media="(min-width: 961px)" fetchpriority="high">`,
+  )}" imagesizes="(max-width: 960px) 100vw, 46vw" fetchpriority="high">`,
 });
 
 /* services index */
@@ -1034,15 +1067,15 @@ const serviceIndexBody = `
 <section class="page-hero">
   <div class="shell">
     ${breadcrumbs([
-      { label: "Home", href: "/" },
-      { label: "Services", href: "/services" },
-    ])}
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+])}
     <p class="eyebrow">Services</p>
     <h1>Interior and exterior services in Thoothukudi and across Tamil Nadu.</h1>
     <p class="page-hero__lead">Eight service lines, from the ceiling to the floor. We handle the trades together so the measurements, materials and fittings line up.</p>
     <div class="chip-row">${services
-      .map((s) => `<a class="chip" href="#${s.slug}">${esc(s.name)}</a>`)
-      .join("")}</div>
+    .map((s) => `<a class="chip" href="#${s.slug}">${esc(s.name)}</a>`)
+    .join("")}</div>
   </div>
 </section>
 
@@ -1097,16 +1130,16 @@ for (const [index, s] of services.entries()) {
     </header>
     <div class="gallery">
       ${extraPhotos
-        .map(
-          (item, i) => `<a class="gallery__item" href="/assets/img/${largestVariantFor(item.img)}.webp" data-lightbox-item data-caption="${esc(item.caption)}" data-reveal style="--i:${i % 3}">
+      .map(
+        (item, i) => `<a class="gallery__item" href="/assets/img/${largestVariantFor(item.img)}.webp" data-lightbox-item data-caption="${esc(item.caption)}" data-reveal style="--i:${i % 3}">
         ${img(item.thumb || item.img, {
           alt: item.alt || item.caption,
           sizes: "(max-width: 700px) 100vw, 33vw",
         })}
         <span class="gallery__label">${esc(item.caption)}</span>
       </a>`,
-        )
-        .join("")}
+      )
+      .join("")}
     </div>
   </div>
 </section>`
@@ -1116,10 +1149,10 @@ for (const [index, s] of services.entries()) {
   <div class="shell split split--hero">
     <div class="split__body" data-reveal>
       ${breadcrumbs([
-        { label: "Home", href: "/" },
-        { label: "Services", href: "/services" },
-        { label: s.name, href: `/services/${s.slug}` },
-      ])}
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
+    { label: s.name, href: `/services/${s.slug}` },
+  ])}
       <p class="eyebrow">Service</p>
       <h1>${esc(s.h1)}</h1>
       <p class="page-hero__lead">${esc(s.lead)}</p>
@@ -1130,11 +1163,11 @@ for (const [index, s] of services.entries()) {
     </div>
     <figure class="split__media" data-reveal>
       ${img(s.heroImg, {
-        alt: s.heroAlt,
-        sizes: "(max-width: 900px) 100vw, 46vw",
-        loading: "eager",
-        priority: true,
-      })}
+    alt: s.heroAlt,
+    sizes: "(max-width: 900px) 100vw, 46vw",
+    loading: "eager",
+    priority: true,
+  })}
     </figure>
   </div>
 </section>
@@ -1185,15 +1218,15 @@ for (const [index, s] of services.entries()) {
     </header>
     <div class="type-grid">
       ${s.types
-        .map(
-          (t) => `<figure class="type-card" data-reveal>
+      .map(
+        (t) => `<figure class="type-card" data-reveal>
         <a class="type-card__link" href="/assets/img/${largestVariantFor(t.img)}.webp" data-lightbox-item data-caption="${esc(t.name)}">
           ${img(t.img, { alt: t.alt, sizes: "(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 25vw" })}
           <figcaption>${esc(t.name)}</figcaption>
         </a>
       </figure>`,
-        )
-        .join("")}
+      )
+      .join("")}
     </div>
   </div>
 </section>
@@ -1209,14 +1242,14 @@ ${categoryPhotosSection}
     </header>
     <ol class="notes-grid">
       ${s.notes
-        .map(
-          (n, i) => `<li data-reveal style="--i:${i % 3}">
+      .map(
+        (n, i) => `<li data-reveal style="--i:${i % 3}">
         <span class="notes-grid__num">${String(i + 1).padStart(2, "0")}</span>
         <h3>${esc(n.title)}</h3>
         <p>${esc(n.body)}</p>
       </li>`,
-        )
-        .join("")}
+      )
+      .join("")}
     </ol>
   </div>
 </section>
@@ -1241,12 +1274,19 @@ ${faqBlock(s.faqs, { title: `${s.name}: common questions` })}
 ${ctaBlock({ title: `Planning ${nameLower(s.name)}?` })}
 `;
 
+  const heroVariants = variantsFor(s.heroImg);
+  const heroPreload = `<link rel="preload" as="image" href="/assets/img/${s.heroImg}.webp"${heroVariants.length > 1
+    ? ` imagesrcset="${heroVariants.map((v) => `/assets/img/${v.key}.webp ${v.w}w`).join(", ")}" imagesizes="(max-width: 900px) 100vw, 46vw"`
+    : ""
+    } fetchpriority="high">`;
+
   pages.push({
     file: `services/${s.slug}.html`,
     urlPath: `/services/${s.slug}`,
     title: s.title,
     description: s.description,
     primaryImage: `${site.url}/assets/img/${largestVariantFor(s.heroImg)}.webp`,
+    preload: heroPreload,
     body,
     graph: [
       breadcrumbSchema([
@@ -1305,9 +1345,9 @@ const contactBody = `
 <section class="page-hero">
   <div class="shell">
     ${breadcrumbs([
-      { label: "Home", href: "/" },
-      { label: "Contact", href: "/contact" },
-    ])}
+  { label: "Home", href: "/" },
+  { label: "Contact", href: "/contact" },
+])}
     <p class="eyebrow">Contact</p>
     <h1>Let us look at the space first.</h1>
     <p class="page-hero__lead">Tell us the rooms you want to change and roughly what you have in mind. We will visit, measure and send a clear quote. We work in Thoothukudi and across Tamil Nadu.</p>
@@ -1320,8 +1360,8 @@ const contactBody = `
       <h2>Request a site visit</h2>
       <p class="contact-card__lead">Fill this in and we will open WhatsApp with your details ready to send. Nothing is stored on this website.</p>
       <form class="quote-form" data-quote-form data-service-map='${esc(
-        JSON.stringify(Object.fromEntries(services.map((s) => [s.slug, s.name]))),
-      )}'>
+  JSON.stringify(Object.fromEntries(services.map((s) => [s.slug, s.name]))),
+)}'>
         <div class="field">
           <label for="name">Your name <span aria-hidden="true">*</span></label>
           <input id="name" name="name" type="text" autocomplete="name" maxlength="60" required placeholder="e.g. Priya Raman">
@@ -1424,9 +1464,9 @@ function legalPage(slug, title, description, sections) {
 <section class="page-hero page-hero--small">
   <div class="shell">
     ${breadcrumbs([
-      { label: "Home", href: "/" },
-      { label: title, href: `/${slug}` },
-    ])}
+    { label: "Home", href: "/" },
+    { label: title, href: `/${slug}` },
+  ])}
     <p class="eyebrow">Legal</p>
     <h1>${esc(title)}</h1>
     <p class="page-hero__lead">Last updated 21 October 2026.</p>
@@ -1654,8 +1694,8 @@ ${processSteps.map((s, i) => `${i + 1}. **${s.title}**: ${s.body}`).join("\n")}
 
 ## Services in detail
 ${services
-  .map(
-    (s) => `### ${s.name}
+    .map(
+      (s) => `### ${s.name}
 - URL: ${abs(`/services/${s.slug}`)}
 - Summary: ${s.lead}
 - Details: ${s.intro.join(" ")}
@@ -1665,22 +1705,20 @@ ${services
 ${s.notes.map((n) => `  - ${n.title}: ${n.body}`).join("\n")}
 - FAQs:
 ${s.faqs.map((f) => `  - Q: ${f.q}\n    A: ${f.a}`).join("\n")}`,
-  )
-  .join("\n\n")}
+    )
+    .join("\n\n")}
 
 ## Frequently Asked Questions
-${homeFaqs.map((f) => `- Q: ${f.q}\n  A: ${f.a}`).join("\n")}${
-  allReviews.length
+${homeFaqs.map((f) => `- Q: ${f.q}\n  A: ${f.a}`).join("\n")}${allReviews.length
     ? `
 
-## Client Reviews${
-        typeof googleReviewsData.rating === "number" && googleReviewsData.totalReviews
-          ? ` (${googleReviewsData.rating}/5 across ${googleReviewsData.totalReviews} Google reviews)`
-          : ""
-      }
+## Client Reviews${typeof googleReviewsData.rating === "number" && googleReviewsData.totalReviews
+      ? ` (${googleReviewsData.rating}/5 across ${googleReviewsData.totalReviews} Google reviews)`
+      : ""
+    }
 ${allReviews.map((r) => `- ${r.name} (${r.rating}/5${r.source ? `, ${r.source}` : ""}): "${r.text}"`).join("\n")}`
     : ""
-}
+  }
 `;
 
 fs.writeFileSync(path.join(out, "llms.txt"), llmsTxt);
@@ -1695,15 +1733,15 @@ fs.writeFileSync(
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapPaths
-  .map(
-    (p) => `  <url>
+    .map(
+      (p) => `  <url>
     <loc>${abs(p.path)}</loc>
     <lastmod>${TODAY}</lastmod>
     <changefreq>${p.path === "/" ? "monthly" : "yearly"}</changefreq>
     <priority>${p.priority}</priority>
   </url>`,
-  )
-  .join("\n")}
+    )
+    .join("\n")}
 </urlset>
 `,
 );

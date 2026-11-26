@@ -162,15 +162,44 @@
   const lightbox = $("[data-lightbox]");
   const lightboxImg = $("[data-lightbox-img]", lightbox || document);
   const lightboxCaption = $("[data-lightbox-caption]", lightbox || document);
+  const lightboxCounter = $("[data-lightbox-counter]", lightbox || document);
   const lightboxClose = $("[data-lightbox-close]", lightbox || document);
+  const lightboxPrev = $("[data-lightbox-prev]", lightbox || document);
+  const lightboxNext = $("[data-lightbox-next]", lightbox || document);
   let lastFocused = null;
+  let activeItems = [];
+  let activeIndex = 0;
+
+  const showLightboxIndex = (index) => {
+    if (!activeItems.length) return;
+    activeIndex = (index + activeItems.length) % activeItems.length;
+    const item = activeItems[activeIndex];
+    const href = item.getAttribute("href") || "";
+    if (!href.startsWith("/assets/")) return;
+    const image = $("img", item);
+    lightboxImg.src = href;
+    lightboxImg.alt = image ? image.alt : "";
+    lightboxCaption.textContent = item.dataset.caption || (image ? image.alt : "");
+    if (lightboxCounter) {
+      lightboxCounter.textContent =
+        activeItems.length > 1 ? `${activeIndex + 1} / ${activeItems.length}` : "";
+    }
+    const multi = activeItems.length > 1;
+    if (lightboxPrev) lightboxPrev.hidden = !multi;
+    if (lightboxNext) lightboxNext.hidden = !multi;
+  };
 
   const closeLightbox = () => {
     if (!lightbox || lightbox.hidden) return;
-    lightbox.hidden = true;
+    lightbox.classList.remove("is-open");
     document.body.classList.remove("nav-open");
     setPageInert(false);
-    lightboxImg.removeAttribute("src");
+    setTimeout(() => {
+      if (!lightbox.classList.contains("is-open")) {
+        lightbox.hidden = true;
+        lightboxImg.removeAttribute("src");
+      }
+    }, 220);
     if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
   };
 
@@ -178,12 +207,14 @@
     if (!lightbox) return;
     const href = item.getAttribute("href") || "";
     if (!href.startsWith("/assets/")) return;
-    const image = $("img", item);
+    const scope = item.closest(".gallery, .type-grid") || document;
+    activeItems = $$("[data-lightbox-item]", scope).filter((el) => !el.hidden);
+    const idx = activeItems.indexOf(item);
     lastFocused = item;
-    lightboxImg.src = href;
-    lightboxImg.alt = image ? image.alt : "";
-    lightboxCaption.textContent = item.dataset.caption || (image ? image.alt : "");
+    showLightboxIndex(idx >= 0 ? idx : 0);
     lightbox.hidden = false;
+    void lightbox.offsetHeight;
+    lightbox.classList.add("is-open");
     document.body.classList.add("nav-open");
     setPageInert(true);
     lightboxClose.focus();
@@ -198,6 +229,8 @@
     });
 
     lightboxClose.addEventListener("click", closeLightbox);
+    if (lightboxPrev) lightboxPrev.addEventListener("click", () => showLightboxIndex(activeIndex - 1));
+    if (lightboxNext) lightboxNext.addEventListener("click", () => showLightboxIndex(activeIndex + 1));
 
     lightbox.addEventListener("click", (event) => {
       if (event.target === lightbox) closeLightbox();
@@ -207,8 +240,31 @@
       trapTab(lightbox, event);
     });
 
+    let touchStartX = 0;
+    lightbox.addEventListener(
+      "touchstart",
+      (event) => {
+        touchStartX = event.changedTouches[0]?.clientX || 0;
+      },
+      { passive: true },
+    );
+    lightbox.addEventListener(
+      "touchend",
+      (event) => {
+        if (activeItems.length < 2) return;
+        const dx = (event.changedTouches[0]?.clientX || 0) - touchStartX;
+        if (Math.abs(dx) > 48) {
+          showLightboxIndex(dx < 0 ? activeIndex + 1 : activeIndex - 1);
+        }
+      },
+      { passive: true },
+    );
+
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !lightbox.hidden) closeLightbox();
+      if (lightbox.hidden) return;
+      if (event.key === "Escape") closeLightbox();
+      else if (event.key === "ArrowLeft" && activeItems.length > 1) showLightboxIndex(activeIndex - 1);
+      else if (event.key === "ArrowRight" && activeItems.length > 1) showLightboxIndex(activeIndex + 1);
     });
   }
 
@@ -417,6 +473,30 @@
     });
   }
 
+  /* ------------------------------------------------------- review carousel */
+
+  const reviewTrack = $("[data-review-track]");
+  const reviewPrev = $("[data-review-prev]");
+  const reviewNext = $("[data-review-next]");
+
+  if (reviewTrack && (reviewPrev || reviewNext)) {
+    const stepBy = (dir) => {
+      const card = $(".review-card", reviewTrack);
+      const step = card ? card.getBoundingClientRect().width + 14 : reviewTrack.clientWidth * 0.8;
+      const maxScroll = reviewTrack.scrollWidth - reviewTrack.clientWidth - 4;
+      if (dir > 0 && reviewTrack.scrollLeft >= maxScroll) {
+        reviewTrack.scrollTo({ left: 0, behavior: "smooth" });
+      } else if (dir < 0 && reviewTrack.scrollLeft <= 4) {
+        reviewTrack.scrollTo({ left: reviewTrack.scrollWidth, behavior: "smooth" });
+      } else {
+        reviewTrack.scrollBy({ left: dir * step, behavior: "smooth" });
+      }
+    };
+
+    if (reviewPrev) reviewPrev.addEventListener("click", () => stepBy(-1));
+    if (reviewNext) reviewNext.addEventListener("click", () => stepBy(1));
+  }
+
   /* --------------------------------------------------- gallery category filter */
 
   const filterBar = $("[data-gallery-filters]");
@@ -433,7 +513,12 @@
       galleryItems.forEach((item) => {
         const show = category === "all" || item.dataset.category === category;
         item.hidden = !show;
-        if (show) item.classList.add("is-in");
+        item.classList.remove("is-filtered-in");
+        if (show) {
+          item.classList.add("is-in");
+          void item.offsetWidth;
+          item.classList.add("is-filtered-in");
+        }
       });
     };
 
@@ -442,5 +527,40 @@
         applyFilter(btn.dataset.galleryFilter || "all");
       });
     });
+  }
+
+  /* --------------------------------------------------- instant link prefetch */
+
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (!conn || (!conn.saveData && conn.effectiveType !== "slow-2g" && conn.effectiveType !== "2g")) {
+    const prefetched = new Set([location.pathname]);
+    const prefetch = (link) => {
+      if (!link || link.origin !== location.origin) return;
+      if (link.pathname === location.pathname || prefetched.has(link.pathname)) return;
+      if (link.hasAttribute("data-lightbox-item") || link.hash) return;
+      prefetched.add(link.pathname);
+      const hint = document.createElement("link");
+      hint.rel = "prefetch";
+      hint.href = link.pathname;
+      document.head.appendChild(hint);
+    };
+
+    document.addEventListener(
+      "pointerenter",
+      (event) => {
+        const link = event.target instanceof Element ? event.target.closest("a[href^='/']") : null;
+        if (link) prefetch(link);
+      },
+      true,
+    );
+
+    document.addEventListener(
+      "touchstart",
+      (event) => {
+        const link = event.target instanceof Element ? event.target.closest("a[href^='/']") : null;
+        if (link) prefetch(link);
+      },
+      { passive: true },
+    );
   }
 })();

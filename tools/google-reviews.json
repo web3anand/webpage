@@ -2,8 +2,66 @@
   "source": "Google",
   "placeId": "",
   "profileUrl": "https://maps.app.goo.gl/CGsX2YnmGyaSUxBZ6",
-  "rating": null,
-  "totalReviews": null,
-  "syncedAt": "",
-  "reviews": []
+  "writeReviewUrl": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x3b03efb2fd3c3353:0x4e6da1e40f53b69d!12e1?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+  "rating": 4.6,
+  "totalReviews": 7,
+  "syncedAt": "2026-11-26",
+  "reviews": [
+    {
+      "name": "V Kumar",
+      "rating": 5,
+      "text": "Their work is of super quality and they complete the work on time.",
+      "date": "2024-04-15",
+      "source": "Google",
+      "url": ""
+    },
+    {
+      "name": "Rahul gsrlab",
+      "rating": 5,
+      "text": "Unexpected really good service. And low cost.",
+      "date": "2024-04-15",
+      "source": "Google",
+      "url": ""
+    },
+    {
+      "name": "Take_ Action",
+      "rating": 5,
+      "text": "Nice work , provides clean service to customers",
+      "date": "2024-03-03",
+      "source": "Google",
+      "url": ""
+    },
+    {
+      "name": "Mr. Gamer",
+      "rating": 5,
+      "text": "Nalla service with good response",
+      "date": "2024-02-06",
+      "source": "Google",
+      "url": ""
+    },
+    {
+      "name": "Kesavan KD",
+      "rating": 5,
+      "text": "Good response 👍🏻",
+      "date": "2024-01-23",
+      "source": "Google",
+      "url": ""
+    },
+    {
+      "name": "Siva Ranjith",
+      "rating": 5,
+      "text": "Thanks for the excellent work 👏🏼❤",
+      "date": "2024-01-18",
+      "source": "Google",
+      "url": ""
+    },
+    {
+      "name": "Poovarasan",
+      "rating": 5,
+      "text": "Really well ! Thanks for the Quick response",
+      "date": "2024-01-15",
+      "source": "Google",
+      "url": ""
+    }
+  ]
 }

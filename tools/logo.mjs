@@ -67,12 +67,14 @@ const crop = {
 
 const mark = sharp(pixels, { raw: { width, height, channels: 4 } })
   .extract(crop)
-  .resize({ width: 800, withoutEnlargement: false });
+  .resize({ width: 400, withoutEnlargement: false });
 
 fs.mkdirSync(path.join(out, "assets", "img"), { recursive: true });
 
 const lightBuffer = await mark.png().toBuffer();
-fs.writeFileSync(path.join(out, "assets", "img", "logo-mark.png"), lightBuffer);
+await sharp(lightBuffer)
+  .webp({ quality: 90, alphaQuality: 100, effort: 6 })
+  .toFile(path.join(out, "assets", "img", "logo-mark.webp"));
 
 const inkPixels = Buffer.from(pixels);
 for (let i = 0; i < inkPixels.length; i += 4) {
@@ -80,12 +82,11 @@ for (let i = 0; i < inkPixels.length; i += 4) {
   inkPixels[i + 1] = INK.g;
   inkPixels[i + 2] = INK.b;
 }
-const inkBuffer = await sharp(inkPixels, { raw: { width, height, channels: 4 } })
+await sharp(inkPixels, { raw: { width, height, channels: 4 } })
   .extract(crop)
-  .resize({ width: 800 })
-  .png()
-  .toBuffer();
-fs.writeFileSync(path.join(out, "assets", "img", "logo-mark-ink.png"), inkBuffer);
+  .resize({ width: 240 })
+  .webp({ quality: 90, alphaQuality: 100, effort: 6 })
+  .toFile(path.join(out, "assets", "img", "logo-mark-ink.webp"));
 
 // App icon: the beige mark centred on the warm wood chip.
 const iconMark = await sharp(lightBuffer).resize({ width: 330 }).toBuffer();

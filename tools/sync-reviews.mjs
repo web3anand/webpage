@@ -5,7 +5,7 @@
  *
  * Supports two zero-backend sources (reads from process.env or local .env):
  *   1. Featurable (free, no Google Cloud billing):
- *        FEATURABLE_WIDGET_ID=your-widget-id
+ *        FEATURABLE_WIDGET_ID=your-widget-id   (UUID or full API URL)
  *   2. Google Places API (New):
  *        GOOGLE_PLACES_API_KEY=your-server-key
  *        GOOGLE_PLACE_ID=ChIJ...
@@ -36,7 +36,7 @@ if (fs.existsSync(envPath)) {
   }
 }
 
-const featurableId = (process.env.FEATURABLE_WIDGET_ID || "").trim();
+const featurableRaw = (process.env.FEATURABLE_WIDGET_ID || site.featurableWidgetId || "").trim();
 const googleApiKey = (process.env.GOOGLE_PLACES_API_KEY || "").trim();
 const googlePlaceId = (process.env.GOOGLE_PLACE_ID || site.googlePlaceId || "").trim();
 
@@ -44,30 +44,90 @@ const existing = fs.existsSync(outPath)
   ? JSON.parse(fs.readFileSync(outPath, "utf8"))
   : {};
 
-async function syncFromFeaturable(widgetId) {
-  const url = `https://featurable.com/api/v1/widgets/${encodeURIComponent(widgetId)}`;
-  const res = await fetch(url, { headers: { Accept: "application/json" } });
-  if (!res.ok) throw new Error(`Featurable API returned HTTP ${res.status}`);
-  const data = await res.json();
-  const rawReviews = Array.isArray(data.reviews) ? data.reviews : [];
+const STAR_ENUM = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4, FIVE: 5 };
+const parseRating = (val) => {
+  if (typeof val === "string" && STAR_ENUM[val.toUpperCase()]) return STAR_ENUM[val.toUpperCase()];
+  const num = Number(val);
+  return Number.isFinite(num) && num > 0 ? Math.max(1, Math.min(5, Math.round(num))) : 5;
+};
+
+async function fetchFeaturableJson(rawIdOrUrl) {
+  const urls = /^https?:\/\//i.test(rawIdOrUrl)
+    ? [rawIdOrUrl]
+    : [
+        `https://featurable.com/api/v2/widgets/${encodeURIComponent(rawIdOrUrl)}`,
+        `https://featurable.com/api/v1/widgets/${encodeURIComponent(rawIdOrUrl)}`,
+      ];
+
+  let lastErr = null;
+  for (const url of urls) {
+    const res = await fetch(url, { headers: { Accept: "application/json" } });
+    if (res.ok) return await res.json();
+    lastErr = new Error(`Featurable API (${url}) returned HTTP ${res.status}`);
+  }
+  throw lastErr;
+}
+
+async function syncFromFeaturable(rawIdOrUrl) {
+  const data = await fetchFeaturableJson(rawIdOrUrl);
+  // Support both v2 ({ success, widget: { ... } }) and v1 ({ reviews, averageRating, ... })
+  const container = data?.widget && typeof data.widget === "object" ? data.widget : data;
+  const rawReviews = Array.isArray(container?.reviews) ? container.reviews : [];
 
   const reviews = rawReviews
     .map((r) => ({
-      name: String(r.reviewer?.displayName || r.authorName || "Google Customer").trim(),
-      rating: Math.max(1, Math.min(5, Number(r.starRating || r.rating) || 5)),
-      text: String(r.comment || r.text || "").trim(),
-      date: String(r.createTime || r.relativeTime || "").slice(0, 10),
+      name: String(
+        r.author?.name ||
+          r.reviewer?.displayName ||
+          r.authorName ||
+          r.name ||
+          "Google Customer",
+      ).trim(),
+      rating: parseRating(r.rating ?? r.starRating),
+      text: String(r.text || r.comment || r.snippet || "").trim(),
+      date: String(
+        r.relativeTimeDescription ||
+          r.relativeTime ||
+          (r.publishedAt ? String(r.publishedAt).slice(0, 10) : "") ||
+          (r.createTime ? String(r.createTime).slice(0, 10) : ""),
+      ).trim(),
       source: "Google",
-      url: String(r.reviewUrl || "").trim(),
+      url: String(r.reviewUrl || r.url || "").trim(),
     }))
     .filter((r) => r.text.length > 0);
+
+  const summary = container?.gbpLocationSummary || data?.gbpLocationSummary || {};
+  const avgRaw =
+    summary?.rating ??
+    container?.averageRating ??
+    container?.rating ??
+    data?.averageRating ??
+    data?.rating;
+  const countRaw =
+    summary?.reviewsCount ??
+    container?.totalReviewCount ??
+    container?.reviewCount ??
+    data?.totalReviewCount ??
+    data?.reviewCount;
+
+  const rating = Number.isFinite(Number(avgRaw)) && Number(avgRaw) > 0
+    ? Number(Number(avgRaw).toFixed(1))
+    : null;
+  const totalReviews = Number.isFinite(Number(countRaw)) && Number(countRaw) > 0
+    ? Number(countRaw)
+    : reviews.length || null;
 
   return {
     source: "Google",
     placeId: googlePlaceId || existing.placeId || "",
-    profileUrl: String(data.profileUrl || existing.profileUrl || site.mapsLink),
-    rating: Number(data.averageRating ?? data.rating) || null,
-    totalReviews: Number(data.totalReviewCount ?? data.reviewCount) || reviews.length || null,
+    profileUrl: String(
+      container?.profileUrl || data?.profileUrl || existing.profileUrl || site.mapsLink,
+    ),
+    writeReviewUrl: String(
+      summary?.writeAReviewUri || existing.writeReviewUrl || "",
+    ).trim(),
+    rating,
+    totalReviews,
     syncedAt: new Date().toISOString().slice(0, 10),
     reviews,
   };
@@ -91,7 +151,7 @@ async function syncFromGooglePlaces(apiKey, placeId) {
   const reviews = rawReviews
     .map((r) => ({
       name: String(r.authorAttribution?.displayName || "Google Customer").trim(),
-      rating: Math.max(1, Math.min(5, Number(r.rating) || 5)),
+      rating: parseRating(r.rating),
       text: String(r.text?.text || r.originalText?.text || "").trim(),
       date: String(r.relativePublishTimeDescription || r.publishTime?.slice(0, 10) || "").trim(),
       source: "Google",
@@ -110,22 +170,27 @@ async function syncFromGooglePlaces(apiKey, placeId) {
   };
 }
 
-if (!featurableId && !(googleApiKey && googlePlaceId)) {
-  console.log(
-    "No sync credentials configured (FEATURABLE_WIDGET_ID or GOOGLE_PLACES_API_KEY + GOOGLE_PLACE_ID).",
-  );
+if (!featurableRaw && !(googleApiKey && googlePlaceId)) {
+  const msg =
+    "Missing sync credentials: set FEATURABLE_WIDGET_ID or (GOOGLE_PLACES_API_KEY + GOOGLE_PLACE_ID).";
+  if (process.env.GITHUB_ACTIONS === "true") {
+    console.error(`::error::${msg} Add them in GitHub Repo -> Settings -> Secrets and variables -> Actions.`);
+    process.exit(1);
+  }
+  console.log(msg);
   console.log("Keeping existing tools/google-reviews.json as-is.");
   process.exit(0);
 }
 
-const payload = featurableId
-  ? await syncFromFeaturable(featurableId)
+const payload = featurableRaw
+  ? await syncFromFeaturable(featurableRaw)
   : await syncFromGooglePlaces(googleApiKey, googlePlaceId);
 
 const fingerprint = (d) =>
   JSON.stringify({
     placeId: d?.placeId || "",
     profileUrl: d?.profileUrl || "",
+    writeReviewUrl: d?.writeReviewUrl || "",
     rating: d?.rating ?? null,
     totalReviews: d?.totalReviews ?? null,
     reviews: Array.isArray(d?.reviews) ? d.reviews : [],

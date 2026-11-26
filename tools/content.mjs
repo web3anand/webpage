@@ -53,6 +53,9 @@ export const site = {
   // You can also paste your Google Business Profile "Ask for reviews" short link in googleReviewLink.
   googlePlaceId: "",
   googleReviewLink: "",
+  // Optional (public, NOT a secret): paste a free Featurable Widget ID from featurable.com
+  // so GitHub Actions auto-syncs your Google Reviews with zero GitHub Secrets needed.
+  featurableWidgetId: "814cf3c5-cbbf-4eba-9c3e-2a8bb61e098d",
   mapsEmbed:
     "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15771.289271885958!2d78.1174878!3d8.8027577!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b03efb2fd3c3353%3A0x4e6da1e40f53b69d!2sAV%20INTERIOR%20DECORATION!5e0!3m2!1sen!2sin!4v1748697393710!5m2!1sen!2sin",
   yearsExperience: "10+",

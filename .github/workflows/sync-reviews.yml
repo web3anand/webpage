@@ -26,10 +26,6 @@ jobs:
           node-version: "22"
 
       - name: Fetch latest Google reviews
-        env:
-          FEATURABLE_WIDGET_ID: ${{ secrets.FEATURABLE_WIDGET_ID }}
-          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
-          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
         run: node tools/sync-reviews.mjs
 
       - name: Check if reviews changed
